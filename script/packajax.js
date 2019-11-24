@@ -456,10 +456,6 @@ var _getHttpsData = function(actionUrl, param, funRecall, errFunRecall) {
 			var msg = err.msg + '(' + err.code + ')'
 			console.log (title)
 			console.log (msg)
-			// api.alert({
-			// 	title : title,
-			// 	msg : msg
-			// });
 		}
 	});
 
