@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/goodsList/goodsList.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" /> -->
+    <style>
+      .main {
+        height: 100vh;
+              background: #00A0E9;
+        position: relative;
+
+      }
+      /* .scroll-box {
+        position: relative;
+        height: 100%;
+        background: #757575;
+      } */
+            .main-content {
+              height: 100%;
+            }
+            .order-list {
+              font-size: .5rem;
+              color: rgb(88, 88, 88);
+              display: flex;
+              align-items: center;
+            }
+            .order-list-item {
+              text-align: left;
+              border-bottom: 1px solid #dddddd;
+            }
+            /* .order-list-item:after{
+              width: 100%;
+              height: 1px;
+              background-color: #dddddd;
+              display: block;
+              content: '';
+              position: absolute;
+              top: auto;
+              right: auto;
+              bottom: 0;
+              left: 0;
+              z-index: 2;
+              -webkit-transform-origin: 50% 100%;
+              transform-origin: 50% 100%;
+              pointer-events: none;
+            } */
+            .order-list-item span {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp:2;
+              -webkit-box-orient: vertical;
+            }
+            .order-list-item-num {
+              width: 100%;
+              text-align: center;
+              font-size: .7rem;
+            }
+            .footer {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction:row;
+              flex-wrap:wrap;
+              background: #DD191B;
+              position: fixed;
+              left: 0;
+              bottom: 0px;
+              width: 100%;
+              z-index: 3;
+              height: 50px;
+              /* border-radius: 25px; */
+            }
+            .but-green{
+              background: #11CE7C;
+              color: #fff;
+              height: 50px;
+              line-height: 50px;
+              text-align: center;
+            }
+            .but-blue{
+              background: #00A0E9;
+              color: #fff;
+              height: 50px;
+              line-height: 50px;
+              text-align: center;
+            }
+            .but-red{
+              background: #F24A4A;
+              color: #fff;
+              height: 50px;
+              text-align: center;
+              line-height: 50px;
+            }
+            .but-gray {
+              background: #DCDCDC;
+              height: 50px;
+              text-align: center;
+              line-height: 50px;
+              color: #757575;
+              font-weight: normal;
+              font-size: .7rem;
+            }
+            .goods-price-color {
+              color: #F24A4A;
+            }
+            .order-tip {
+              width: 1.5em;
+              height: 1.5em;
+              line-height: 1.5em;
+              background-color: #fff;
+              border: 1px solid rgb(88, 88, 88);
+              border-radius: 50%;
+              color: rgb(88, 88, 88);
+              font-size: .5rem;
+          }
+          .goods-list {
+            padding: 0 0.75rem;
+            }
+            .item-data-null {
+              padding: 0.4rem 0;
+              text-align: center;
+            }
+            .head-font {
+              font-size: .5rem;
+            }
+            .text-size {
+        font-size: 0.6rem !important;
+}
+    </style>
+</head>
+<body>
+  <div id="info_id" class="main">
+        <div class="aui-card-list main-content">
+            <div class="aui-card-list-content-padded">
+              <p class="aui-row">
+                <span class="aui-col-xs-6 text-size">用户名称：{{clientDetailAddress.clientName}}</span>
+                <span class="aui-col-xs-6 text-size">联系方式：{{clientDetailAddress.clientPhone}}</span>
+              </p>
+              <p class="aui-row">
+                  <span class="aui-col-xs-12 text-size">拍照单号：{{itemData.photoOrderId}}</span>
+                </p>
+                <p class="aui-row">
+                  <span class="aui-col-xs-12 text-size">下单时间：{{itemData.createDate}}</span>
+                </p>
+                <p class="aui-row">
+                  <span class="aui-col-xs-12 text-size">收货地址：{{clientDetailAddress.clientAddress}}</span>
+                </p>
+            </div>
+            <ul class="aui-list aui-media-list">
+                <li class="aui-list-header aui-row">
+                  <span class="head-font aui-col-xs-1">序号</span>
+                  <span class="head-font aui-col-xs-1">图片</span>
+                  <span class="head-font aui-col-xs-2">名称</span>
+                  <span class="head-font aui-col-xs-1">规格</span>
+                  <span class="head-font aui-col-xs-1">邮费</span>
+                  <span class="head-font aui-col-xs-1">数量</span>
+                  <span class="head-font aui-col-xs-2">单价</span>
+                  <span class="head-font aui-col-xs-1">合计</span>
+                  <span class="head-font aui-col-xs-1">删</span>
+                </li>
+            </ul>
+            <div class="goods-list">
+            <div class="item-data-null" v-if ='goodsList.length <= 0'>尚未添加商品</div>
+            <ul  class="aui-list aui-media-list">
+                <li class="order-list-item" v-for='(item,index) in goodsList' @click='goodsDetail(item)'>
+                    <!-- <i @click="shadeIcon(item,index)" class="aui-iconfont aui-icon-more shop-list-icom"></i> -->
+                    <div class="aui-media-list-item-inner order-list aui-row">
+                        <div class="aui-col-xs-1">
+                            <span class="order-list-item-num order-tip">{{index+1}}</span>
+                            <!-- <span class="order-list-item-num order-tip">{{index+1}}</span> -->
+                        </div>
+                        <div class="aui-col-xs-1">
+                            <img :src="item.imgUrl" class="aui-list-img-sm">
+                            <!-- <img src="../../image/data.png" class="aui-list-img-sm"> -->
+                        </div>
+                        <div class="aui-col-xs-2">
+                            <span>{{item.itemName}}</span>
+                            <!-- <span>12311</span> -->
+                        </div>
+                        <div class="aui-col-xs-2">
+                            <span>{{item.shopItemSpecAttr}}</span>
+                            <!-- <span>12322</span> -->
+                        </div>
+                        <div class="aui-col-xs-1">
+                          <span v-if='item.postageAmnt == 0.00'>0</span><span v-else>{{item.postageAmnt}}</span>
+                          <!-- <span v-if='item.postageAmnt == 0.00'>0.00</span> -->
+                        </div>
+                        <div class="aui-col-xs-1">
+                            <span>{{item.itemNumber}}</span>
+                            <!-- <span>X100</span> -->
+                        </div>
+                        <div class="aui-col-xs-2 aui-ellipsis-2">
+                            <span>{{item.itemSalePrice}}</span>
+                            <!-- <span>33.33</span> -->
+                        </div>
+                        <div class="aui-col-xs-1 aui-ellipsis-2">
+                            <span>{{item.itemAmount}}</span>
+                            <!-- <span>99.99</span> -->
+                        </div>
+                        <div class="aui-col-xs-1" @click='delList(item)'>
+                          <span class="aui-iconfont aui-icon-close" style="color: #F24A4A"></span>
+                        </div>
+                        <!-- <div class="aui-list-item-inner aui-list-item-arrow aui-col-xs-10">
+                            <div class="aui-list-item-text">
+                                <div class="aui-list-item-title aui-font-size-14 goods-title">
+                                    <span class="goods-name">{{item.itemName}}</span>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </li>
+            </ul>
+         </div>
+
+    </div>
+    <div class="footer aui-row">
+        <div class="but-gray aui-col-xs-6" >总金额：￥{{totalOrder}}</div>
+        <div class="but-green aui-col-xs-6 aui-row" @click='pushOrde()'>
+          推送
+        </div>
+    </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery.mobile.custom.min.js"></script>
+<script type="text/javascript" src="../../script/md5/base64.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<!-- <script type="text/javascript" src="../../script/mescroll/mescrollmin.js"></script> -->
+<script type="text/javascript">
+    apiready = function () {
+    var shopUserId = $api.getStorage("userid")
+    var shopOpenId = $api.getStorage("openId")
+    var infoVm
+
+    //查询某个订单 photoOrderId
+    var getPhotoOrderItem = function (funCll) {
+      var goodsParam = 'shopId=' + shopUserId + '&photoOrderId=' + infoVm.itemData.photoOrderId;
+        _getHttpsData('/photoOrder/getPhotoOrderList', goodsParam,
+            function (ret) {
+              if(ret.status){
+                  funCll(ret.data[0])
+                }
+            },
+            function (err) {
+            }
+        );
+    }
+
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+        totalOrder:'',//合计总价
+        itemData:'',
+        itemAmount:'',//单项总价
+        clientDetailAddress:'',
+        goodsList:[], //商品列表
+
+        curFirstClass: {
+            itemClassId: '',
+            classAllNo: '',
+            className: ''
+        },
+
+      },
+      methods: {
+        goodsDetail: function (e){
+        // var goodsInfo = JSON.stringify(e)
+        //     api.openWin(
+        //         {
+        //             name: 'goodsDetail_win',
+        //             url: 'widget://html/goodsDetail/goodsDetail_win.html',
+        //             slidBackEnabled: true,
+        //             pageParam:{
+        //                 DetailPageParam:e,
+				// 		    },
+        //             delay: 300
+        //         }
+        //     );
+    },
+
+    delList:function(e){
+      // if(infoVm.totalOrder.length <= 0){api.toast({ msg: '未添加商品',duration: 2000, location: 'bottom'});return}
+      // else if(infoVm.goodsList.length <= 1){api.toast({ msg: '操作无效，清单至少有一件商品',duration: 2000, location: 'bottom'});return}
+  api.showProgress()
+  api.confirm({
+    title: '提示',
+    msg: '是否确定删除？',
+    buttons: ['确定', '取消']
+  }, function (ret, err) {
+    var index = ret.buttonIndex;
+    if (index == 1) {
+        getPhotoOrderItem(function (params) { //校验状态
+        infoVm.photoOrderStatus = params.status
+        if(infoVm.photoOrderStatus >= 0){
+        // if(infoVm.photoOrderStatus == 1){api.toast({ msg: '操作无效，该订单已推送',duration: 2000, location: 'bottom'});api.hideProgress();return}
+        if(infoVm.photoOrderStatus == 2){api.toast({ msg: '操作无效，该订单待付款',duration: 2000, location: 'bottom'});api.hideProgress();return}
+        else if(infoVm.photoOrderStatus == 3){api.toast({ msg: '操作无效，该订单已付款',duration: 2000, location: 'bottom'});api.hideProgress();return}
+        else if (infoVm.photoOrderStatus == 4){api.toast({ msg: '客户已取消该订单，操作无效',duration: 2000, location: 'bottom'});api.hideProgress();return}
+        else if (infoVm.photoOrderStatus == 5){api.toast({ msg: '店主已取消该订单，操作无效',duration: 2000, location: 'bottom'});api.hideProgress();return}
+        else {
+
+          if(infoVm.photoOrderStatus >= 0){
+            var param = 'clientId=' + infoVm.itemData.clientId + '&shopCartId=' + e.shopCartId;
+            _getHttpsData('/order/deleteCart', param,
+                function (ret) {
+                    if (ret.status) {
+                      infoVm.geIfyHttpsData(function (status,params) {
+                        if(status) {
+                            var param = {
+                            photoOrderId:infoVm.itemData.photoOrderId,
+                            totalAmount:infoVm.totalOrder
+                          }
+                          _postHttpsData('/photoOrder/updatePhotoOrder', param,
+                              function (ret) {
+                                  if (ret.status) {
+                                    api.hideProgress();
+                                    api.toast({ msg:'已删除',duration: 2000, location: 'bottom'});
+                                }
+                              },
+                              function (err) {
+                              }
+                          );
+                            }
+                          })
+                        }
+                    },
+                    function (err) {
+                    }
+                );
+              }
+
+            }
+          }
+          })
+        } else {
+          //点击取消
+          api.hideProgress();
+        }
+      })
+        },
+
+      /**计算总价 */
+  calTotalPrice: function () {
+    var goodsList = this.data.goodsList;
+    var totalPrice = 0;
+    var goodsSum = [];
+    for (var index in goodsList) {
+      if (goodsList[index].isChecked) {
+        var xfMoney = (Number(goodsList[index].itemSalePrice) * Number(goodsList[index].itemNumber)).toFixed(2);
+        totalPrice = app.accAdd(totalPrice, xfMoney);
+        var postageAmnt = goodsList[index].postageAmnt == undefined ? 0 : goodsList[index].postageAmnt;
+        totalPrice = app.accAdd(totalPrice, Number(postageAmnt));
+        goodsSum.push(goodsList[index].itemNumber)
+        this.setData({
+          goodsNumber: goodsSum.reduce((a, b) => a + b)
+        })
+      }
+    }
+    this.setData({
+      totalPrice: totalPrice.toFixed(2),
+      isGoodsNumber: this.data.goodsNumber //解决数字统计时闪烁问题
+    })
+    if (totalPrice == 0) {
+      this.setData({
+        goodsNumber: 0,
+        isGoodsNumber: 0,
+        thisIsChecked: false
+      })
+    } else {
+      this.setData({
+        thisIsChecked: true
+      })
+    }
+  },
+
+            //重新获取该商品数据
+            geIfyHttpsData : function(funCll){
+			      var funCll
+            var param = 'userId=' + infoVm.itemData.clientId + '&photoOrderId=' + infoVm.itemData.photoOrderId;
+                        _getHttpsData('/order/getCartList',param,
+                    function(ret){
+                        if(ret.status){
+                          infoVm.goodsList = []
+                          infoVm.totalOrder = []
+                          if(ret.data.length <= 0){
+                            infoVm.goodsList = []
+                            infoVm.totalOrder = 0
+                            funCll(ret.status,infoVm.totalOrder)
+                            api.toast({ msg: '未添加商品',duration: 2000, location: 'bottom'});return}
+                              var adds = []
+                              var postageAmnts = []
+                              ret.data.forEach(function (item,index) {
+                                infoVm.goodsList.push (item)
+                                var postageAmnt = item.postageAmnt == undefined ? 0:item.postageAmnt;
+                                adds.push(Number(item.amount))
+                                postageAmnts.push(Number(postageAmnt))
+                              });
+                              infoVm.goodsList.forEach(function(item,index){
+                                  item['itemAmount']= Number(item.amount)+ Number(item.postageAmnt) //邮费+合计 = itemAmount
+                                  if(item.postageAmnt > 0){item.postageAmnt = item.postageAmnt.slice(0, -3);}
+                              })
+                              var totalOrderSum = eval(adds.join('+')).toFixed(2) //数组求和，保留两位
+                              var postageAmntsSum = eval(postageAmnts.join('+')).toFixed(2) //数组求和，保留两位
+                              infoVm.totalOrder = Number(totalOrderSum) + Number(postageAmntsSum) //支付总价
+                              funCll(ret.status,infoVm.totalOrder)
+                        }else{
+
+						              	api.toast({ msg: res.msg+'('+res.code+')',duration: 2000, location: 'bottom'});
+                      }
+                    },
+                    function(err){
+                      api.hideProgress();
+             });
+          },
+
+          pushOrde: function (){
+          if(infoVm.totalOrder <= 0){api.toast({ msg: '未添加商品',duration: 2000, location: 'bottom'});return}
+
+          if(infoVm.itemData.status == 1){api.toast({ msg: '已推送',duration: 2000, location: 'bottom'});return}
+          if(infoVm.itemData.status == 2){api.toast({ msg: '操作无效，该订单待付款',duration: 2000, location: 'bottom'});return}
+          if(infoVm.itemData.status == 3){api.toast({ msg: '操作无效，该订单已付款',duration: 2000, location: 'bottom'});return}
+          else if (infoVm.itemData.status == 4){api.toast({ msg: '客户已取消该订单，无需操作',duration: 2000, location: 'bottom'});return}
+          else if (infoVm.itemData.status == 5){api.toast({ msg: '店主已取消该订单，无需操作',duration: 2000, location: 'bottom'});return}
+
+            api.confirm({
+              title: '提示',
+              msg: '是否推送给客户？',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                var param = {
+                photoOrderId:infoVm.itemData.photoOrderId,
+                status:1,
+                totalAmount:infoVm.totalOrder
+                }
+                _postHttpsData('/photoOrder/updatePhotoOrder', param,
+                    function (ret) {
+                        if (ret.status) {
+                          api.sendEvent({
+                          name: 'outOfStock_status',
+                          extra: {
+                            goodsStatus: true,
+                          }
+                        });
+                          api.alert({
+                            title: '提示',
+                            msg: '推送成功',
+                          }, function(ret, err) {
+                            api.closeToWin({
+                              name : 'cameraOrder_win',
+                              url : 'widget://html/cameraOrder/cameraOrder_win.html',
+                              reload:true
+                            });	
+                          });
+                          
+                        }
+                    },
+                    function (err) {
+
+                    }
+                );
+              } else {
+                //点击取消
+              }
+            })
+          }
+        }
+    })
+
+     //监听
+		api.addEventListener({
+		    name: 'outOfStock_status'
+		}, function(ret, err) {
+			if(ret){
+				if(ret.value.goodsStatus){
+		      infoVm.geIfyHttpsData(function name(status,params) {})
+				}
+			}
+		});
+
+      var getUserInfoHttps = function (param) {
+      // 	//获取店铺信息
+      api.showProgress();
+      var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+      _getHttpsData('/shop/getShopInfo', param,
+        function (res) {
+          api.hideProgress();
+          if (res.code == 0005) {
+            infoVm.shopData = false
+            infoVm.affect = false
+            api.confirm({
+              title: '提示',
+              msg: '您未开店，是否申请开店',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.openWin({
+                  name : 'shopManage_win',
+                  url : 'widget://html/shopManage/shopManage_win.html',
+                  reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+          } else if (JSON.stringify(res.data).length > 0) {
+            if(res.data.shopStatus == 1){
+              api.confirm({
+              title: '提示',
+              msg: '店铺审核中，请联系管理员',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+            }
+            if(res.data.shopStatus == 3){
+              api.confirm({
+              title: '提示',
+              msg: '店铺信息审核未通过，请重新提交审核',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+            }
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      )
+    };
+
+    getUserInfoHttps()
+    infoVm.itemData = api.pageParam.itemData.itemData;//页面提交过来的参数
+    infoVm.clientDetailAddress = api.pageParam.itemData.itemData.clientDetailAddress
+
+		infoVm.geIfyHttpsData(function name(status,params) {})
+}
+</script>
+</html>

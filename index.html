@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+    <style></style>
+</head>
+<body></body>
+</html>
+<script type="text/javascript" src="script/api.js"></script>
+
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/aui/aui_dialog.js"></script>
+<script type="text/javascript" src="./script/custom/tools.js"></script>
+<script type="text/javascript" src="./script/packajax.js"></script>
+<!-- <script type="text/javascript" src="./script/custom/bmap.js"></script> -->
+
+<script type="text/javascript">
+    var intervalNewData
+
+    apiready = function(){
+        var userId = $api.getStorage("userid");//用户id
+        var clientPhone = $api.getStorage("clientPhone");//手机号
+        var clientLevel = $api.getStorage("clientLevel");//
+        var shopOpenId = $api.getStorage("openId")
+
+        if(userId==undefined || userId==null || userId==''){
+            api.openWin({
+   			name: 'login_win',
+		    url: 'html/login/login_win.html',
+			delay:300,
+            reload:true,
+            allowEdit:true,
+		    slidBackEnabled:false//（可选项）是否支持滑动返回。iOS7.0及以上系统中，在新打开的页面中向右滑动，可以返回到上一个页面，该字段只 iOS 有效
+        });   
+	    }else {
+            againLoginByUserId();/**通过用户id和手机号再次登录获取用户信息*/
+            var userLevel = $api.getStorage("clientLevel");//
+            // if(userLevel == 9 || userLevel == 6){
+                    api.openWin({
+                        name: 'main_win',
+                        url: 'widget://html/main/main_win.html',
+                        reload:true,
+                        slidBackEnabled:false,//（可选项）是否支持滑动返回。iOS7.0及以上系统中，在新打开的页面中向右滑动，可以返回到上一个页面，该字段只 iOS 有效
+                        delay:300
+                    });
+                // }
+        }
+
+        api.addEventListener({
+			    name:'resume'
+			}, function(ret, err){   
+				//应用从后台到前台
+				// alert ('应用从后台到前台')
+				console.log ('1应用从后台到前台')
+                againLoginByUserId();
+                getShopDataHttps(function (params) {}) //应用从后台到前台
+                getTokenRes(function name(params) {
+                })
+			});
+
+            // checkUpAppVersion();
+            // getShopDataHttps(function (params) { //退出APP 进入APP会执行，首次进入执行 但不触发api.sendEvent
+            //     if(params.status){
+            //         api.sendEvent({
+            //             name: 'refreshData_Event',
+            //             extra: {
+            //                 resObj: params,
+            //                 Success:true
+            //             }
+            //         });
+            //     }else {
+            //         api.sendEvent({
+            //             name: 'refreshData_Event',
+            //             extra: {
+            //                 res: params,
+            //                 Success:false
+            //             }
+            //         });
+            //     }
+            // })
+            getTokenRes(function name(params) {})
+
+        //拍照订单声音提示
+        // var NumPaiZhao = $api.getStorage("PAIZHAO"); // 旧拍照数
+        // var NumPaiZhaoNew //新拍照数
+        // //每几秒获取拍照未接单数量
+        // intervalNewData = function() {
+        //     getShopDataHttps(function (params) {
+        //         $api.setStorage("PAIZHAO", params.data.PAIZHAO);//
+        //         NumPaiZhaoNew = $api.getStorage("PAIZHAO"); 
+        //         if(NumPaiZhaoNew > NumPaiZhao){
+        //             NumPaiZhao = NumPaiZhaoNew
+        //             api.sendEvent({
+        //                 name: 'intervalNewData_Event',
+        //                 extra: {
+        //                     numbers: NumPaiZhaoNew,
+        //                     Success:true
+        //                 }
+        //             });
+        //             api.startPlay({
+		// 			    path: 'widget://res/audio/msg_notice.mp3'
+		// 			}, function(ret, err) {
+		// 			    if (ret) {
+	    //                     //alert('播放完成');
+		// 			    } else {
+	    //                     //alert(JSON.stringify(err));
+		// 			    }
+        //             });
+        //         }
+        //         $api.setStorage("financeDues", params.data.financeDues);//
+        //         $api.setStorage("visitNum", params.data.visitNum);//
+        //         $api.setStorage("totalAmount", params.data.totalAmount);//
+        //         $api.setStorage("totalNum", params.data.totalNum);//
+        //     })
+        // }
+        // setInterval("intervalNewData()","10000"); //自动刷新
+        // intervalNewData()//不自动刷新，只执行一次
+    };
+</script>

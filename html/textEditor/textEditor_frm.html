@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui_flex.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/quill_snow.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/textEditor/textEditor.css" />
+  <style>
+    .list-box .divInput{
+    /* margin: 200px; */
+  }
+  ul li{
+    list-style: none;
+  }
+  .list-box .input{
+
+  }
+  .list-box .input input{
+    border: none;
+    outline: none;
+    width: 90%;
+  }
+  .list-box .input img{
+    position: absolute;
+    right: 34px;
+    top: 48%;
+  }
+  .list-box .list{
+    top: 0;
+    position: fixed;
+    /* width: 50%; */
+    border: 1px solid #cccccc;
+    overflow: hidden;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0,.7);
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+  }
+  .list-box .list ul{
+    position: absolute;
+    width: 50vw;
+    height: 70vh;
+    background: #eee;
+    top: 10%;
+    left: 25%;
+    overflow: hidden;
+  }
+  .list-box .list ul li{
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    line-height: 50px;
+    padding-left: 10px;
+    text-align: center;
+    border: 1px solid #999;
+    overflow: scroll;
+  }
+  .list-box .list ul li:hover{
+    background-color: #cccccc;
+  }
+  .selected {
+            background-color: #00b3f1;
+        }
+
+  .info-edit-item  {
+    display: flex;
+    align-items: center;
+  }
+  .info-edit-item .title {
+    font-size: 0.7rem;
+    color: #212121;
+    width: 3rem;
+  }
+  .def-phd{color:#aab2bd;font-size: 0.6rem;margin-top: 3px;}
+  .info-edit-item .choose-res{position: relative;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 6px 6px;}
+  .res-icon{color:#aab2bd;font-weight: lighter;width: 1em;position: absolute;right: 5px;font-size: .6rem !important;}
+  .res-icon .aui-iconfont{font-size: .4rem !important;}
+  .text-weight{font-size: 0.6rem;
+    /* margin-top: 3px; */
+    color: #212121;font-style: normal;}
+  .info-input {height: 1.6rem;line-height: 1.6rem;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 0 6px;} 
+  .info-input input{
+    height: 1.6rem !important;
+    font-size: 0.6rem !important;
+    color: #212121 !important;
+  } 
+  .info-input .radio-text {margin: 0 1rem 0 .3rem; }
+  .aui-list .aui-list-item {
+  margin: 0;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  }
+
+  .list-item {
+padding: 0 0.75rem !important;
+font-size: 0.6rem !important;
+}
+.aui-list textarea {
+overflow: auto;
+margin: 0 !important;
+height: 3rem;
+line-height: 1rem;
+resize: none;
+padding: 0.5rem 0 !important; 
+}
+.case-img-label {
+  margin-top: 0.5rem !important;
+}
+#editor{
+  margin-bottom: 50px;
+  min-height: 6rem;
+}
+*{
+  -webkit-user-select:text !important;  
+}
+  </style>
+</head>
+<body>
+<div id="info_id">
+  <!-- <template> -->
+
+      <ul class="aui-list aui-form-list">
+          <li class="aui-list-header">标题/描述</li>
+          <li class="list-item aui-border-b">
+                  <div class="aui-list-item-inner">
+                      <div class="aui-list-item-label">
+                          标题(必填)：
+                      </div>
+                      <div class="aui-list-item-input">
+                          <input class="aui-font-size-12" type="text" placeholder="请输入标题" maxlength="100" v-model='articleTitle'>
+                      </div>
+                  </div>
+          </li>
+          <li class="list-item aui-border-b">
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-label">
+                      描述(选填)：
+                  </div>
+                  <div class="aui-list-item-input">
+                      <textarea class="aui-font-size-12" type="text" placeholder="请输入描述内容,限200字内.." maxlength="200" v-model="articleDescribe"></textarea>
+                  </div>
+              </div>
+      </li>
+      </ul>
+
+      <ul class="aui-list aui-form-list">
+          <li class="aui-list-header">上传图片
+            <span style="color: #757575">插入说明图，需先上传说明图后，方可编辑</span>
+          </li>
+          <li class="list-item aui-border-b">
+        <div class="aui-font-size-14 aui-margin-b-10 case-img-label">
+          <span><span>说明图：</span><span class="img-ratio">{{proCaseImgList.length}}/{{proCaseImgMax}}</span></span>
+          <span v-if='prohibit' class="aui-btn aui-btn-success" onclick="addDetailImg()">插入说明图</span>
+          <span v-else class="aui-btn" onclick="addDetailUrl()">上传成功</span>
+        </div>
+        <div class="aui-flex-col aui-flex-middle">
+          <div class="aui-flex-item-3 aui-padded-5" v-for="(proCaseItem,proCaseIndex) in proCaseImgList">
+            <div class="id-img">
+              <span v-if='prohibit' class="del-tip" tapmode="hover" @click="proCaseImgDel(proCaseIndex,proCaseItem)">—</span>
+              <img :src="proCaseItem.pic" tapmode="hover" @click="previewImg(proCaseIndex,proCaseImgList)"/>
+            </div>
+          </div>
+          <div class="aui-flex-item-3 aui-padded-5" v-if="proCaseImgList.length<proCaseImgMax && prohibit">
+            <div class="id-img" tapmode="hover" @click="addDetailImgClick">
+              <i class="aui-iconfont aui-icon-plus"></i>
+            </div>
+          </div>
+        </div>
+      </li>
+      </ul>
+      <ul class="aui-list aui-form-list">
+        <li class="aui-list-header">图/文编辑
+          <span style="color: #757575">插入详情图时，编辑区内容将被清空</span>
+        </li>
+      </ul>
+
+    <!-- <div class="aui-font-size-14 aui-margin-b-10 case-img-label img-btn">
+        <span>图/文编辑：</span>
+        <span class="aui-btn aui-btn-success" onclick="addDetailUrl()">插入说明图</span>
+    </div> -->
+    <!-- <p class="aui-font-size-12 aui-margin-t-10 aui-margin-b-5 case-img-label explain">插入说明图，需先上传说明图后，方可编辑</p> -->
+    <!-- <p class="aui-font-size-12 aui-margin-t-5 aui-margin-b-10 case-img-label explain">插入图片后文字被覆盖，需重新编辑文字。</p> -->
+    
+  <!-- </template> -->
+</div>
+<div id="editor"></div>
+<div class="footer aui-row" id="editBut">
+  <!-- <div class="but-green aui-col-xs-4" onclick="saveClick()">保存编辑</div> -->
+  <div class="but-green aui-col-xs-4" onclick="delData()">删除</div>
+  <div class="but-blue aui-col-xs-4" onclick="globalSubmitClick(0)">保存编辑</div>
+  <div class="but-red aui-col-xs-4" onclick="backbar()">返回</div>
+</div>
+<div class="footer aui-row" id="addBut">
+  <div class="but-blue aui-col-xs-6" onclick="globalSubmitClick(1)">提交</div>
+  <div class="but-red aui-col-xs-6" onclick="backbar()">返回</div>
+</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery213min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_dialog.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../res/data/citypicker.js"></script>
+<script type="text/javascript" src="../../script/picker/pickermin.js"></script>
+<!-- <script type="text/javascript" src="../../script/picker/addresspicker.js"></script> -->
+<script type="text/javascript" src="../../script/picker/jyfwpicker.js"></script>
+<script type="text/javascript" src="../../script/picker/datepicker.js"></script>
+<script type="text/javascript" src="../../script/quill.js"></script>
+<script type="text/javascript">
+  var infoVm;
+  var backbar;
+  var corpImgResGoods;
+  var globalSubmitClick;
+  var saveClick;
+  var addDetailImg;
+  var addDetailUrl;
+  var proCaseImgList = []//说明图
+  var picImgList =[];//轮播图
+  var corpImgResGoods_status; //监听规格截图是否完毕
+  var corpImgResPic_status; //监听轮播截图是否完毕
+  var corpImgResPro_status; //监听详情截图是否完毕
+  var shopId = $api.getStorage("shopId");//用户id
+  var delData
+
+
+  var toolbarOptions = [
+  ['bold','underline', 'strike'],        // toggled buttons
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'align': [] }],
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    ];
+
+  var quill = new Quill('#editor', {
+    theme: 'snow',
+    placeholder:'开始输入...',
+    modules: {
+      toolbar: toolbarOptions
+    }
+  });
+  var delImgList = [];//存放选择删除的图片对象
+  apiready = function () {
+    var shopUserId = $api.getStorage("userid")
+    var shopOpenId = $api.getStorage("openId")
+    var pageParam = api.pageParam;//页面提交过来的参数
+    //获取articleId
+    var articleId 
+    getTokenRes(function (id) {articleId = id})
+    
+
+
+    
+    // alert (infoVm.goodsData.itemSpec)
+    //   for(let index=0;index<data.length;index++){
+    //   const element = data[index][index];
+    //   infoVm.itemSpec.push(element);
+    // }
+
+    var getGoodsId = function () {
+      _getHttpsData('/utils/getPK', '',
+        function (res) {
+          if (res.status) {
+            infoVm.goodsData.shopItemId = res.data
+            // alert(JSON.stringify(infoVm.goodsData.shopItemId))
+          } else {
+            // alert(res.msg)
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        })
+    }
+
+    var getSelectGoodsType = function () {
+      //获取平台分类
+      _getHttpsData('/shop/getItemClass?classParentId=1', '',
+        function (res) {
+          infoVm.itemClassIds = res.data
+          console.log('平台分类'+JSON.stringify(infoVm.itemClassIds))
+        },
+        function (err) {
+          //api.hideProgress();
+        })
+
+      //获取店铺分类
+      _getHttpsData('/shop/getItemClass?classParentId=1&shopId=' + shopUserId, '',
+        function (res) {
+          infoVm.shopItemClassIds = res.data
+          console.log('店铺分类'+JSON.stringify(infoVm.shopItemClassIds))
+        },
+        function (err) {
+          //api.hideProgress();
+        })
+    }
+
+    backbar = function () {
+      //关闭当前window，使用默认动画
+      api.closeWin();
+    }
+
+
+
+       /**
+			 *上传商品详情图片
+			 *proCaseImgList 商品详情图片
+			 */
+			var uploadCaseImgList = function(proCaseImgList, funCal) {
+				if (proCaseImgList.length > 0) {
+					//检测压缩商品详情
+					api.showProgress({
+						title : '压缩图'
+          });
+					batchCompressList('paramsClassNo', 'paramsClassNo', proCaseImgList, function(attNameList, attFkNameList, imgArray) {
+						if(imgArray.length>0) {
+							var param = {};
+							param.attUser = shopUserId;
+							param.attFkId = articleId;
+							param.attName = attNameList;
+							param.attFkName = attFkNameList;
+							param.attNoWater = '1';
+							api.showProgress({
+								title : '上传详情图'
+              });
+							uploadFileHttps(param, imgArray, function(ret) {
+								if (ret.status) {
+                  infoVm.articleId = articleId
+                  infoVm.prohibit = false
+                  api.hideProgress();
+                  api.toast({msg : '上传成功',duration : 2000,location : 'middle'});
+                  ret.pic.forEach(function(element,index){
+                    infoVm.goodsDetailImg.push('<br><p><img src='+element.pic+'></p><br><br>')
+                  });
+                    addDetailUrl()
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(true);
+                    addDetailUrl()
+									}
+								} else {
+                  infoVm.prohibit = true
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(false);
+									}
+									showSingleAuiDialog('上传失败(' + ret.code + ')', ret.msg);
+								}
+							}, function(err) {
+								api.hideProgress();
+							});
+						}else{
+							if (funCal != undefined && typeof funCal === "function") {
+								funCal(true);
+							}
+						}
+						
+					});
+				} else {
+					if (funCal != undefined && typeof funCal === "function") {
+						funCal(true);
+					}
+				}
+      };
+      
+
+      
+       /***
+			 * 提交用户信息
+			 * param 用户信息
+			 * picImgList 行业资质图片
+			 * proCaseImgList 商品详情图片
+			 */
+			var submitUserInfoHttps = function(picImgList,proCaseImgList,handle) {
+							uploadFileBatch(picImgList, proCaseImgList,function(upSuccess) {
+                if(handle== 'isPro' && upSuccess){ //禁止操作详情图
+                  infoVm.prohibit = false
+                }else{infoVm.prohibit = true}
+
+								delImgHtts(function(res){ //删图
+									api.hideProgress();
+									if(upSuccess){
+
+										// showSingleAuiDialog('提交', '提交成功','确定',function(ret){
+										// 	api.closeWin({
+										// 	    name: 'auth_step_win'
+										// 	})
+										// 	api.sendEvent({
+										// 	    name: 'authstepsend_event',
+										// 	    extra: {
+										// 	        isSuccess: true,
+										// 	    }
+										// 	});
+										// 	// api.closeWin();
+										// });
+									}else{
+										api.toast({msg : '上传图片异常',duration : 2000,location : 'middle'});
+									}
+								});
+              });
+      };
+      
+            	/**
+			 *上传图片
+			 * busLicImgList 营业执照图片
+			 * proCaseImgList 经营场所图片
+			 */
+			var uploadFileBatch = function(busLicImgList, proCaseImgList,idCardImgList,logoImg,qualiImgList,funCal) {
+
+          uploadCaseImgList(proCaseImgList, funCal);
+			};
+
+
+    getGoodsId();
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+
+        shopData:false,//按钮状态
+
+        articleId:'',
+        editArticleId:'',//删除的ID
+
+        articleTitle:'',
+        articleDescribe:'',
+
+        specIndex: '',// 操作规格图的下标index
+        ImgCutUrl: '',// 裁剪后得到的图片路径
+
+
+        flag: -1,
+
+        show:false,
+        value:'',
+
+        prohibit:true,//禁止操作详情图
+
+        NotesImgText:{
+          text:'',
+          img:[]
+        },
+
+        quillData:false, //富文本是否有数据
+
+        goodsDetailImg:[],//获取商品详情图
+
+        proCaseImgList : [], //商品详情
+        proCaseImgMax : 1, //商品详情图片最多能添加多少张
+        picImgList : [], //轮播图
+				picImgMax : 9, //轮播图图片最多能添加多少张
+
+        areaChooseId: '', //区域Id
+        areaChoose: '', //区域选择
+
+        shopItemClassIds: '',//店铺分类
+        itemClassIds: '',//平台商品分类
+
+        shopItemClassIdsSublevel: '',//店铺分类
+        itemClassIdsSublevel: '',//平台商品分类
+
+        itemClassIdInfo: '',//选中平台类属性
+        shopItemClassIdInfo: '',//选中店铺类属性
+
+        
+        itemClassIdInfoSublevel: '',//选中平台子类属性
+        shopItemClassIdInfoSublevel: '',//选中店铺子类属性
+
+
+        itemSpecData: [
+
+        ],
+
+        itemSpecObj: {
+          spec: '1',
+          price: '2',
+          selected: true
+        },
+        goodsData: {
+          shopItemId: "",//商品ID
+          storeId: shopUserId,//所在店铺
+          itemStatus: "",//商品状态 0新增
+          itemNotes: '',//描述
+          shopId: shopUserId,//店铺ID 不显示在html
+          classAllNo: "",//
+          itemClassId: "",//平台商品分类 classAllNo
+          shopClassAllNo: "",//
+          shopItemClassId: "",//店铺商品分类ID shopClassAllNo
+          itemName: "",//商品名称
+          itemUnit: "",//单位
+          itemPrice: "",//单价
+          upNumber: "999",//数量
+          itemSort: "0",//排序
+          deliveryMode: "快递",//配送方式
+          // tzStatus: "0",//推荐
+          postageType: "包邮",//包邮
+          postageAmnt: "0",//邮费
+          // itemSpec: this.itemSpecData//多商品规格
+          itemSpec: [] //多商品规格
+
+
+
+        },
+        token: '',
+        pitchItem: '',
+        listImgs:[], //规格图片
+        addSpecItem:'',
+        searchingstate:false, //校验规格
+        checkoutForm:false //校验规格
+      },
+
+      methods: {
+
+        proCaseImgDel: function (position, data) {
+          //删除详情图片
+          this.proCaseImgList.splice(position, 1);
+          if (data.attFkName != undefined && data.attFkName != null && data.attFkName != '') {
+            delImgList.push(data)
+          }
+        },
+
+        //删除说明
+        deleteItem : function (params) {
+          api.confirm({
+              title: '提示',
+              msg: '确定删除？',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                var param = "articleId=" + infoVm.editArticleId
+              _getHttpsData('/shop/deleteArticle', param,
+                function (res) {
+                  if(res.status){
+                    api.hideProgress();
+                    alert ('删除成功')
+                    backbar()
+                  }
+                },
+                function (err) {
+                  api.hideProgress();
+                }
+              ) 
+              } else {
+                
+              }
+            })
+
+              
+        },
+
+        //获取说明
+        getItem : function (params) {
+          if(pageParam.pageParam.title == '配送说明'){
+              var param = "shopId=" + shopId + '&type=Article_shopAPP_Delivery'
+              }else {
+              var param = "shopId=" + shopId + '&type=Article_shopAPP_Post_Sale'
+              }
+              _getHttpsData('/shop/getShopArticleList', param,
+                function (res) {
+                  if(res.data.length <= 0 || res.data == undefined && res.status){
+                    //无数据， 新添加
+                    infoVm.shopData = false
+                    $("#editBut").attr("style","display:none;");//隐藏div
+                  }else {
+                    infoVm.shopData = true
+                    $("#addBut").attr("style","display:none;");//隐藏div
+                    infoVm.articleTitle = res.data[0].articleTitle
+                    infoVm.articleDescribe = res.data[0].articleDescribe
+                    infoVm.goodsData.itemNotes = res.data[0].articleNotes
+                    getDetaiContent() //写入富文本区
+                    infoVm.editArticleId = res.data[0].articleId
+                    api.hideProgress();
+                    quill.blur() //移除富文本焦点
+                  }
+                },
+                function (err) {
+                  api.hideProgress();
+                }
+              )
+          },
+
+
+
+        //添加详情图
+        addDetailImgClick: function (index) {
+						var chooseNum = Number(this.proCaseImgMax) - Number(this.proCaseImgList.length);
+						chooseCameraSheet(function(retList) {
+              imgCutUp(retList[0]); //跳转去裁剪  , 裁剪后得到图片路径 infoVm.retDestPath
+
+              corpImgResPro_status = true
+              api.addEventListener({//监听轮播截图是否完毕
+                name: 'corpImgResPro_status'
+              }, function(ret, err) {
+              if(ret){
+                if(ret.value.Pro_status){
+                  infoVm.appendProCaseImgImg(infoVm.ImgCutUrl);
+                  corpImgResPro_status = false
+                }
+              }
+              });
+
+						}, 1, '完成');
+        },
+
+
+
+        appendProCaseImgImg : function(pathList) {
+						//追加详情图片
+						if (this.proCaseImgList.length < this.proCaseImgMax) {
+							// for(var index in pathList){
+								var imgObj = this.imgObjPackag('','',pathList);
+								this.proCaseImgList.push(imgObj);
+							// }
+//							this.proCaseImgList = this.proCaseImgList.concat(pathList);
+							// this.nextTick();
+						} else {
+							api.toast({
+								msg : '详情图片最多只能添加' + this.proCaseImgMax + '张',
+								duration : 1000,
+								location : 'bottom'
+							});
+						}
+          },
+
+          previewImg : function(position, imgList) {//图片预览
+						var imgListTemp =[];//详情图
+						for(var index in imgList){
+							imgListTemp.push(imgList[index].pic);
+						}
+						api.openWin({
+							name : 'previewpicture_win',
+							url : 'widget://html/previewpicture/previewpicture_win.html',
+							pageParam : {
+								position : position,
+								imgList : imgListTemp
+							},
+							slidBackEnabled : false,
+							delay : 300
+						});
+          },
+          
+          imgObjPackag:function(attFkName,attName,pic){
+						var imgObj={};
+						imgObj.attFkName=attFkName;
+						imgObj.attName=attName;
+						imgObj.pic=pic;
+						return imgObj;
+					},
+          
+
+        getRadioVal: function (value, index) {
+          this.itemSpecData[index].selected = true
+          this.itemSpecData.forEach(function (item, i) {
+            if (i != index) {
+              infoVm.itemSpecData[i].selected = false
+            }
+          })
+        },
+
+
+
+
+        getSublevel:function (itemId,index){
+          api.showProgress();
+          if(index == 1){
+          infoVm.itemClassIdsSublevel = ''
+          var param ='classParentId=' + itemId
+          }
+          else if (index == 2){
+          infoVm.shopItemClassIdsSublevel = ''
+          var param = "classParentId=" + itemId + '&shopId=' + shopUserId
+          }
+          _getHttpsData('/shop/getItemClass', param,
+            function (res) {
+              if(index == 1){
+              infoVm.itemClassIdsSublevel = res.data
+              }else if (index == 2){
+              infoVm.shopItemClassIdsSublevel = res.data
+              }
+              api.hideProgress();
+            },
+            function (err) {
+              api.hideProgress();
+            }
+          )
+        },
+
+                //校验表单
+          checkout: function(){
+            if(infoVm.goodsData.shopId.length <= 0 || infoVm.goodsData.shopId.length== undefined ){api.toast({msg: 'shopId不能为空'});}else
+            if(infoVm.articleTitle.length <= 0 || infoVm.articleTitle.length== undefined ){api.toast({msg: '标题不能为空'});}else
+            // if(infoVm.articleDescribe.length <= 0 || infoVm.articleDescribe.length== undefined ){api.toast({msg: '内容不能为空'});}else
+            if(quill.container.firstChild.innerHTML.length <= 0 || quill.container.firstChild.innerHTML.length== undefined ){api.toast({msg: '编辑区内容不能为空'});}else{
+            if(infoVm.articleId.length <= 0 || infoVm.articleId.length== undefined ){api.toast({msg: '图片未上传'});}else
+          infoVm.checkoutForm = true 
+          }
+        },
+
+        //上架待审核 表单和规格通过才可提交
+        submitClick: function (status) { //1 提交 0保存编辑
+          if(status == 0){
+            infoVm.articleId = toString(infoVm.editArticleId);
+            infoVm.checkout();
+            infoVm.checkoutForm ? infoVm.articleId = infoVm.editArticleId:infoVm.articleId = toString(infoVm.editArticleId);
+          } 
+          else if(status == 1){infoVm.checkout()}
+          
+          // 表单规格通过后，传详情，轮播 图
+          if(infoVm.checkoutForm){
+            var quillItemNotes = quill.container.firstChild.innerHTML //富文本内容
+            if(!quillItemNotes){//富文本是否有数据
+              api.toast({msg: '请上传商品详情图，并编辑详情图文'});
+            }else {
+
+            //提交
+            api.confirm({
+            title: '提示',
+            msg: '是否确定提交？',
+            buttons: ['确定', '取消']
+          }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+              // submitUserInfoHttps(picImgList,proCaseImgList,'');//详情，轮播 传图
+              api.showProgress({ title: "提交信息" });
+              infoVm.goodsData.itemNotes = quill.container.firstChild.innerHTML //富文本内容
+              if(pageParam.pageParam.title == '配送说明') {
+                var param = {
+                paramsClassNo: "Article_shopAPP_Delivery",//配送说明
+                articleId: infoVm.articleId,
+                shopId: infoVm.goodsData.shopId,
+                articleNotes: encodeURI(infoVm.goodsData.itemNotes),
+                articleTitle: infoVm.articleTitle,
+                articleDescribe: infoVm.articleDescribe,
+                articleClassId: "1902151232000370"   //写死
+              }}else if(pageParam.pageParam.title == '售后说明'){
+                var param = {
+                paramsClassNo: "Article_shopAPP_Post_Sale",//售后说明
+                articleId: infoVm.articleId,
+                shopId: infoVm.goodsData.shopId,
+                articleNotes: encodeURI(infoVm.goodsData.itemNotes),
+                articleTitle: infoVm.articleTitle,
+                articleDescribe: infoVm.articleDescribe,
+                articleClassId: "1902151232000370"   //写死
+              }
+              }
+              
+              var submitStatus
+              if(status == 1){submitStatus = 'createArticle'}
+              else if(status == 0){submitStatus = 'updateArticle'}
+              _postHttpsData('/shop/'+submitStatus, param,
+                function (res) {
+                  if(res.status){
+                  alert(JSON.stringify(res.msg))
+                  api.hideProgress();
+                  backbar()
+                  }else{
+                  alert(JSON.stringify(res.msg))
+                  api.hideProgress();
+                  }
+
+                },
+                function (err) {
+                  api.hideProgress();
+                })
+             
+            } else {
+            }
+          })
+          }
+        }
+
+        
+
+
+
+                // var proCaseImgList =[];//商品详情图
+                // for(var index in this.proCaseImgList){
+                //   var attFkName=this.proCaseImgList[index].attFkName;
+                //   if(attFkName==undefined || attFkName==null || attFkName==''){
+                //     proCaseImgList.push(this.proCaseImgList[index].pic);
+                //   }
+                // }
+
+                // var DetailNum = ''
+                // proCaseImgList.forEach(function (element,index){
+                //   DetailNum = index + 1
+                //   uploadGoodsDetailHttps(element,DetailNum)
+                // });
+
+          
+        },
+
+                //上架待审核 表单和规格通过才可提交
+          updateClick: function (status) {
+          this.checkout()//校验表表单
+          
+          // 表单规格通过后，传详情，轮播 图
+          if(infoVm.checkoutForm){
+            if(!infoVm.quillData){//富文本是否有数据
+              api.toast({msg: '请上传商品详情图，并编辑详情图文'});
+            }else {
+
+            //提交
+            api.confirm({
+            title: '提示',
+            msg: '是否确定提交？',
+            buttons: ['确定', '取消']
+          }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+              // submitUserInfoHttps(picImgList,proCaseImgList,'');//详情，轮播 传图
+              api.showProgress({ title: "提交信息" });
+              infoVm.goodsData.itemNotes = quill.container.firstChild.innerHTML //富文本内容
+              if(pageParam.pageParam.title == '配送说明') {
+                var param = {
+                paramsClassNo: "Article_shopAPP_Delivery",//配送说明
+                articleId: infoVm.articleId,
+                shopId: infoVm.goodsData.shopId,
+                articleNotes: infoVm.goodsData.itemNotes,
+                articleTitle: infoVm.articleTitle,
+                articleDescribe: infoVm.articleDescribe,
+                articleClassId: "1902151232000370"   //写死
+              }}else if(pageParam.pageParam.title == '售后说明'){
+                var param = {
+                paramsClassNo: "Article_shopAPP_Post_Sale",//售后说明
+                articleId: infoVm.articleId,
+                shopId: infoVm.goodsData.shopId,
+                articleNotes: infoVm.goodsData.itemNotes,
+                articleTitle: infoVm.articleTitle,
+                articleDescribe: infoVm.articleDescribe,
+                articleClassId: "1902151232000370"   //写死
+              }
+              }
+              
+              _postHttpsData('/shop/createArticle', param,
+                function (res) {
+                  if(res.status){
+                  alert(JSON.stringify(res.msg))
+                  api.hideProgress();
+                  backbar()
+                  }else{
+                  alert(JSON.stringify(res.msg))
+                  api.hideProgress();
+                  }
+
+                },
+                function (err) {
+                  api.hideProgress();
+                })
+             
+            } else {
+            }
+          })
+          }
+        }
+  
+        },
+
+        setAvaImg: function (path) {
+          this.avatar = path;
+          console.log('this.infoData.AVATAR:' + this.avatar);
+        },
+      },
+      mounted: function () {
+        this.token = $api.getStorage('token');
+
+      },
+
+    });
+
+    function imgCutUp(path) {
+      api.openWin({
+        name: 'cropimg_win',
+        url: 'widget://html/cropimg/cropimg_win.html',
+        pageParam: {
+          winName: 'textEditor_win',
+          frmName: 'textEditor_frm',
+          funCal: 'corpImgResGoods',
+          path: path,
+          shearBoxW: 300,
+          shearBoxH: 300,
+          appearance: 'rectangle'
+        },
+        delay: 300,
+        slidBackEnabled: false
+      });
+    }
+
+    corpImgResGoods = function (ret) {
+      infoVm.ImgCutUrl = ''
+      infoVm.ImgCutUrl = ret.destPath
+
+      if (corpImgResPro_status) {
+        api.sendEvent({ //监听轮播截图是否完毕
+        name: 'corpImgResPro_status',
+        extra: {
+          Pro_status: true,
+        }
+      });
+      }
+      // uploadUserAvatarHttps(ret.destPath);
+    }
+
+
+
+      addDetailImg = function () { 
+      var proCaseImgList =[];//商品详情图
+      for(var index in infoVm.proCaseImgList){
+        var attFkName=infoVm.proCaseImgList[index].attFkName;
+        if(attFkName==undefined || attFkName==null || attFkName==''){
+          proCaseImgList.push(infoVm.proCaseImgList[index].pic);
+        }
+      }
+
+
+        if(proCaseImgList.length == 0 || proCaseImgList.length == null){
+          api.toast({msg: '请添加图片'});
+        }else {
+          submitUserInfoHttps(picImgList,proCaseImgList,'isPro');//传图
+        }
+      }
+
+
+        //插入图片
+        addDetailUrl = function (){
+              infoVm.quillData = false //富文本是否有内容
+              if(infoVm.goodsDetailImg.length == 0 || infoVm.goodsDetailImg.length == null){
+                api.toast({msg: '图片未上传'});
+              }else {
+                quill.pasteHTML(JSON.stringify(infoVm.goodsDetailImg.join('')).slice(1,-1)) //获取到的图片，放入编辑器中
+                infoVm.quillData = true
+              }
+        }
+
+        
+
+        //上架待审核
+        globalSubmitClick = function (status) {
+          // if(proCaseImgList.length == 0 || proCaseImgList.length == null){
+          //       alert ("2请添加详情图")
+          //     }else if(infoVm.goodsDetailImg.length == 0 || infoVm.goodsDetailImg.length == null){
+          //       alert ("详情图未上传")
+          //     }else {
+                infoVm.submitClick(status)
+              // }
+          }
+
+          //保存
+          saveClick = function () {
+          // if(proCaseImgList.length == 0 || proCaseImgList.length == null){
+          //       alert ("3请添加详情图")
+          //     }else if(infoVm.goodsDetailImg.length == 0 || infoVm.goodsDetailImg.length == null){
+          //       alert ("详情图未上传")
+          //     }else {
+                infoVm.submitClick(0)
+              // }
+          }
+
+
+
+    var getUserInfoHttps = function (param) {
+      // 	//获取店铺信息
+      api.showProgress();
+      var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+      _getHttpsData('/shop/getShopInfo', param,
+        function (res) {
+          api.hideProgress();
+          if (res.code == 0005) {
+            api.confirm({
+              title: '提示',
+              msg: '您未开店，是否申请开店',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.openWin({
+                  name : 'shopManage_win',
+                  url : 'widget://html/shopManage/shopManage_win.html',
+                  reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+          } else if (JSON.stringify(res.data).length > 0) {
+            if(res.data.shopStatus == 1){
+              api.confirm({
+              title: '提示',
+              msg: '店铺审核中，请联系管理员',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+            }
+            if(res.data.shopStatus == 3){
+              api.confirm({
+              title: '提示',
+              msg: '店铺信息审核未通过，请重新提交审核',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+            }
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      )
+    };
+
+    delData = function (params) {
+      infoVm.deleteItem()
+    }
+
+    var getDetaiContent = function () {
+      quill.pasteHTML(infoVm.goodsData.itemNotes) //获取到的详情，放入编辑器中
+    }
+
+    getUserInfoHttps()
+    infoVm.getItem()
+    // getSelectGoodsType()
+  }
+</script>
+
+</html>

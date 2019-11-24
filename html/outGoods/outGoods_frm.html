@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" />
+  <style>
+    .shop-list-icom {
+      position: absolute;
+      right: 12px;
+      bottom: 4px;
+      /* width: 1rem;
+            height: 1rem;
+            background: red; */
+      z-index: 2;
+    }
+
+    .goodsStatus {
+      color: #2FC588;
+    }
+
+    .goodsStatus1 {
+      color: red;
+    }
+
+    .mescroll {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      height: auto;
+    }
+    .item-data-null {
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .date-status {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .text-size {
+        font-size: 0.6rem !important;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="info_id" class="main" id="tab1-con">
+    <template>
+      <div id="mescroll" class="mescroll aui-content aui-margin-b-15">
+            <ul class="aui-list aui-media-list">
+            <li class="item-data-null" v-if ='showGoodsList'>
+              <p class="downwarp-progress"></p><p class="downwarp-tip">加载中..</p>
+            </li>
+            <li class="aui-list-item aui-list-item-middle" v-for='(item,index) in goodsList' @click='goodsDetail(item)'
+            v-if="item.itemStatus == 0 || item.itemStatus == 3 || item.itemStatus == 1 && goodsList.length > 0">
+            <!-- <i @click="shadeIcon(item,index)" class="aui-iconfont aui-icon-more shop-list-icom"></i> -->
+            <div class="aui-media-list-item-inner">
+              <div class="aui-list-item-media" style="width: 3rem;">
+                <img :src="item.itemSpec[0][0].imgUrl" class="aui-list-img-sm">
+              </div>
+              <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-font-size-12 aui-ellipsis-2">
+                    {{item.itemName}}
+                </div>
+                
+                <p class="aui-font-size-12">
+                  <span class="aui-margin-r-5">价格:{{item.itemPrice}}</span><span
+                    class="aui-margin-r-5">库存:{{item.upNumber}}</span><span class="aui-margin-r-5">单位:{{item.itemUnit}}</span>
+                </p>
+                <p class="date-status aui-font-size-12">
+                  <span>时间:{{item.itemDate}}</span> 
+                  <!-- <span>
+                  <span class="goodsStatus" v-if="item.itemStatus == 2">(已上架)</span>
+                  <span class="goodsStatus1" v-if="item.itemStatus == 1">(审核中)</span>
+                  <span class="goodsStatus" v-if="item.itemStatus == 0">(未上架)</span>
+                  <span class="goodsStatus1" v-if="item.itemStatus == 3">(审核不通过)</span>
+                  </span> -->
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="item-data-null" v-if ='resNoData'>
+            <p class="downwarp-progress"></p><p class="downwarp-tip">加载完毕</p>
+        </li>
+        </ul>
+      </div>
+    </template>
+  </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery.mobile.custom.min.js"></script>
+<script type="text/javascript" src="../../script/md5/base64.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/mescroll/mescrollmin.js"></script>
+<script type="text/javascript">
+  apiready = function () {
+    var shopUserId = $api.getStorage("userid")
+    var shopOpenId = $api.getStorage("openId")
+    var infoVm
+		var goodsStatus = api.pageParam.pageParam;//页面提交过来的参数
+    var indexPage = 1;//页码
+    var pageNum = 10;//每页的数量
+
+    //所有商品列表
+    // var getGoodsList = function (param) {
+    //   var goodsParam = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' +
+    //     '&sortType=DESC' + '&startPage=1' + '&recordSize=800' + '&from=shopApp';
+    //   _getHttpsData('/shop/getShopItemList', goodsParam,
+    //     function (ret) {
+    //       if (ret.status) {
+    //         infoVm.goodsList = ret.data
+    //         for (var ListItem in infoVm.goodsList) {//时间格式调整
+    //           if (infoVm.goodsList[ListItem].lastEditDate) {
+    //             infoVm.goodsList[ListItem].lastEditDate = infoVm.goodsList[ListItem].lastEditDate.substr(5, 11)
+    //           }
+    //           if (infoVm.goodsList[ListItem].upDate) {
+    //             infoVm.goodsList[ListItem].upDate = infoVm.goodsList[ListItem].upDate.substr(5, 11)
+    //           }
+    //         }
+    //         mescroll.endSuccess();
+    //         // var shopItemList = JSON.parse(JSON.stringify(infoVm.goodsData.itemSpec))
+    //         //     shopItemList.forEach(function (item,index) {
+    //         //     const element = shopItemList[index][index];
+    //         //     infoVm.itemSpecData.push(element);
+    //         //     });
+    //         // infoVm.goodsData.itemSpec = infoVm.itemSpecData
+    //         // console.log (JSON.stringify(infoVm.goodsData.itemSpec))
+    //       } else {
+    //       }
+    //     },
+    //     function (err) {
+    //     }
+    //   );
+    // };
+
+    api.parseTapmode();
+    var tab = new auiTab({
+      element: document.getElementById("tab"),
+    }, function (ret) {
+      if (ret) {
+        //定义获取对象的所有兄弟节点的函数，
+        function siblings(elm) {
+          var a = [];
+          var p = elm.parentNode.children;
+          for (var i = 0, pl = p.length; i < pl; i++) {
+            if (p[i] !== elm) a.push(p[i]);
+          }
+          return a;
+        }
+        var index = ret.index;
+        var activeC = document.getElementById("tab1-con" + index);
+        activeC.className = "";
+        for (var i = 0; i < siblings(activeC).length; i++) {
+          siblings(activeC)[i].className = "aui-hide";
+        }
+      }
+    });
+
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+        currentIndex: null,//记录当前选中数据
+        isShade: false,
+        goodsList: [], //商品列表
+        resNoData:false,//获取到空数据时
+        showGoodsList:true,
+        ClassIfyList: [],//分类列表
+
+        curFirstClass: {
+          itemClassId: '',
+          itemClassNo: '',
+          className: ''
+        },
+
+      },
+      watch: {
+        goodsList(val,oldval){
+            if(val){
+                infoVm.showGoodsList = false
+            }else{
+                infoVm.showGoodsList = true
+            }
+            }
+      },
+      methods: {
+        goodsDetail: function (e) {
+          var goodsInfo = JSON.stringify(e)
+          api.openWin(
+            {
+              name: 'goodsDetail_win',
+              url: 'widget://html/goodsDetail/goodsDetail_win.html',
+              slidBackEnabled: true,
+              pageParam: {
+                DetailPageParam: e,
+              },
+              delay: 300
+            }
+          );
+        },
+
+        //重新获取该商品数据
+        geIfyHttpsData: function (isRefresh) {
+          if (isRefresh) {
+            indexPage = 1;
+          } else {
+            indexPage++;
+          }
+          var param = 'shopId=' + shopUserId + '&sortName=LAST_EDIT_DATE' + '&sortType=DESC' + '&startPage=' + indexPage + '&recordSize=' + pageNum + '&from=shopApp' + '&itemStatus=' + goodsStatus.itemStatus;
+          _getHttpsData('/shop/getShopItemList', param,
+            function (ret) {
+              if (ret.status) {
+                ret.data.length == 0 ? infoVm.resNoData = true : infoVm.resNoData = false;
+                if (isRefresh) { infoVm.goodsList = [] }
+                mescroll.endErr();  //隐藏下拉刷新的状态
+                ret.data.map(function (item, index) {
+                  infoVm.goodsList.push(item)
+                });
+                for (let ListItem in infoVm.goodsList) {//时间格式调整
+                    if (infoVm.goodsList[ListItem].lastEditDate == undefined && infoVm.goodsList[ListItem].upDate) {
+                      infoVm.goodsList[ListItem].itemDate = dataFormatting(infoVm.goodsList[ListItem].upDate)
+                    }else
+                    if (infoVm.goodsList[ListItem].lastEditDate && infoVm.goodsList[ListItem].upDate == undefined) {
+                      infoVm.goodsList[ListItem].itemDate = dataFormatting(infoVm.goodsList[ListItem].lastEditDate)
+                    }else
+                    if (infoVm.goodsList[ListItem].lastEditDate && infoVm.goodsList[ListItem].upDate) {
+                      infoVm.goodsList[ListItem].itemDate = dataFormatting(infoVm.goodsList[ListItem].upDate)
+                    }else {
+                      infoVm.goodsList[ListItem].itemDate = dataFormatting(infoVm.goodsList[ListItem].submitDate)
+                    }
+                  }
+                  mescroll.endSuccess();
+                  infoVm.showGoodsList = false
+
+              } else {
+                infoVm.showGoodsList = false
+
+                mescroll.endErr();  //隐藏下拉刷新的状态
+                if (indexPage > 0) {
+                  indexPage--;
+                }
+                api.toast({ msg: res.msg + '(' + res.code + ')', duration: 2000, location: 'bottom' });
+              }
+            },
+            function (err) {
+              api.hideProgress();
+              if (indexPage > 0) {
+                indexPage--;
+              }
+            });
+
+
+        }
+
+
+      }
+    })
+
+    //监听
+    api.addEventListener({
+      name: 'outOfStock_status'
+    }, function (ret, err) {
+      if (ret) {
+        if (ret.value.goodsStatus) {
+          // infoVm.goodsList=[]
+          infoVm.geIfyHttpsData(true)
+        }
+      }
+    });
+
+    var getUserInfoHttps = function (param) {
+      // 	//获取店铺信息
+      api.showProgress();
+      var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+      _getHttpsData('/shop/getShopInfo', param,
+        function (res) {
+          api.hideProgress();
+          if (res.code == 0005) {
+            infoVm.shopData = false
+            infoVm.affect = false
+            api.confirm({
+              title: '提示',
+              msg: '您未开店，是否申请开店',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.openWin({
+                  name: 'shopManage_win',
+                  url: 'widget://html/shopManage/shopManage_win.html',
+                  reload: true,
+                });
+              } else {
+                api.closeToWin({
+                  name: 'main_win',
+                  url: 'widget://html/main/main_win.html',
+                  reload: true,
+                });
+              }
+            })
+          } else if (JSON.stringify(res.data).length > 0) {
+
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      )
+    };
+
+    //下拉刷新
+    //创建MeScroll对象
+    var mescroll = new MeScroll("mescroll", {
+      down: {
+        auto: false, //是否在初始化完毕之后自动执行下拉回调callback; 默认true
+        callback: downCallback //下拉刷新的回调
+      },
+      up: {
+        auto: false, //是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
+        isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+        callback: upCallback, //上拉回调,此处可简写; 相当于 callback: function (page) { upCallback(page); }
+        toTop: { //配置回到顶部按钮
+          src: "../../image/icon/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+          //offset : 1000
+        }
+      }
+    });
+
+    /*下拉刷新的回调 */
+    function downCallback() {
+      infoVm.showGoodsList = false
+      infoVm.geIfyHttpsData(true)
+    }
+
+    /*上拉加载的回调  */
+    function upCallback(page) {
+      infoVm.showGoodsList = false
+      infoVm.geIfyHttpsData(false)
+    }
+
+    getUserInfoHttps()
+
+    infoVm.geIfyHttpsData(true)
+  }
+
+
+</script>
+
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui_flex.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+  <style>
+    
+    html,body {
+      background-color: #f4f3f3;
+    }
+    #info_id {
+      overflow: hidden;
+      margin-bottom: 46px;
+    }
+
+    /* .aui-content-padded p {
+      margin: .5rem;
+    } */
+    .btn-block {
+      /* background: #f7f6f6 !important;
+      color: #6e6e6e;
+      display: block;
+      width: 10rem;
+      height: 2rem;
+      line-height: 2rem;
+      margin-bottom: 0;
+      font-size: .7rem;
+      border-radius: 5px;
+      -moz-box-shadow: 0px 2px 6px -2px #575757;
+      -webkit-box-shadow: 0px 2px 6px -2px #575757;
+      box-shadow: 0px 2px 6px -2px #575757;
+      justify-content: space-between;
+      display: flex;
+      align-items: center; */
+    }
+    .footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction:row;
+      flex-wrap:wrap;
+      background: #11CE7C;
+      position: fixed;
+      left: 0;
+      bottom: 0px;
+      width: 100%;
+      z-index: 3;
+      height: 46px;
+    }
+    .but-green{
+      background: #11CE7C;
+      color: #fff;
+      height: 46px;
+      line-height: 46px;
+      text-align: center;
+    }
+    .main-box {
+      display: flex;
+      justify-content: center;
+    }
+    .goods-class-list {
+      color: #7A7A7A;
+      background: #fff;
+      font-size: .7rem;
+      border-radius: 5px;
+      /* width: 60vw; */
+      display: flex;
+      margin: .3rem;
+      -moz-box-shadow: 0px 2px 6px -2px #949494;
+      -webkit-box-shadow: 0px 2px 6px -2px #949494;
+      box-shadow: 0px 2px 6px -2px #949494;
+    }
+    .goods-class-icon {
+      height: 1.6rem;
+      width: 1.6rem;
+      margin:.2rem .3rem; 
+      display: flex;
+      align-items: center;
+      justify-items: center;
+    }
+    .goods-class-icon img{
+      /* height: 100%; */
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-items: center;
+    }
+    .class-content {
+      width: auto;
+      display: flex;
+      align-items: center;
+      width: 8rem;
+      justify-content: space-between;
+      border-radius: 0px 5px 5px 0px;
+    }
+    .class-content .aui-iconfont {
+      margin-right:.5rem; 
+    }
+    .item-data-null {
+      text-align: center;
+      padding: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="info_id">
+    <template>
+        <div class="item-data-null" v-if ='getInfoTpyeData.length <= 0'>暂无数据</div>
+      <div class="main-box" v-for="item in getInfoTpyeData" @click='itemClick(item)'>
+        <div @click='itemClick(item)' class="goods-class-list">
+          <div class="goods-class-icon"><img :src="item.classIcon" alt=""></div>
+          <div class="class-content">
+          <span>{{item.className}}</span>
+          <span @click='itemClick(item.itemClassId)'  class="aui-iconfont aui-icon-right"></span>
+          </div>
+        </div>
+      </div>
+      <div class="footer" onclick="createClass()">
+        <div class="but-green">添加分类</div>
+    </div>
+    </template>
+  </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery213min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../res/data/citypicker.js"></script>
+<script type="text/javascript" src="../../script/picker/pickermin.js"></script>
+<script type="text/javascript" src="../../script/picker/addresspicker.js"></script>
+<script type="text/javascript" src="../../script/picker/datepicker.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+
+<script type="text/javascript">
+  var infoVm;
+  var backbar;
+  var getInfoTpye;
+  var createClass
+  apiready = function () {
+    var shopUserId = $api.getStorage("userid")
+    var shopOpenId = $api.getStorage("openId")
+    var getUserInfoHttps = function (param) {
+      // 	//获取店铺信息
+      api.showProgress();
+      var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+      _getHttpsData('/shop/getShopInfo', param,
+        function (res) {
+          api.hideProgress();
+          if (res.code == 0005) {
+            infoVm.shopData = false
+            infoVm.affect = false
+            api.confirm({
+              title: '提示',
+              msg: '您未开店，是否申请开店',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.openWin({
+                  name: 'shopManage_win',
+                  url: 'widget://html/shopManage/shopManage_win.html',
+                  reload: true,
+                });
+              } else {
+                api.closeToWin({
+                  name: 'main_win',
+                  url: 'widget://html/main/main_win.html',
+                  reload: true,
+                });
+              }
+            })
+          } else if (JSON.stringify(res.data).length > 0) {
+            if(res.data.shopStatus == 1){
+              api.confirm({
+              title: '提示',
+              msg: '店铺审核中，请联系管理员',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+            }
+            if(res.data.shopStatus == 3){
+              api.confirm({
+              title: '提示',
+              msg: '店铺信息审核未通过，请重新提交审核',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+            }else {
+              getInfoTpye()
+            }
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      )
+    };
+
+    createClass = function(){
+				api.openWin({
+				name: 'classifyDetail_win',
+				url: 'classifyDetail_win.html',
+        slidBackEnabled: true,
+			});
+		}
+
+    
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+        getInfoTpyeData: [],
+        token: ''
+      },
+      methods: {
+        itemClick: function (item) {
+          if(infoVm.getInfoTpyeData.length = 0) return
+          api.openWin(
+            {
+              name: 'classifyDetail_win',
+              url: 'widget://html/goodsClassify/classifyDetail_win.html',
+              slidBackEnabled: true,
+              pageParam: {
+                itemClass: item,
+              },
+              delay: 300
+            }
+          );
+        }
+      },
+      mounted: function () {
+        this.token = $api.getStorage('token')
+      },
+
+    });
+
+    getInfoTpye = function () {
+      _getHttpsData("/shop/getItemClass?classParentId=1&shopId=" + shopUserId, "",
+        function (ret) {
+          if (ret.status) {
+            infoVm.getInfoTpyeData = []
+            infoVm.getInfoTpyeData = ret.data
+          } else {
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      );
+    }
+
+    getUserInfoHttps()
+  }
+</script>
+
+</html>

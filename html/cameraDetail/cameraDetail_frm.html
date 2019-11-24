@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/goodsList/goodsList.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" />
+    <style>
+      body {
+    /* background-color: rgb(255, 32, 32); */
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+}
+
+.box-wrap {
+    height: 100%;
+    /* background: #259B24; */
+}
+ul,li{ padding:0;margin:0;list-style:none}
+.main {
+    /* height: 100%; */
+}
+.classify-list {
+    text-align: center;
+    border: 0px solid black;
+    position: fixed;
+    box-sizing: border-box;
+    width: 30%;
+    overflow: auto;
+    display: inline-block;
+    left: 0;
+    bottom: 0;
+    margin-bottom: 7vh;
+    /* height: calc(100% - 7vh); */
+}
+.goods-list {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding-bottom: 7vh;
+  width: 70%;
+}
+.goods-list ul {
+  height: 6rem;
+}
+.classify-list-li {
+    line-height: 2rem;
+    height: 2rem;
+}
+.goods-list-li {
+    height: 2rem;
+    border:1px solid red;
+}
+
+.classify-item-act {
+    color: #259B24;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .6rem;
+    font-weight: normal;
+}
+.classify-item-act .sel-line {
+    top: 25%;
+    width: 5px;
+    height: 20px;
+    background-color: #259b24;
+    position: absolute;
+    margin-top: 0;
+    left: 0;
+}
+.classify-item {
+    line-height: 2rem;
+    height: 2rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .6rem;
+    font-weight: normal;
+}
+.goods-title {
+    font-size: 10px;
+}
+.goods-name {
+    text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;
+    width: 100%;
+    font-size: .6rem;
+    font-weight: normal;
+}
+.goods-date {
+    width: auto;
+    white-space: nowrap;
+    padding: 2px 4px;
+    background: #11CE7C;
+    color: #fff !important;
+    border-radius: 6px;
+}
+.goods-date1 {
+    width: auto;
+    white-space: nowrap;
+    padding: 2px 4px;
+    background: rgb(110, 110, 110);
+    color: #fff !important;
+    border-radius: 6px;
+}
+    
+    
+    
+
+
+      /* ------ */
+        .shop-list-icom {
+            position: absolute;
+            right: 12px;
+            bottom: 4px;
+            /* width: 1rem;
+            height: 1rem;
+            background: red; */
+            z-index: 2;
+            }
+            .goodsStatus {
+                color: #2FC588;
+            }
+            .goodsStatus1 {
+                color: red;
+            }
+            .mescroll{
+                overflow: auto;
+            }
+            .item-data-null {
+            text-align: center;
+            padding: .4rem 0;
+            }
+            .click-img {
+              border-radius:3px;
+              border: 1px solid #2FC588;
+            }
+            .footer {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction:row;
+              flex-wrap:wrap;
+              background: #DD191B;
+              position: fixed;
+              left: 0;
+              bottom: 0px;
+              width: 100%;
+              z-index: 3;
+              height: 7vh;
+              /* border-radius: 25px; */
+            }
+            .but-green{
+              background: #11CE7C;
+              color: #fff;
+              height: 7vh;
+              line-height: 7vh;
+              text-align: center;
+              width: 50%;
+            }
+            .but-blue{
+              background: #00A0E9;
+              color: #fff;
+              height: 7vh;
+              line-height: 7vh;
+              text-align: center;
+            }
+            .but-red{
+              background: #F24A4A;
+              color: #fff;
+              height: 7vh;
+              text-align: center;
+              line-height: 7vh;
+            }
+            .but-gray {
+              background: #DCDCDC;
+              height: 7vh;
+              text-align: center;
+              line-height: 7vh;
+              color: #757575;
+              font-weight: normal;
+              width: 50%;
+            }
+            .goods-price-color {
+              color: #F24A4A;
+            }
+
+
+          /* -------- */
+            .popup-wrap {
+              overflow: hidden;
+            }
+            .spec-choose-popup-area {
+              height: 60vh;
+              width: 100%;
+              padding-bottom: 20px;
+              overflow: hidden;
+              position: fixed;
+              bottom: 0;
+              left: 0;
+              z-index: 99;
+              }
+              .shadow-head {
+                height: 3vh;
+
+}
+.spec-info-area {
+background-color: #FFFFFF;
+display: block;
+}
+.spec-head-area {
+display: flex;
+padding: 0 15px;
+min-height: 15vh;
+
+}
+.spec-img {
+width: 15vh;
+display: flex;
+justify-content: center;
+background-color: #FFFFFF;
+border: 1px solid #DDDDDD;
+border-radius: 5px;
+position: absolute;
+margin-top: -3vh;
+z-index: 100;
+padding: 2px;
+
+}
+
+ .spec-img img {
+width: calc(100% - 4px);
+height: 80px;
+}
+ .spec-info {
+margin-left: calc(15vh + 20px);
+width: calc(100% - 15vh - 20px - 24px);
+margin-top: 5px;
+
+}
+ .old-price {
+color: #8f8f8f;
+text-decoration: line-through;
+font-size: 0.8em;
+margin-left: 18px;
+
+}
+ .spec-colse-popup {
+padding: 8px 0 8px 8px;
+
+}
+
+.spec-info-area .spec-head-area {
+display: flex;
+padding: 0 15px;
+min-height: 15vh;
+background: rgb(235, 235, 235);
+}
+
+.spec-head-area:after{
+    width: 100%;
+    height: 1px;
+    background-color: #dddddd;
+    display: block;
+    content: '';
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    pointer-events: none;
+}
+
+.spec-info-area .spec-list-area {
+height: calc(32vh - 40px);
+overflow-x: hidden;
+overflow-y: scroll;
+}
+
+.spec-list-area:after{
+    width: 100%;
+    height: 1px;
+    background-color: #dddddd;
+    display: block;
+    content: '';
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    pointer-events: none;
+}
+
+.spec-info-area .spec-list-area .spec-scroll-area {
+height: 100%;
+max-height: 100%;
+
+}
+.specifications-area {
+  padding-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.specifications-area .specifications-item {
+  border-radius: 5px;
+  padding: 2px 8px;
+  margin: 5px 10px;
+}
+.specifications-item-sel {
+color: #11CE7C;
+border: 1px solid #11CE7C;
+
+}
+.specifications-item-nor {
+color: #464646;
+border: 1px solid #aaaaaa;
+
+}
+
+.spec-info-area .spec-popup-btn-area {
+height: 4.2rem;
+line-height: 4.2rem;
+max-height: 4.2rem;
+margin-top: 2vh;
+margin-bottom: 2vh;
+
+}
+
+.spec-buy-num-item {
+display: flex;
+height: 40px;
+max-height: 40px;
+line-height: 40px;
+padding: 0 10px;
+
+}
+.spec-buy-num-item .bug-num-title {
+color: #000;
+width: 8em;
+
+}
+.spec-buy-num-item .spec-buy-num {
+width: calc(100% - 8em);
+max-height: 40px;
+line-height: 40px;
+display: flex;
+align-items: center;
+justify-content: flex-end;
+
+}
+.num-btn {
+font-size: 20px;
+padding: 0 10px;
+font-weight: bold;
+
+}
+.spec-buy-num .num-btn {
+font-size: 20px;
+padding: 0 10px;
+font-weight: bold;
+
+}
+.spec-info-area .spec-popup-btn-area .footer-popup-btn {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 6vh;
+line-height: 6vh;
+max-height: 6vh;
+padding: 0 10%;
+
+}
+.spec-info-area .spec-popup-btn-area .footer-popup-btn .spec-join-car {
+width: 80%;
+text-align: center;
+background-color: #11CE7C;
+border-radius: 15px;
+color: #FFFFFF;
+}
+.spec-info-area .spec-popup-btn-area .footer-popup-btn .spec-join-no {
+width: 80%;
+text-align: center;
+background-color: rgb(153, 153, 153);
+border-radius: 15px;
+color: #FFFFFF;
+}
+
+.spec-choose-popup-area .spec-info-area .spec-popup-btn-area .footer-popup-btn .spec-buy-now {
+width: 50%;
+text-align: center;
+border-top-right-radius: 20px;
+border-bottom-right-radius: 20px;
+color: #FFFFFF;
+background: #97442a;
+
+}
+
+.client-info {
+  font-size: .5rem;
+  /* height: 35vh; */
+}
+.client-info img {
+  height: 2rem !important;
+}
+.data-null {
+  padding: 3rem;
+  width: 100%;
+  text-align: center;
+  color: #757575;
+}
+.new-price {
+  color: #DD191B;
+  font-size: 1em;
+}
+.text-size {
+        font-size: 0.6rem !important;
+}
+    </style>
+</head>
+<body>
+  <div id="info_id" class="box-wrap" >
+            <div class="aui-card-list-content-padded client-info" ref="elememt">
+                <p class="aui-row text-size">
+                  <span class="aui-col-xs-6">用户名称：{{clientDetailAddress.clientName}}</span>
+                  <span class="aui-col-xs-6">联系方式：{{clientDetailAddress.clientPhone}}</span>
+                </p>
+                <p class="aui-row text-size">
+                    <span>拍照单号：{{itemData.photoOrderId}}</span>
+                  </p>
+                  <p class="aui-row text-size">
+                    <span>下单时间：{{itemData.createDate}}</span>
+                  </p>
+                  <p class="aui-row text-size">
+                    <span class="aui-col-xs-12">收货地址：{{clientDetailAddress.clientAddress}}</span>
+                  </p>
+                <div class="aui-row text-size aui-row-padded">
+                    <div class="aui-col-xs-2" v-for='(picItem,picIndex) in itemData.imgUrl'>
+                        <img class="click-img" :src="picItem" @click="previewImg(picIndex,itemData.imgUrl)" />
+                    </div>
+                    <!-- <div class="aui-col-xs-2">
+                        <img src="../../image/camera1.png" />
+                    </div>
+                    <div class="aui-col-xs-2">
+                        <img src="../../image/camera1.png" />
+                    </div>
+                    <div class="aui-col-xs-2">
+                        <img src="../../image/camera1.png" />
+                    </div>
+                    <div class="aui-col-xs-2">
+                        <img src="../../image/camera1.png" />
+                    </div>
+                    <div class="aui-col-xs-2">
+                        <img src="../../image/camera1.png" />
+                    </div> -->
+                </div>
+            </div>
+        <!-- <div v-else-if='itemData.status == 2' class="data-null text-size">交易完成</div> -->
+
+
+    <ul class="classify-list mescroll-touch" v-bind:style="{ top: heightCss + 'px' }">
+            <li class="classify-list-li" v-for='(classIfy,index) in ClassIfyList' @click='clickIfy(classIfy)'>
+                <div class="classify-item-choose" v-if='classIfy.itemClassId==curFirstClass.itemClassId'>
+                    <div class='classify-item-act'>
+                        <label class='sel-line'></label>
+                        {{classIfy.className}}
+                    </div>
+                </div>
+                <div v-else class='classify-item'>
+                    {{classIfy.className}}
+                </div>
+            </li>
+        </ul>
+
+        <div class="goods-list" v-bind:style="{ top: heightCss + 'px' }">
+        <div id="mescroll" class="mescroll" >
+            <div class="item-data-null text-size" v-if ='goodsList.length <= 0'>暂无数据</div>
+            <ul v-else class="aui-list aui-media-list">
+                <li class="text-size"  v-for='(item,index) in goodsList' @click='goodsDetail(item)'>
+                    <div class="aui-media-list-item-inner">
+                        <div class="" style="width: 80px;">
+                            <img :src="item.itemSpec[0][0].imgUrl" class="aui-list-img-sm">
+                        </div>
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-text">
+                                <div class="aui-list-item-title aui-font-size-14 goods-title">
+                                    <span class="goods-name">{{item.itemName}}</span>
+                                </div>
+                                <div v-if='item.itemStatus == 1' class="aui-list-item-right goods-date1 text-size">审核中</div>
+                                <div v-else-if='item.itemStatus == 0' class="aui-list-item-right goods-date1 text-size">未上架</div>
+                                <div v-else-if='item.itemStatus == 3' class="aui-list-item-right goods-date1 text-size">未上架</div>
+                                <div v-else class="aui-list-item-right goods-date text-size">选规格</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="item-data-null" v-if ='resNoData'>
+                    <p class="downwarp-progress"></p><p class="downwarp-tip">加载完毕</p>
+                </li>
+            </ul>
+         </div>
+        </div>
+         <div class="footer">
+           <div class="but-gray" @click="sendData()">取消订单</div>
+           <div class="but-green" tapmode="hover" @click="toBillList(itemData)">清单明细</div>
+        </div>
+     
+    <div class="popup-wrap" v-if='isPopup'>
+    <div class="aui-mask aui-mask-in" @click='isPopupShow()'></div>
+      <div class="spec-choose-popup-area">
+      <div class="shadow-head"></div>
+        <div class="spec-info-area">
+          <div class="spec-head-area">
+            <div class="spec-img">
+              <img @click="_previewImg(spec_imgurl)" v-if="spec_imgurl!='' && spec_imgurl!=undefined" :src="spec_imgurl" alt="">
+            </div>
+            <div class="spec-info text-size">
+              <div class="price">
+                <span class="new-price" v-if='new_price'>￥{{new_price}}</span>
+                <span class="new-price" v-else>￥{{old_price}}</span>
+                <span class="old-price" v-if='new_price != old_price'>原价￥{{old_price}}</span>
+                <span class="old-price" v-else></span>
+              </div>
+              <div class="sepc-name text-size">{{goods_name}}</div>
+              <p class="text-size" v-if='goodsInfoDetail.postageAmnt != 0.00'>邮费￥{{goodsInfoDetail.postageAmnt}}</p>
+              <p class="text-size" v-else>包邮</p>
+            </div>
+            <div class="spec-colse-popup">
+              <i class="aui-iconfont aui-icon-close" @click='isPopupShow()'></i>
+            </div>
+          </div>
+          <div class="spec-list-area text-size">
+            <div class="spec-scroll-area">
+              <div class="specifications-area">
+                <div v-for='(item,index) in specifications_list' class="specifications-item" v-bind:class= "item.selected ? 'specifications-item-sel':'specifications-item-nor'" @click='specificationsTap(item,index)'>
+                  {{item.spec}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="spec-popup-btn-area">
+            <div class="spec-buy-num-item text-size">
+              <div class="bug-num-title">合计¥{{totalPrice}}</div>
+              <div class="spec-buy-num">购买数量:
+                <div class="num-btn" @click='delNumTap()'>-</div>
+                <div class="section">
+                  <input type="number" @input="bindKeyInput" :value="buy_num" style="width:2rem;text-align: center;"></input>
+                </div>
+                <div class="num-btn" @click='appNumTap()'>+</div>
+              </div>
+            </div>
+            <div v-if='allowBuy' class="footer-popup-btn" @click='joinCarTap()'>
+              <div class="spec-join-car">加入清单</div>
+            </div>
+            <div v-else class="footer-popup-btn">
+              <div class="spec-join-no">加入清单</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_popup.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_popup_new.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery.mobile.custom.min.js"></script>
+<script type="text/javascript" src="../../script/md5/base64.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/mescroll/mescrollmin.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+    var shopUserId = $api.getStorage("userid")
+    var shopOpenId = $api.getStorage("openId")
+    var infoVm
+    var indexPage=1;//页码
+    var pageNum=30;//每页的数量
+    var toBillList;
+    var backbar
+    backbar = function () {api.closeWin();}
+
+    //查询某个订单 photoOrderId
+    var getPhotoOrderItem = function (funCll) {
+      var goodsParam = 'shopId=' + shopUserId + '&photoOrderId=' + infoVm.itemData.photoOrderId;
+        _getHttpsData('/photoOrder/getPhotoOrderList', goodsParam,
+            function (ret) {
+              if(ret.status){
+                  funCll(ret.data[0])
+                }
+            },
+            function (err) {
+            }
+        );
+    }
+    
+
+    //所有商品列表
+    var getGoodsList = function (param) {
+      if(infoVm.itemData.status == 5){return}
+      var goodsParam = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' +
+                 '&sortType=ASC' + '&startPage=1' +'&recordSize=10' + '&from=shopApp' + '&itemStatus=2';	
+				_getHttpsData('/shop/getShopItemList',goodsParam,
+					function(ret){
+						if(ret.status){
+              ret.data.length == 0 ? infoVm.resNoData = true : infoVm.resNoData = false;
+              infoVm.goodsList = []
+              infoVm.goodsList = ret.data
+              mescroll.endSuccess();
+						}else{
+						}
+					},
+					function(err){
+					}
+				);
+    };
+
+
+
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+        heightCss:null,
+        resNoData:false,//获取到空数据时
+        photoOrderStatus:'',//提交前查询订单状态
+        goodsInfoDetail:'',
+
+        picImgList:[
+        '../../image/camera1.png',
+        '../../image/camera1.png',
+        '../../image/camera1.png',
+        '../../image/camera1.png',
+        '../../image/camera1.png',
+        '../../image/camera1.png',
+      ],
+
+        allowBuy:true, //是否允许购买
+
+        totalPrice:'',//合计
+        buy_num: 1, //购买数量
+        specificationsCurIndex: -1, //选择当前的规格下标
+        goods_name: '', //商品名称
+        spec_name: '', //选择的规格名称
+        spec_imgurl: '', //规格图片
+        new_price: 0, //商品新单价
+        old_price: 0, //商品原单价
+        shop_num: 0, //购物车数量
+        postageAmnt:'',//邮费
+        showSpecMethodPopup: false, //是否显示选择规格列表
+        inventory_num: 0, //库存
+
+
+        goodsSpec:{},//订单对象
+        specifications_list:[],//规格数组
+        isPopup:false,
+        itemData:'',//页面过来的数据
+        clientDetailAddress:'',//页面过来的邮寄人信息
+        currentIndex:null,//记录当前选中数据
+        isShade:false,
+        goodsList:[], //商品列表
+        ClassIfyList:[],//分类列表
+
+        curFirstClass: {
+            itemClassId: '',
+            classAllNo: '',
+            className: ''
+        },
+
+      },
+
+
+      methods: {
+        topHeightCss:function(){
+          infoVm.heightCss = infoVm.$refs.elememt.offsetHeight;
+        },
+
+        
+
+        //获取清单列表数据
+        getLsitData : function(funCll){
+			      var funCll
+            var param = 'userId=' + infoVm.itemData.clientId + '&photoOrderId=' + infoVm.itemData.photoOrderId;
+                        _getHttpsData('/order/getCartList',param,
+                    function(ret){
+                        if(ret.status){
+                          var getLsits = []
+                          var totalOrder = '' ////支付总价
+                          if(ret.data.length <= 0){
+                            getLsits = []
+                            totalOrder = 0
+                            funCll(ret.status,totalOrder);return}
+                              var adds = []
+                              var postageAmnts = []
+                              ret.data.forEach(function (item,index) {
+                                getLsits.push (item)
+                                var postageAmnt = item.postageAmnt == undefined ? 0:item.postageAmnt;
+                                adds.push(Number(item.amount))
+                                postageAmnts.push(Number(postageAmnt))
+                              });
+                              getLsits.forEach(function(item,index){ //邮费+合计 = itemAmount
+                                  item['itemAmount']= Number(item.amount)+ Number(item.postageAmnt)
+                              })
+                              var totalOrderSum = eval(adds.join('+')).toFixed(2) //数组求和，保留两位
+                              var postageAmntsSum = eval(postageAmnts.join('+')).toFixed(2) //数组求和，保留两位
+                              totalOrder = Number(totalOrderSum) + Number(postageAmntsSum) //支付总价
+                              funCll(ret.status,totalOrder)
+                        }else{
+
+						              	api.toast({ msg: res.msg+'('+res.code+')',duration: 2000, location: 'bottom'});
+                      }
+                    },
+                    function(err){
+                      api.hideProgress();
+             });
+          },
+
+        previewImg: function (position, imgList) {//图片预览
+          var imgListTemp = [];//详情图
+          for (var index in imgList) {
+            imgListTemp.push(imgList[index]);
+          }
+          api.openWin({
+            name: 'previewpicture_win',
+            url: 'widget://html/previewpicture/previewpicture_win.html',
+            pageParam: {
+              position: position,
+              imgList: imgListTemp
+            },
+            slidBackEnabled: false,
+            delay: 300
+          });
+        },
+
+        _previewImg: function (imgUrl) {//图片预览
+          //预览附件
+					var imgList=[];
+					imgList.push(imgUrl);
+					api.openWin({
+						name : 'previewpicture_win',
+						url : 'widget://html/previewpicture/previewpicture_win.html',
+						pageParam : {
+							position : 0,
+							imgList : imgList
+						},
+						slidBackEnabled : false,
+						delay : 300
+					});
+        },
+
+          /**
+   * 加入购物车
+   */
+  joinCarTap: function(e) {
+    infoVm.photoOrderStatus = ''
+    api.showProgress()
+      getPhotoOrderItem(function (params) {
+        infoVm.photoOrderStatus = params.status
+        if(infoVm.photoOrderStatus >= 0){
+            // if(infoVm.photoOrderStatus == 1){api.toast({ msg: '操作无效，该订单已推送',duration: 2000, location: 'bottom'});return}
+            if(infoVm.photoOrderStatus == 2){api.toast({ msg: '操作无效，该订单待付款',duration: 2000, location: 'bottom'});api.hideProgress();return}
+            if(infoVm.photoOrderStatus == 3){api.toast({ msg: '操作无效，该订单已付款',duration: 2000, location: 'bottom'});api.hideProgress();return}
+            else if (infoVm.photoOrderStatus == 4){api.toast({ msg: '客户已取消该订单，操作无效',duration: 2000, location: 'bottom'});api.hideProgress();return}
+            else if (infoVm.photoOrderStatus == 5){api.toast({ msg: '店主已取消该订单，操作无效',duration: 2000, location: 'bottom'});api.hideProgress();return}
+            else {
+
+              if(infoVm.photoOrderStatus >=0){
+              var buyNum = infoVm.buy_num; //购买数量
+              var inventoryNum = infoVm.inventory_num; //库存
+              // if (buyNum > inventoryNum) {
+              //   wx.showToast({
+              //     title: '库存不足',
+              //     icon: 'none',
+              //     duration: 1000
+              //   })
+              // } else {
+                // this.colseSpecMethod();
+                // if (!app.checkLoginState(
+                //   function (isLogin) {
+                //     if (isLogin) {
+                //       isOnShowRefresh = true;
+                //     }
+                //   }
+                // )) {
+                //   return;
+                // };
+                // var detailInfo = this.data.detailInfo;
+                // if (this.data.spec_name == null || this.data.spec_name == '' || this.data.spec_name == undefined) {
+                //   wx.showModal({
+                //     title: '提示',
+                //     content: '请先选择规格',
+                //     showCancel: false,
+                //     success: res => {}
+                //   })
+                //   return;
+                // }
+                var param = {};
+                param.clientId = infoVm.itemData.clientId;
+                param.shopItemId = infoVm.goodsSpec.shopItemId;
+                param.itemName = infoVm.goodsSpec.itemName;
+                // param.itemPrice = this.data.new_price;
+                param.itemSalePrice = infoVm.new_price;
+                param.itemPrice = infoVm.old_price;
+                param.itemNumber = infoVm.buy_num;
+                param.itemSpec = infoVm.itemData;
+                param.shopItemSpecAttr = infoVm.spec_name;
+                param.imgUrl = infoVm.spec_imgurl;
+                param.shopId = shopUserId;
+                param.memo = '';
+                param.photoOrderId = infoVm.itemData.photoOrderId
+
+                _postHttpsData('/order/addToCart', param,
+                  function(ret) {
+                    //成功
+                    if (ret.status && ret.code == 0001) {
+                      //修改总价
+                      if(infoVm.itemData.status == 1){//状态为1 ，已推送是时。加入清单后直接推送
+                        infoVm.getLsitData(function (status,itemTotalAmount) {
+                          //更新总价给小程序列表用
+                          var param = {
+                            photoOrderId:infoVm.itemData.photoOrderId,
+                            status:1,
+                            totalAmount:itemTotalAmount
+                            }
+                            _postHttpsData('/photoOrder/updatePhotoOrder', param,
+                                function (res) {
+                                    if (res.status) {
+                                      api.hideProgress();
+                                      api.toast({ msg:'已加入清单',duration: 2000, location: 'bottom'});
+                                    }
+                                },
+                                function (err) {}
+                            );
+                        })
+                      }else {
+                         api.hideProgress();
+                         api.toast({ msg:'已加入清单',duration: 2000, location: 'bottom'});}
+
+                      // that.setData({
+                      //   shop_num: ret.data
+                      // });
+                      api.hideProgress();
+                      infoVm.isPopup = false
+                    } else {
+
+                    }
+                  },
+                  function(ret) {
+                    //失败
+                    api.toast({ msg:'加入清单失败',duration: 2000, location: 'bottom'});
+                      api.hideProgress();
+
+                  });
+                // }
+              }
+
+            }
+        }
+      })
+
+
+
+
+  },
+
+        toBillList : function(e) {
+          api.openWin(
+                    {
+                        name: 'billList_win',
+                        url: 'widget://html/billList/billList_win.html',
+                        slidBackEnabled: true,
+                        pageParam:{
+                          itemData:e,
+                    },
+                        delay: 300
+                    }
+                );
+        },
+
+     sendData: function() {
+      infoVm.photoOrderStatus = ''
+      api.showProgress()
+      api.confirm({
+            title: '提示',
+            msg: '是否确定取消该拍照订单？',
+            buttons: ['确定', '取消']
+          }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+        getPhotoOrderItem(function (params) { //校验状态
+        infoVm.photoOrderStatus = params.status
+        if(infoVm.photoOrderStatus >= 0){
+        // if(infoVm.photoOrderStatus == 1){api.toast({ msg: '操作无效，该订单已推送',duration: 2000, location: 'bottom'});api.hideProgress();return}
+        if(infoVm.photoOrderStatus == 2){api.toast({ msg: '操作无效，该订单待付款',duration: 2000, location: 'bottom'});api.hideProgress();return}
+        else if(infoVm.photoOrderStatus == 3){api.toast({ msg: '操作无效，该订单已付款',duration: 2000, location: 'bottom'});api.hideProgress();return}
+        else if (infoVm.photoOrderStatus == 4){api.toast({ msg: '客户已取消该订单，操作无效',duration: 2000, location: 'bottom'});api.hideProgress();return}
+        else if (infoVm.photoOrderStatus == 5){api.toast({ msg: '店主已取消该订单，操作无效',duration: 2000, location: 'bottom'});api.hideProgress();return}
+        else {
+
+          if(infoVm.photoOrderStatus >= 0){
+            var param = {
+                photoOrderId:infoVm.itemData.photoOrderId,
+                status:5
+              }
+            _postHttpsData('/photoOrder/updatePhotoOrder', param,
+                function (ret) {
+                    if (ret.status) {
+                      api.hideProgress();
+                      api.sendEvent({
+                        name: 'outOfStock_status',
+                        extra: {
+                          goodsStatus: true,
+                        }
+                      });
+                      backbar()
+                      api.toast({ msg:'订单已取消',duration: 2000, location: 'bottom'});
+                    }
+                },
+                function (err) {
+                }
+            );
+          }
+        }
+      }
+      })
+                } else {
+                  //点击取消
+                  api.hideProgress()
+                }
+              })
+    },
+
+        isPopupShow:function(){
+          if(infoVm.isPopup){
+            infoVm.isPopup = false,
+            infoVm.totalPrice = 0,
+            infoVm.buy_num = 0
+            if(infoVm.inventory_num > 0){//库存
+              infoVm.allowBuy=true//是否允许购买
+            }else{infoVm.allowBuy=false}
+          }
+        },
+
+        specificationsTap:function(item,index){
+          var position = index; //列表下标
+          infoVm.switchSpec(position);
+          infoVm.buy_num = 1
+        },
+
+          /**规格开关 */
+  switchSpec: function(position) {
+    var indexCur = infoVm.specificationsCurIndex;
+    var specifications = infoVm.specifications_list[position];
+    if (indexCur == position && specifications.selected) {
+      //如果选择的规格还是当前的规格，则不需要再做处理
+
+      if (indexCur > -1) {//暂行和更新处理一样
+        infoVm.specifications_list[indexCur].selected = false
+      }
+      infoVm.specifications_list.forEach(function(element,index) {
+        if(!position == index){
+            infoVm.specifications_list[index].selected = false
+        }
+      });
+        infoVm.specifications_list[position].selected = true
+        var specImgurl = infoVm.spec_imgurl;
+        infoVm.new_price = specifications.itemSalePrice != undefined && specifications.itemSalePrice.length > 0 ? specifications.itemSalePrice : specifications.price
+        infoVm.totalPrice = specifications.itemSalePrice != undefined && specifications.itemSalePrice.length > 0 ? specifications.itemSalePrice : specifications.price
+        infoVm.old_price = specifications.price,
+        infoVm.specificationsCurIndex = position,
+        infoVm.spec_name = specifications.spec,
+        infoVm.spec_imgurl = specifications.imgUrl != undefined && specifications.imgUrl.length > 0 ? specifications.imgUrl : specImgurl
+     //暂行和更新处理一样 end
+    } 
+    else {
+      //如果选择的规格不是当前的规格，则需要进行更新处理
+      if (indexCur > -1) {
+        infoVm.specifications_list[indexCur].selected = false
+      }
+      infoVm.specifications_list.forEach(function(element,index) {
+        if(!position == index){
+            infoVm.specifications_list[index].selected = false
+        }
+      });
+      // alert(JSON.stringify(specifications))
+      infoVm.specifications_list[position].selected = true
+        var specImgurl = infoVm.spec_imgurl;
+        infoVm.new_price = specifications.itemSalePrice != undefined && specifications.itemSalePrice.length > 0 ? specifications.itemSalePrice : specifications.price
+        infoVm.totalPrice = specifications.itemSalePrice != undefined && specifications.itemSalePrice.length > 0 ? specifications.itemSalePrice : specifications.price
+        infoVm.old_price = specifications.price,
+        infoVm.specificationsCurIndex = position,
+        infoVm.spec_name = specifications.spec,
+        infoVm.spec_imgurl = specifications.imgUrl != undefined && specifications.imgUrl.length > 0 ? specifications.imgUrl : specImgurl
+    }
+  },
+
+    /**删除数量 */
+    delNumTap: function(e) {
+    var buyNum = infoVm.buy_num; //购买数量
+    if (buyNum > 1) {
+      buyNum--;
+      var totalPrice = (Number(buyNum) * Number(infoVm.new_price)).toFixed(2)
+        infoVm.buy_num = buyNum,
+        infoVm.totalPrice = totalPrice
+    } else {
+      api.toast({ msg: '已经不能再减了',duration: 2000, location: 'bottom'});
+    }
+  },
+
+    /**添加数量 */
+    appNumTap: function(e) {
+    var buyNum = infoVm.buy_num; //购买数量
+    var inventoryNum = infoVm.inventory_num; //库存
+    if (buyNum < inventoryNum) {
+      buyNum++;
+      var totalPrice = (Number(buyNum) * Number(infoVm.new_price)).toFixed(2)
+      infoVm.buy_num = buyNum,
+      infoVm.totalPrice = totalPrice
+    } else {
+      api.toast({ msg: '库存不足',duration: 2000, location: 'bottom'});
+    }
+  },
+
+
+    //手动输入数量
+    bindKeyInput: function(e) {
+    var buyNum = e.target.value; //购买数量
+    var inventoryNum = infoVm.inventory_num; //库存
+    var input = e.target.value;
+    if (input == 0) {//判空
+      api.toast({ msg: '不能为空',duration: 2000, location: 'bottom'});
+        infoVm.buy_num = buyNum,
+        infoVm.allowBuy=false//是否允许购买
+
+      var value = e.target.value
+      var pos = e.target.cursor
+      return {
+        value: value.replace(/0/g, '1'),
+        cursor: pos
+      }
+    }else if(buyNum > inventoryNum){//判断库存
+      api.toast({ msg: '库存不足',duration: 2000, location: 'bottom'});
+
+        infoVm.buy_num = inventoryNum,
+        infoVm.allowBuy=false//是否允许购买
+    }else {
+      var totalPrice = (Number(buyNum) * Number(infoVm.new_price)).toFixed(2)
+        infoVm.totalPrice = totalPrice,
+        infoVm.buy_num = buyNum,
+        infoVm.buy_num = e.target.value,
+        infoVm.allowBuy=true//是否允许购买
+    }
+  },
+
+        goodsDetail: function (e){
+          if(e.itemStatus == 0){api.toast({ msg: '商品未上架',duration: 2000, location: 'bottom'});return}
+          else if(e.itemStatus == 1){api.toast({ msg: '商品未上架',duration: 2000, location: 'bottom'});return}
+          else if(e.itemStatus == 3){api.toast({ msg: '商品未上架',duration: 2000, location: 'bottom'});return}
+
+          infoVm.goods_name = e.itemName
+          // if(infoVm.itemData.status == 1){api.toast({ msg: '操作无效，该订单已推送',duration: 2000, location: 'bottom'});return}
+          // else if(infoVm.itemData.status == 2){api.toast({ msg: '操作无效，该订单待付款',duration: 2000, location: 'bottom'});return}
+          // else if (infoVm.itemData.status == 4){api.toast({ msg: '客户已取消该订单，无需操作',duration: 2000, location: 'bottom'});return}
+          // else if (infoVm.itemData.status == 5){api.toast({ msg: '订单已取消，操作无效',duration: 2000, location: 'bottom'});return}
+
+          var param = 'shopItemId=' + e.shopItemId;	
+                _getHttpsData('/shop/getShopItem',param,
+                    function(ret){
+                        if(ret.status){
+                          infoVm.goodsInfoDetail = ret.data
+                          console.log ('666'+JSON.stringify(infoVm.goodsInfoDetail))
+                        }else{
+							          }
+                    },
+                    function(err){
+                        api.hideProgress();
+                    });
+
+          infoVm.isPopup = true
+          infoVm.goodsSpec = e
+          infoVm.inventory_num = e.upNumber //库存 
+          infoVm.specifications_list = []
+          for(let index in infoVm.goodsSpec.itemSpec){
+            var itemSpec = infoVm.goodsSpec.itemSpec[index][index];
+            infoVm.specifications_list.push(itemSpec)
+          }
+          infoVm.new_price = infoVm.specifications_list[0].itemSalePrice
+          infoVm.old_price = infoVm.specifications_list[0].price
+          // infoVm.postageAmnt = infoVm.specifications_list[0].postageAmnt == undefined ? 0 : infoVm.specifications_list[0].postageAmnt;
+          infoVm.spec_imgurl = infoVm.specifications_list[0].imgUrl
+          infoVm.spec_name = infoVm.specifications_list[0].spec
+          infoVm.totalPrice = infoVm.specifications_list[0].itemSalePrice
+          infoVm.buy_num = 1
+
+
+
+            // api.openWin(
+            //     {
+            //         name: 'goodsDetail_win',
+            //         url: 'widget://html/goodsDetail/goodsDetail_win.html',
+            //         slidBackEnabled: true,
+            //         pageParam:{
+            //             DetailPageParam:e,
+						//     },
+            //         delay: 300
+            //     }
+            // );
+    },
+        shadeClick : function(item,index){
+        this.currentIndex=null
+        // alert ('shadeClick'+JSON.stringify (item))
+        // alert ('shadeClick'+JSON.stringify (index))
+    },
+    shadeIcon: function(item,index) {
+        this.currentIndex = index
+        // alert (this.currentIndex)
+        // alert (this.isShade)
+    },
+    butClick: function(item,index) {
+        // alert ('butClick'+JSON.stringify (item))
+        // alert ('butClick'+JSON.stringify (index))
+        this.currentIndex=null
+      },
+
+      appendData:function(data){
+            this.goodsList=this.goodsList.concat(data);
+        },
+
+        //点击左Tab
+        clickIfy:function(item){
+            if (infoVm.curFirstClass.classAllNo == item.classAllNo) return; //防止重复请求 
+                infoVm.curFirstClass.itemClassId = item.itemClassId;
+                infoVm.curFirstClass.classAllNo = item.classAllNo;
+                infoVm.curFirstClass.className = item.className;
+
+            if(item.classAllNo == 'All'){ //判断是否点击 全部分类
+                getGoodsList() //获取全部分类
+            }else {
+                //获取该分类商品
+                var param = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' +
+                '&sortType=ASC' + '&startPage=1'+ '&recordSize=10' + '&from=shopApp' + + '&itemStatus=2' + '&itemClassId=' + infoVm.curFirstClass.itemClassId + '&classAllNo=' + infoVm.curFirstClass.classAllNo;	
+                _getHttpsData('/shop/getShopItemList',param,
+                    function(ret){
+                        if(ret.status){
+                            ret.data.length == 0 ? infoVm.resNoData = true : infoVm.resNoData = false;
+                            infoVm.goodsList = []
+                            infoVm.goodsList = ret.data
+                            mescroll.endSuccess();
+                        }else{
+                        }
+                    },
+                    function(err){
+                    }
+                );
+            }
+        },
+
+            //重新获取该商品数据
+			geIfyHttpsData : function(isRefresh){
+      if(infoVm.itemData.status == 5){return}
+                if(isRefresh){
+					indexPage=1;
+				}else{
+					indexPage++;
+				}
+                if(infoVm.curFirstClass.classAllNo == 'All'){ //判断是否点击 全部分类
+                    // getGoodsList() //获取全部分类
+                    var param = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' +'&sortType=ASC' + '&itemStatus=2' +'&startPage='+indexPage+'&recordSize=' +pageNum+ '&from=shopApp';	
+                }else {
+                     //获取该分类商品
+                        var param = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' + '&sortType=ASC' + '&itemStatus=2' +'&startPage='+ indexPage + '&recordSize=' +pageNum+ '&from=shopApp' + '&itemClassId=' + infoVm.curFirstClass.itemClassId + '&classAllNo=' + infoVm.curFirstClass.classAllNo;	
+                        }
+                _getHttpsData('/shop/getShopItemList',param,
+                    function(ret){
+                        if(ret.status){
+                            ret.data.length == 0 ? infoVm.resNoData = true : infoVm.resNoData = false;
+                            if(isRefresh){infoVm.goodsList=[]}
+	                        mescroll.endErr();  //隐藏下拉刷新的状态
+                                
+                                ret.data.map(function (item,index) {
+                                infoVm.goodsList.push (item)
+                            });
+                        }else{
+	                        mescroll.endErr();  //隐藏下拉刷新的状态
+                            if(indexPage>0){
+								indexPage--;
+							}
+							api.toast({ msg: res.msg+'('+res.code+')',duration: 2000, location: 'bottom'});
+                        }
+                    },
+                    function(err){
+                        api.hideProgress();
+						if(indexPage>0){
+							indexPage--;
+						}
+                    });
+                
+                
+          }
+        }
+    })
+
+     //监听
+		api.addEventListener({
+		    name: 'outOfStock_status'
+		}, function(ret, err) {
+			if(ret){
+				if(ret.value.goodsStatus){
+                    infoVm.goodsList=[]
+                    getGoodsList()
+				}
+			}
+		});
+
+    //获取分类
+    getClassIfyList = function () {
+      if(infoVm.itemData.status == 5){return}
+      _getHttpsData("/shop/getItemClass?classParentId=1&shopId=" + shopUserId, "",
+        function (ret) {
+          if (ret.status) {
+            infoVm.ClassIfyList = []
+            ret.data.forEach(function (item) {
+              infoVm.ClassIfyList.push(item);
+            });
+            var allClass={
+                itemClassId: 'All',
+                classAllNo: 'All',
+                className: '全部商品'
+            }
+            infoVm.ClassIfyList.unshift(allClass)		
+            infoVm.curFirstClass={ //默认选择全部
+                itemClassId: infoVm.ClassIfyList[0].itemClassId,
+                classAllNo: infoVm.ClassIfyList[0].classAllNo,
+                className: infoVm.ClassIfyList[0].className
+                }
+                getGoodsList()
+          } else {
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      );
+    }
+
+        var getUserInfoHttps = function (param) {
+      // 	//获取店铺信息
+      api.showProgress();
+      var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+      _getHttpsData('/shop/getShopInfo', param,
+        function (res) {
+          api.hideProgress();
+          if (res.code == 0005) {
+            infoVm.shopData = false
+            infoVm.affect = false
+            api.confirm({
+              title: '提示',
+              msg: '您未开店，是否申请开店',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.openWin({
+                  name : 'shopManage_win',
+                  url : 'widget://html/shopManage/shopManage_win.html',
+                  reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+          } else if (JSON.stringify(res.data).length > 0) {
+            if(res.data.shopStatus == 1){
+              api.confirm({
+              title: '提示',
+              msg: '店铺审核中，请联系管理员',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+            }
+            if(res.data.shopStatus == 3){
+              api.confirm({
+              title: '提示',
+              msg: '店铺信息审核未通过，请重新提交审核',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+            }
+            getClassIfyList()
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      )
+    };
+    getUserInfoHttps()
+
+    //下拉刷新
+    //创建MeScroll对象
+			var mescroll = new MeScroll("mescroll", {
+				down: {
+					auto: true, //是否在初始化完毕之后自动执行下拉回调callback; 默认true
+					callback: downCallback //下拉刷新的回调
+				},
+				up: {
+					auto: false, //是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
+					isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+					callback: upCallback, //上拉回调,此处可简写; 相当于 callback: function (page) { upCallback(page); }
+					// toTop:{ //配置回到顶部按钮
+					// 	src : "../../image/icon/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+					// 	//offset : 1000
+					// }
+				}
+            });
+            
+            /*下拉刷新的回调 */
+			function downCallback(){
+				infoVm.geIfyHttpsData(true)
+            }
+            
+            /*上拉加载的回调  */
+			function upCallback(page){
+            infoVm.geIfyHttpsData(false)
+			}
+
+    infoVm.itemData = api.pageParam.itemData.itemData;//页面提交过来的参数
+    infoVm.clientDetailAddress = api.pageParam.itemData.itemData.clientDetailAddress
+    console.log (JSON.stringify( infoVm.itemData))
+    // alert (infoVm.itemData.status)
+
+    getPhotoOrderItem(function name(params) {})
+
+    setTimeout(() => {
+      infoVm.topHeightCss()
+    }, 500);
+
+
+
+}
+</script>
+</html>

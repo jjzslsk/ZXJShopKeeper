@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" />
+    <style>
+        body {
+            background: #eee
+        }
+
+        .goodsStatus {
+            color: red;
+        }
+        .goodsStatus {
+            color: red;
+            white-space: nowrap;
+            padding: 2px 4px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .goods-status-null {
+            white-space: nowrap;
+            border-radius: 10px;
+            text-align: center;
+            color: #11CF9C;
+        }
+        .but-click {
+           display: flex;
+           justify-content: flex-end;
+            align-items: center;
+        }
+        .but-click .aui-btn{
+            margin-left:.3rem;
+        }
+        .goods-list {
+            background: #eee
+        }
+        .goods-list .goods-list-item{
+            margin: .3rem 0 !important;
+            border-radius: 4px;
+            border: #eee solid .5px;
+            background: #fff
+        }
+        .mescroll {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        height: auto;
+        }
+        .item-data-null {
+        text-align: center;
+        padding: 2rem 0;
+        }
+        .order-status {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="info_id" class="aui-padded-5 " id="tab1-con">
+        <!-- <template> -->
+            <div id="mescroll" class="mescroll aui-content aui-margin-b-15">
+                <ul class="aui-list aui-media-list goods-list">
+                    <li class="item-data-null" v-if ='showGoodsList'>
+                            <p class="downwarp-progress"></p><p class="downwarp-tip">加载中..</p>
+                    </li>
+                    <li v-for='item in goodsList' class="aui-list-item aui-list-item-middle goods-list-item">
+                        <div class="aui-media-list-item-inner">
+                            <div @click='toDetail(item)' class="aui-list-item-media" style="width: 3rem;">
+                                <img :src="item.IMG_URL" class="aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div @click='toDetail(item)'>
+                                        <div class="aui-font-size-12 aui-row">
+                                            <span class="aui-font-size-12 aui-ellipsis-2 aui-col-xs-9">{{item.ITEM_NAME}}</span> 
+                                            <span class="aui-font-size-12 aui-col-xs-3 order-status">
+                                                <span class="goods-status-null" v-if="item.CART_STATUS == 2">申请退货</span>
+                                                <span class="goods-status-null" v-if="item.CART_STATUS == 3">同意退货</span>
+                                                <span class="goods-status-null" v-if="item.CART_STATUS == 4">客户发货</span>
+                                                <span class="goods-status-null" v-if="item.CART_STATUS == 7">确认退货</span>
+                                                <span class="goods-status-null" v-if="item.CART_STATUS == 8">申请退货</span>
+                                                <span class="goods-status-null" v-if="item.CART_STATUS == 11">拒绝退货</span>
+                                                <span class="goods-status-null" v-if="item.CART_STATUS == 6">确认退货</span>
+                                                <span class="goods-status-null" v-if="item.CART_STATUS == 10">同意退货</span>
+                                                <span class="goods-status-null" v-if="item.CART_STATUS == 9">客户发货</span>
+                                                <span class="goodsStatus" v-if="item.CART_STATUS == 5">拒绝退货</span>
+                                                <!-- <span class="goods-status-null">-{{item.CART_STATUS}}</span> -->
+                                            </span>
+                                        </div>
+                                    <p class="aui-font-size-12 aui-ellipsis-2">
+                                        <span class="aui-col-xs-12">商品规格:{{item.SHOP_ITEM_SPEC_ATTR}}</span>
+                                    </p>
+                                    <p class="aui-font-size-12">
+                                        <span>普通单号:{{item.ORDER_NO}}</span> 
+                                        <!-- <span class="aui-font-size-12">日期:{{item.BACK_REASON_DATE}}</span> -->
+                                    </p>
+                                    <p class="aui-font-size-12" v-if='item.PHOTO_ORDER_ID'>
+                                        <span>拍照单号:{{item.PHOTO_ORDER_ID}}</span>
+                                    </p>
+                                    <div class="aui-list-item-text aui-row aui-font-size-12">
+                                        <div class="aui-font-size-12">时间:{{item.BACK_REASON_DATE}}</div>
+                                    </div class="aui-list-item-text aui-row aui-font-size-12">
+                                    <!-- <p> -->
+                                        <!-- <span class="aui-font-size-12">数量:{{item.ITEM_NUMBER}}</span>
+                                        <span class="aui-font-size-12">金额:{{item.ITEM_PRICE}}</span> -->
+                                        <!-- <span class="">名称:{{item.CLIENT_NAME}}</span>
+                                        <span class="aui-font-size-12">电话:{{item.CLIENT_PHONE}}</span> -->
+                                    <!-- </p> -->
+                                    <!-- <div class="aui-list-item-text">
+                                        描述:{{item.BACK_REASON}}
+                                    </div> -->
+                                </div>
+                                <div class="aui-row but-click">
+                                        <div class="aui-btn aui-btn-success" v-if="item.agreeToReturn"
+                                            @click="confirmSend(item)">同意退货</div>
+                                        <div class="aui-btn aui-btn-danger" v-if="item.refuseToReturn"
+                                            @click="cancelOrder(item)">
+                                            拒绝退货</div>
+                                        <div class="aui-btn aui-btn-info" v-if="item.confirmToReturn"
+                                            @click="achieve(item)">确认退货</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-data-null" v-if ='resNoData'>
+                        <p class="downwarp-progress"></p><p class="downwarp-tip">加载完毕</p>
+                    </li>
+                </ul>
+            </div>
+        <!-- </template> -->
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_dialog.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery.mobile.custom.min.js"></script>
+<script type="text/javascript" src="../../script/md5/base64.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/mescroll/mescrollmin.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+        var infoVm
+        var shopUserId = $api.getStorage("userid")
+        var shopOpenId = $api.getStorage("openId")
+        var shopId = $api.getStorage("shopId"); //
+        var token = $api.getStorage("token")
+        var orderStatus = ''
+        var indexPage=0;//页码
+        var pageNum=10;//每页的数量
+        
+        auiDialog_ = new auiDialog();
+
+        var getListData = function (isRefresh) {
+            // api.showProgress()
+            //获取订单列表
+            if(isRefresh){
+                indexPage=0;
+            }else{
+                indexPage += 10;
+            }
+
+            var param = 'zxj_repertory&AJAX_MODE=AJAX_MODE_QUERY&QUERY_MODE=list&DATASET=back_goods_orders_page_app' +'&START_POSITION=' + indexPage + '&END_POSITION=' + pageNum + '&CURR_USER_ID=' + shopId;
+            api.ajax({
+                url: serviceAjaxUrl + param,
+                method: 'get',
+                returnAll: false, //（可选项）是否需要返回所有 response 信息（包括响应头、消息体、状态码），为 true 时，返回的头信息获取方法(ret.headers)，消息体信息获取方法(ret.body)，状态码获取方法(ret.statusCode)
+                dataType: 'json',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    token: this.token
+                }
+            }, function (ret, err) {
+                // api.hideProgress()
+                if(ret.code != 0) return
+                ret.msg.length == 0 ? infoVm.resNoData = true : infoVm.resNoData = false;
+                if(ret.msg.length > 0) {
+                    if(isRefresh){infoVm.goodsList=[]}
+                    mescroll.endErr();  //隐藏下拉刷新的状态
+                    var arr = JSON.parse(ret.msg)
+                    arr.map(function (item, index) {
+                        fnOrderStatus(item.CART_STATUS)
+                        item.agreeToReturn ? item : Object.assign(item, {
+                            agreeToReturn: infoVm.agreeToReturn
+                        }, {
+                                orderStatus: orderStatus
+                            })
+                        item.refuseToReturn ? item : Object.assign(item, {
+                            refuseToReturn: infoVm.refuseToReturn
+                        }, {
+                                orderStatus: orderStatus
+                            })
+                        item.confirmToReturn ? item : Object.assign(item, {
+                            confirmToReturn: infoVm.confirmToReturn
+                        }, {
+                                orderStatus: orderStatus
+                            })
+                        // if(item.agreeToReturn){item.agreeToReturn=item}else{item.agreeToReturn=Object.assign(item, {agreeToReturn: infoVm.agreeToReturn},{orderStatus:orderStatus})}
+                        // if(item.refuseToReturn){item.refuseToReturn=item}else{item.refuseToReturn=Object.assign(item, {refuseToReturn: infoVm.refuseToReturn},{orderStatus:orderStatus})}
+                        // if(item.confirmToReturn){item.confirmToReturn=item}else{item.confirmToReturn=Object.assign(item, {confirmToReturn: infoVm.confirmToReturn},{orderStatus:orderStatus})}
+                        if(item.BACK_REASON_DATE!=null){
+                            item.BACK_REASON_DATE = dataFormatting(item.BACK_REASON_DATE) //时间格式
+                        }
+                        infoVm.goodsList.push(item)
+                    })
+                    infoVm.showGoodsList = false
+
+                } else {
+                    infoVm.showGoodsList = false
+                    
+                    // api.toast({ msg: '加载完毕',duration: 2000, location: 'bottom'});
+                    mescroll.endErr();}
+            });
+        }
+
+
+        var fnOrderStatus = function (_STATUS) {
+            switch (_STATUS) {
+                case 1:
+                    orderStatus = 1
+                    break;
+                case 2:
+                    orderStatus = 2
+                    break;
+                case 3:
+                    orderStatus = 3
+                    break;
+                case 4:
+                    orderStatus = 4
+                    break
+                case 5:
+                    orderStatus = 5
+                    break;
+                case 6:
+                    orderStatus = 6 //确认退货
+                    break;
+                case 7:
+                    orderStatus = 7 //确认退货
+                    break;
+                case 8:
+                    orderStatus = 2
+                    break;
+                case 9:
+                    orderStatus = 4
+                    break;
+                case 10:
+                    orderStatus = 3
+                    break;
+                case 11:
+                    orderStatus = 5
+                    break;
+                default:
+            }
+            if (orderStatus == 2) {
+                infoVm.agreeToReturn = true //同意退货
+                infoVm.refuseToReturn = true //拒绝退货
+                infoVm.confirmToReturn = false //确认退货
+            } else if (orderStatus == 4) {
+                infoVm.agreeToReturn = false
+                infoVm.refuseToReturn = false
+                infoVm.confirmToReturn = true
+            } else {
+                infoVm.agreeToReturn = false
+                infoVm.refuseToReturn = false
+                infoVm.confirmToReturn = false
+            }
+        }
+
+        api.parseTapmode();
+        var tab = new auiTab({
+            element: document.getElementById("tab"),
+
+        }, function (ret) {
+            if (ret) {
+                //定义获取对象的所有兄弟节点的函数，
+                function siblings(elm) {
+                    var a = [];
+                    var p = elm.parentNode.children;
+                    for (var i = 0, pl = p.length; i < pl; i++) {
+                        if (p[i] !== elm) a.push(p[i]);
+                    }
+                    return a;
+                }
+                var index = ret.index;
+                var activeC = document.getElementById("tab1-con" + index);
+                activeC.className = "";
+                for (var i = 0; i < siblings(activeC).length; i++) {
+                    siblings(activeC)[i].className = "aui-hide";
+                }
+            }
+        });
+        infoVm = new Vue({
+            el: "#info_id",
+            data: {
+                agreeToReturn: '', //同意退货
+                refuseToReturn: '', //决绝退货
+                confirmToReturn: '', //确认退货
+                goodsList: [],
+                showGoodsList:true,
+                resNoData:false,//获取到空数据时
+            },
+            watch: {
+                goodsList(val,oldval){
+                    if(val){
+                        infoVm.showGoodsList = false
+                    }else{
+                        infoVm.showGoodsList = true
+                    }
+                    }
+            },
+            
+            methods: {
+
+                //拒绝退货
+                cancelOrder: function (data) {
+                    auiDialog_.prompt({
+                        title: "提示",
+                        text: '请输入拒绝原因',
+                        buttons: ['取消', '确定']
+                    }, function (ret) {
+                        if (ret.buttonIndex == 2) {
+                            fnOrderStatus(data.CART_STATUS)
+                            if (infoVm.refuseToReturn) {
+                                api.showProgress()
+                                var param = 'MODE=2' + '&SHOP_CART_ID=' + data.SHOP_CART_ID +
+                                    '&BACK_REASON_REFUSE=' + ret.text;
+                                _getHttpsData('/order/confirmBackGoods', param,
+                                    function (ret) {
+                                        api.hideProgress()
+                                        if (ret.code == 0) {
+                                            api.sendEvent({
+                                                name: 'cancelOrder_list_status',
+                                                extra: {
+                                                    orderStatus: true,
+                                                }
+                                            });
+                                            orderStatus = ''
+                                        }
+                                        api.toast({
+                                            msg: ret.msg
+                                        });
+                                    },
+                                    function (err) { }
+                                );
+                            }
+                        }
+                    })
+                },
+
+                //同意退货
+                confirmSend: function (data) {
+                    api.confirm({
+                        title: '提示',
+                        msg: '是否确定同意退货？',
+                        buttons: ['确定', '取消']
+                    }, function (ret, err) {
+                        var index = ret.buttonIndex;
+                        if (index == 1) {
+                            api.showProgress()
+                            fnOrderStatus(data.CART_STATUS)
+                            if (infoVm.agreeToReturn) {
+                                var param = 'MODE=0' + '&SHOP_CART_ID=' + data.SHOP_CART_ID;
+                                _getHttpsData('/order/confirmBackGoods', param,
+                                    function (ret) {
+                                        api.hideProgress()
+                                        if (ret.code == 0) {
+                                            api.sendEvent({
+                                                name: 'cancelOrder_list_status',
+                                                extra: {
+                                                    orderStatus: true,
+                                                }
+                                            });
+                                            orderStatus = ''
+                                        }
+                                        api.toast({
+                                            msg: ret.msg
+                                        });
+                                    },
+                                    function (err) { }
+                                );
+                            }
+                        } else { }
+                    })
+                },
+                //确认退货
+                achieve: function (data) {
+                    api.confirm({
+                        title: '提示',
+                        msg: '是否确认退货？',
+                        buttons: ['确定', '取消']
+                    }, function (ret, err) {
+                        var index = ret.buttonIndex;
+                        if (index == 1) {
+                            fnOrderStatus(data.CART_STATUS)
+                                if (infoVm.confirmToReturn) {
+                                    api.showProgress()
+                                    var param = 'MODE=1' + '&SHOP_CART_ID=' + data.SHOP_CART_ID;
+                                    _getHttpsData('/order/confirmBackGoods', param,
+                                        function (ret) {
+                                            api.hideProgress()
+                                            if (ret.code == 0) {
+                                                api.sendEvent({
+                                                    name: 'cancelOrder_list_status',
+                                                    extra: {
+                                                        orderStatus: true,
+                                                    }
+                                                });
+                                                orderStatus = ''
+                                            }
+                                            api.toast({
+                                                msg: ret.msg
+                                            });
+                                        },
+                                        function (err) { }
+                                    );
+                                }
+                        }
+                    })
+                },
+
+                toDetail: function (data) {
+                    api.openWin({
+                        name: 'cancelOrderDetail_win.html',
+                        url: 'widget://html/cancelOrderDetail/cancelOrderDetail_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: '',
+                            itemData: data
+                        },
+                        delay: 300
+                    });
+                }
+            },
+        })
+
+        var getUserInfoHttps = function (param) {
+            // 	//获取店铺信息
+            api.showProgress();
+            var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+            _getHttpsData('/shop/getShopInfo', param,
+                function (res) {
+                    api.hideProgress();
+                    if (res.code == 0005) {
+                        infoVm.shopData = false
+                        infoVm.affect = false
+                        api.confirm({
+                            title: '提示',
+                            msg: '您未开店，是否申请开店',
+                            buttons: ['确定', '取消']
+                        }, function (ret, err) {
+                            var index = ret.buttonIndex;
+                            if (index == 1) {
+                                api.openWin({
+                                    name: 'shopManage_win',
+                                    url: 'widget://html/shopManage/shopManage_win.html',
+                                    reload: true,
+                                });
+                            } else {
+                                api.closeToWin({
+                                    name: 'main_win',
+                                    url: 'widget://html/main/main_win.html',
+                                    reload: true,
+                                });
+                            }
+                        })
+                    } else if (JSON.stringify(res.data).length > 0) { }
+                },
+                function (err) {
+                    api.hideProgress();
+                }
+            )
+        };
+
+        //监听
+        api.addEventListener({
+            name: 'cancelOrder_list_status'
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.value.orderStatus) {
+                    infoVm.goodsList = []
+                    getListData(true)
+                }
+            }
+        });
+
+                  //下拉刷新
+    //创建MeScroll对象
+    var mescroll = new MeScroll("mescroll", {
+        down: {
+            auto: false, //是否在初始化完毕之后自动执行下拉回调callback; 默认true
+            callback: downCallback //下拉刷新的回调
+        },
+        up: {
+            auto: false, //是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
+            isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+            callback: upCallback, //上拉回调,此处可简写; 相当于 callback: function (page) { upCallback(page); }
+            toTop:{ //配置回到顶部按钮
+                src : "../../image/icon/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+                //offset : 1000
+            }
+        }
+    });
+    
+    /*下拉刷新的回调 */
+    function downCallback(){
+        infoVm.showGoodsList = false
+        getListData(true)
+    }
+    
+    /*上拉加载的回调  */
+    function upCallback(page){
+    infoVm.showGoodsList = false
+    getListData(false)
+    }
+
+
+        getUserInfoHttps() //获取店铺信息
+        getListData(true) //获取list
+
+    }
+</script>
+
+</html>

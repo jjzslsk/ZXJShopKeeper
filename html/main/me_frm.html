@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/main/index.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            background: #eee
+        }
+
+
+        .head-box {
+            height: 20vh;
+            max-height: 20vh;
+            background: linear-gradient(to right, #11ce7c 20%, #11cfc8 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+
+        .head-box .head-info {
+            height: 8rem;
+            /* width:8rem; */
+            display: flex;
+            align-items: center;
+            margin-left: 8%;
+        }
+
+        .head-box .head-info .user-img {
+            background: teal;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .user-img-item {
+            width: 100%;
+            height: 100%;
+        }
+
+        .head-box .head-info .user-content {
+            /* background: yellow; */
+            margin-left: 8px;
+            width:8rem;
+
+        }
+
+        .head-box .head-info .user-content .user-name {
+            font-size: 16px;
+        }
+
+        .head-box .head-info .user-content .user-money {
+            font-size: 12px;
+            overflow: hidden;
+             text-overflow:ellipsis; 
+             white-space: nowrap;
+        }
+
+        .head-box .head-info .user-content .user-money input{
+            font-size: 12px;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+
+        .head-box .head-state {
+            margin-right: 8%;
+            background: #fff;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .head-box .head-state .head-state-text {
+            padding: 4px 10px;
+            color: #11ce7c;
+            white-space: nowrap;
+        }
+
+        .box-item img {
+            width: 1.3rem !important;
+            height: 1.3rem !important;
+            line-height: 1.3rem !important;
+            display: inline-block;
+        }
+
+        .exit {
+            /* padding: 0 20px 10px 20px; */
+        }
+
+        .exit .aui-btn {
+            color: #fff !important;
+            background: #11ce7c !important;
+            border-radius: 6px;
+            -moz-box-shadow: 0px 2px 6px -2px #333333;
+            -webkit-box-shadow: 0px 2px 6px -2px #333333;
+            box-shadow: 0px 2px 6px -2px #333333;
+            border: 1px solid #11ce7c !important;
+        }
+
+        .num-item {
+            color: #11cfc8;
+        }
+
+        .header-title {
+            color: #000;
+            font-size: 20px !important;
+            font-weight: bold;
+            background: #fff !important;
+        }
+
+        .aui-icon-cert {
+            color: #fbff00;
+            padding: 0 6px;
+            font-size: 1.2rem;
+        }
+        .trans-wrap {
+            margin: .5rem .5rem 0 .5rem;
+        }
+
+        .trans-wrap-item {
+            border-radius: 6px;
+            -moz-box-shadow: 0px 2px 6px -2px #333333;
+            -webkit-box-shadow: 0px 2px 6px -2px #333333;
+            box-shadow: 0px 2px 6px -2px #333333;
+        }
+        .trans-wrap-item .box-item {
+            padding: .5rem 0 !important;
+        }
+        .trans-title {
+            margin: 1rem;
+            position: relative;
+        }
+        .trans-title:after {
+            height: 1px;
+            background-color: #dddddd;
+            display: block;
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            right: auto;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+            -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="info_id">
+        <!-- <template> -->
+            <div class="head-box">
+                <div class="head-info">
+                    <div class="user-img" @click="upAvaClick">
+                            <img class="user-img-item" :src="shopLogo" onerror="src='../../image/user.png'" />
+                        <!-- <image class="user-img-item" src="avatar" /> -->
+                    </div>
+                    <div class="user-content">
+                        <div class="user-name" v-if="shopName == 'undefined' || shopName == null || shopName.length <= 0"></div>
+                        <div class="user-name" v-else>{{shopName}}<i class="aui-iconfont aui-icon-cert"></i></div>
+                        <div class="user-money" v-if="shopIdea == 'undefined' || shopIdea == null || shopIdea.length <= 0"></div>
+                        <div class="user-money" v-else>{{shopIdea}}</div>
+                        <!-- <div class="user-money" v-else><input type="text" placeholder="Name" v-model='shopIdea'></div> -->
+                    </div>
+                </div>
+                <div class="head-state">
+                    <span v-if="isShopDataStuta == 1"  class="head-state-text">审核中</span>
+                    <span v-if="isShopDataStuta == 2"  class="head-state-text">营业中</span>
+                    <span v-if="isShopDataStuta == 3"  class="head-state-text">审核失败</span>
+                    <span v-if="isShopDataStuta == 0" class="head-state-text" onclick="shopManage()">未开店</span>
+                </div>
+            </div>
+
+            <div class="trans-wrap">
+                    <!-- <section class="aui-content trans-wrap-box transaction">
+                            <div class="aui-card-list">
+                                <section class="aui-grid">
+                                    <div class="aui-row">
+                                        <div class="aui-col-xs-6 box-item">
+                                            <span class="trans-contents">今日交易额</span>
+                                            <div class="aui-grid-label trans-nums">0.00</div>
+                                        </div>
+                                        <div class="aui-col-xs-6 box-item">
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </section>
+                        <section class="aui-content trans-wrap-row">
+                            <div class="aui-card-list trans-wrap-row">
+                                <section class="aui-grid trans-wrap-row">
+                                    <div class="aui-row trans-wrap-row trans-shadow">
+                                        <div class="aui-col-xs-3 box-item">
+                                            <span class="trans-content">今日访客</span>
+                                            <div class="aui-grid-label trans-num">0</div>
+                                        </div>
+                                        <div class="aui-col-xs-3 box-item">
+                                            <span class="trans-content">新增客户</span>
+                                            <div class="aui-grid-label trans-num">0</div>
+                                        </div>
+                                        <div class="aui-col-xs-3 box-item" onclick="mycommission()">
+                                            <span class="trans-content">我的佣金</span>
+                                            <div class="aui-grid-label trans-num">0.00</div>
+                                        </div>
+                                        <div class="aui-col-xs-3 box-item" onclick="mywallet()">
+                                            <span class="trans-content">钱包</span>
+                                            <div class="aui-grid-label trans-num">{{financeDues}}</div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </section> -->
+
+
+                <section class="aui-grid aui-margin-b-15 trans-wrap-item">
+                    <div class="trans-title">增值服务</div>
+                    <div class="aui-row">
+                        <div class="aui-col-xs-3 box-item" onclick="shopManage()">
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/woyaokaidian.png" alt="">
+                            <div class="aui-grid-label">店铺信息</div>
+                        </div>
+                        <div class="aui-col-xs-3 box-item" onclick="mycommission()">
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/mycommission.png" alt="">
+                            <div class="aui-grid-label">我的佣金</div>
+                        </div>
+                        <div class="aui-col-xs-3 box-item" onclick="mywallet()">
+                            <!-- <div class="aui-badge">88</div> -->
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/money.png" alt="">
+                            <div class="aui-grid-label">我的钱包</div>
+                        </div>
+                        <div class="aui-col-xs-3 box-item" onclick="mydetail()">
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/mydetail.png" alt="">
+                            <div class="aui-grid-label">我的明细</div>
+                        </div>
+                        <div class="aui-col-xs-3 box-item" onclick="myteam()">
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/wodetuandui.png" alt="">
+                            <div class="aui-grid-label">我的团队</div>
+                        </div>
+                        <div class="aui-col-xs-3 box-item" onclick="comproblem()">
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/comproblem.png" alt="">
+                            <div class="aui-grid-label">常见问题</div>
+                        </div>
+                        <div class="aui-col-xs-3 box-item" onclick="comsugges()">
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/tousujianyi.png" alt="">
+                            <div class="aui-grid-label">投诉建议</div>
+                        </div>
+                        <!-- <div class="aui-col-xs-3 box-item" onclick="mypromote()">
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/mypromote.png" alt="">
+                            <div class="aui-grid-label">我要推广</div>
+                        </div> -->
+                        <div class="aui-col-xs-3 box-item" onclick="skipPage('工匠加盟')">
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/gongjiangjiameng.png" alt="">
+                            <div class="aui-grid-label">工匠加盟</div>
+                        </div>
+                            <!-- <div class="aui-col-xs-3 box-item" onclick="itemClick()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/me/kefuzhongxin1.png" alt="">
+                                    <div class="aui-grid-label">关于我们</div>
+                                </div> -->
+                                <!-- <div class="aui-col-xs-3 box-item" onclick="itemClick()">
+                                        <img class="aui-iconfont aui-icon-home" src="../../image/me/kefuzhongxin1.png" alt="">
+                                        <div class="aui-grid-label">客服中心</div>
+                                    </div> -->
+                        <div class="aui-col-xs-3 box-item" onclick="itemClick('生意经')">
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/syj1.png" alt="">
+                            <div class="aui-grid-label">生意经</div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="exit" @click="backAccount()">
+                    <div class="aui-btn aui-btn-primary aui-btn-block aui-btn-outlined aui-btn-sm">退出登录</div>
+                </div>
+            </div>
+        <!-- </template> -->
+    </div>
+</body>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/vue/vue_lazyload.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery213min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_dialog.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript">
+    var infoVm
+    var backbar;
+    var shopManage;
+	var corpImgRes;
+    var itemClick
+    apiready = function () {
+        var shopUserId = $api.getStorage("userid")
+        var shopOpenId = $api.getStorage("openId")
+        backbar = function () {
+            //关闭当前window，使用默认动画
+            // api.closeWin();
+            //退出当前登录
+            // api.openWin({
+            //     name: 'login_win',
+            //     url: 'widget://html/login/login_win.html',
+            //     slidBackEnabled: true,
+            //     delay: 300
+            // });
+
+        }
+        itemClick = function () {
+            api.toast({
+                msg: '正在内测，敬请期待！'
+            });
+        }
+        setup = function () {
+            api.openWin(
+                {
+                    name: 'setup_win',
+                    url: 'widget://html/setup/setup_win.html',
+                    slidBackEnabled: true,
+                    pageParam: {
+                        state: 100,
+                        title: '设置'
+                    },
+                    delay: 300
+                }
+            );
+        },
+
+        mycommission = function () {
+                if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                    {
+                        name: 'mycommission_win',
+                        url: 'widget://html/mycommission/mycommission_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: '我的佣金'
+                        },
+                        delay: 300
+                    }
+                );
+                }
+                
+            }
+
+            mywallet = function () {
+                if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                    {
+                        name: 'mywallet_win',
+                        url: 'widget://html/mywallet/mywallet_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: '我的佣金'
+                        },
+                        delay: 300
+                    }
+                );
+                }
+                
+            }
+
+            mydetail = function () {
+                if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                    {
+                        name: 'mydetail_win',
+                        url: 'widget://html/mydetail/mydetail_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: '我的佣金'
+                        },
+                        delay: 300
+                    }
+                );
+                }
+                
+            }
+
+        myteam = function () {
+            if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                    {
+                        name: 'myteam_win',
+                        url: 'widget://html/myteam/myteam_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: '全部订单'
+                        },
+                        delay: 300
+                    }
+                );
+                }
+                
+            }
+
+            mypromote = function () {
+                if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                    {
+                        name: 'mypromote_win',
+                        url: 'widget://html/mypromote/mypromote_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: '全部订单'
+                        },
+                        delay: 300
+                    }
+                );
+                }
+                
+            }
+
+            comproblem = function () {
+                if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                    {
+                        name: 'comproblem_win',
+                        url: 'widget://html/comproblem/comproblem_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: '全部订单'
+                        },
+                        delay: 300
+                    }
+                );
+                }
+                
+            }
+
+            skipPage = function (data) {
+                if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                    {
+                        name: 'skipPage_win',
+                        url: 'widget://html/skipPage/skipPage_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: data
+                        },
+                        delay: 300
+                    }
+                );
+                }
+                
+            }
+
+            comsugges = function () {
+                if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                    {
+                        name: 'comsugges_win',
+                        url: 'widget://html/comsugges/comsugges_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: '全部订单'
+                        },
+                        delay: 300
+                    }
+                );
+                }
+                
+            }
+
+            shopManage = function () {
+                api.openWin(
+                    {
+                        name: 'shopManage_win',
+                        url: 'widget://html/shopManage/shopManage_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: '全部订单'
+                        },
+                        delay: 300
+                    }
+                );
+            }
+
+            mycommission = function () {
+                if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                    {
+                        name: 'mycommission_win',
+                        url: 'widget://html/mycommission/mycommission_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: '我的佣金'
+                        },
+                        delay: 300
+                    }
+                );
+                }
+                
+            }
+
+            mywallet = function () {
+                if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                {
+                    name: 'mywallet_win',
+                    url: 'widget://html/mywallet/mywallet_win.html',
+                    slidBackEnabled: true,
+                    pageParam: {
+                        state: 100,
+                        title: '我的佣金'
+                    },
+                    delay: 300
+                }
+            );
+                }
+                
+            
+        }
+
+        // 图片懒加载配置
+		Vue.use(VueLazyload, {
+		  preLoad: 1, // 预加载高度比例
+		  error: '../../image/placeholder_err.png', // 图片路径错误时加载图片
+		  loading: '../../image/placeholder_loading.png', // 预加载图片
+		  attempt: 1, // 尝试加载图片数量
+		  observer: true,
+		  observerOptions: {
+		    rootMargin: '0px',
+		    threshold: 0.1
+		  }
+        })
+        
+        		//上传用户头像
+		var uploadUserAvatarHttps=function(avatarPath){
+			var param={};
+			param.clientId=shopUserId;
+			param.attUser=shopUserId;
+			param.attFkId=shopUserId;
+			param.attNoWater = '1';//1没有水印
+			api.showProgress({title: '压缩头像'});
+			var imgArray=[];
+			checkCompressImg(avatarPath,function(imgPathPos){
+				var attFkName=[];
+				var attName=[];
+				if(imgPathPos!=null){
+					imgArray.push(imgPathPos);
+					attFkName.push('shop_logo');
+					attName.push('shop_logo.jpg');
+				}
+				if(imgArray.length>0){
+					//开始上传
+					param.attFkName=attFkName;
+ 			    	param.attName=attName;
+ 			    	api.showProgress({title: '上传头像'});
+ 			    	uploadFileHttps(param,imgArray,
+						function(ret){
+							api.hideProgress();
+							if(ret.status){
+								api.toast({ msg: ret.msg,duration: 2000, location: 'middle'});
+								setAvatarStor(ret.pic[0].pic);
+								infoVm.setAvaImg(ret.pic[0].pic);
+								api.sendEvent({
+								    name: 'personalInfo_send_event',
+								    extra: {
+								        personalInfoSuccess: true,
+								    }
+								});
+							} else{
+								showSingleAuiDialog('上传头像失败('+ret.code+')', ret.msg);
+							}
+						},
+						function(err){
+							api.hideProgress();
+						}
+					);
+				} else{
+					api.hideProgress();
+				}
+			});
+        };
+        
+        corpImgRes=function(ret){
+            delImgHtts(function name(funCal) {
+               if(funCal){
+                uploadUserAvatarHttps(ret.destPath);
+               } else{
+                   alert('请重新上传！')
+               }
+            })
+        };
+
+              			//删除图片
+			var delImgHtts=function(funCal){
+            api.showProgress({
+                title : '删除图片'
+            });
+            var param="clientId="+shopUserId+'&type=shop_logo'+'&userType='+'&attName=shop_logo.jpg';
+            _getHttpsData('/member/deletPhoto',param,
+                function(ret){
+                    if(ret.status){
+                            funCal(true);
+                    }else{
+                        api.toast({ msg: '删除图片失败',duration: 2000, location: 'middle'});
+                    }
+                },
+                function(err){
+                    funCal(false);
+                }
+                );
+            };
+                
+        
+        var FNImageClip;
+		function imgCutUp(path){
+			api.openWin({
+				name : 'cropimg_win',
+				url : 'widget://html/cropimg/cropimg_win.html',
+				pageParam : {
+					winName : 'main_win',
+					frmName:'me_frm',
+					funCal:'corpImgRes',
+					path : path,
+					shearBoxW:100,
+					shearBoxH:100,
+					appearance:'rectangle',
+					mode:'image'
+				},
+				delay:300,
+				slidBackEnabled : false
+			});
+		}
+
+        infoVm = new Vue({
+            el: '#info_id',
+            data: {
+                isShopDataStuta:false,
+
+                    nickname: '',
+                    shopName:'',
+                    shopLogo:'',
+                    avatar: '',
+                    starLevel: '',
+                    clientLevel: '',
+                    clientPhone: '',
+                    shopIdea:'',
+                    financeDues:''
+            },
+            methods: {
+
+                setAvaImg:function(path){
+					this.shopLogo=path;
+					console.log('this.infoData.AVATAR:'+this.shopLogo);
+				},
+
+                upAvaClick:function(){
+                    if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    //更新头像
+                    chooseCameraSheet(function(retList){
+                            //infoVm.infoData.AVATAR=retList[0];
+                            imgCutUp(retList[0]);
+                        },1,'完成');
+                    }
+				},
+
+                previewImg : function(position,imgList) {
+					api.openWin({
+						name : 'previewpicture_win',
+						url : 'widget://html/previewpicture/previewpicture_win.html',
+						pageParam : {
+							position : position,
+							imgList : imgList
+						},
+						delay:300,
+						slidBackEnabled : false
+					});
+				},
+                
+                backAccount:function(){
+					//退出当前登录
+					api.confirm({
+					    title: '退出提示',
+					    msg: '是否退出当前登录？',
+					    buttons: ['退出', '取消']
+					}, function(ret, err) {
+					    var index = ret.buttonIndex;
+					    if(index==1){
+							//切换
+							clearUserInfoCache();
+							clearShopInfoCache();
+					    	api.sendEvent({
+							    name: 'back_curlogin_send_event',
+							    extra: {
+							        backSuccess: true,
+							    }
+							});
+							api.openWin({
+								name : 'login_win',
+								url : 'widget://html/login/login_win.html',
+								delay:300,
+                                reload:true,
+                                allowEdit:true,
+							});
+						}
+					});
+				}
+            },
+        })
+
+
+
+        //初始化数据shopIdea
+        infoVm.nickname = $api.getStorage("nickname");//昵称
+        infoVm.shopName = $api.getStorage("shopName");//昵称
+        infoVm.shopLogo = $api.getStorage("shopLogo");//logo
+
+        infoVm.avatar = $api.getStorage("avatar");//用户头像
+        infoVm.starLevel = $api.getStorage("starLevel");//星级(1-5级，由返回信息时自动计算)
+        infoVm.clientLevel = $api.getStorage("clientLevel");//用户级别(0-行业代表   1-服务中心  2-县级代理  3-市级代理  4-省级代理   5-工匠  6-商铺  9-普通用户)
+        infoVm.clientPhone = $api.getStorage("clientPhone");//手机号
+        infoVm.shopIdea = $api.getStorage("shopIdea");//描述
+        infoVm.financeDues = $api.getStorage("financeDues");////余额
+
+
+
+         //监听退出当前登录
+		api.addEventListener({
+		    name: 'back_curlogin_send_event'
+		}, function(ret, err) {
+			if(ret){
+				if(ret.value.backSuccess){
+                    //退出登录成功
+                    clearUserInfoCache();
+                    clearShopInfoCache();
+                    api.closeToWin({
+							name : 'login_win',
+							url : 'widget://html/login/login_win.html',
+                            reload:true,
+                            allowEdit:true,
+						});
+				}
+			}
+		});
+
+        var getUserInfoHttps = function (param) {
+      //获取店铺信息
+      var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+      _getHttpsData('/shop/getShopInfo', param,
+        function (res) {
+          api.hideProgress();
+          if(res.code == 0001){ infoVm.isShopDataStuta = res.data.shopStatus}
+          if (res.code == 0005) {
+            infoVm.isShopDataStuta = 0
+            infoVm.affect = false
+            api.confirm({
+              title: '提示',
+              msg: '您未开店，是否申请开店',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.openWin({
+                  name : 'shopManage_win',
+                  url : 'widget://html/shopManage/shopManage_win.html',
+                  reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+          } else if (JSON.stringify(res.data).length > 0) {
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      )
+    };
+
+    //下拉刷新
+    api.setRefreshHeaderInfo({
+            loadingImg: '',
+            bgColor: '#fff',
+            textColor: '#2fc588',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...'
+        }, function(ret, err) {
+            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+            getShopDataInfo()
+        });
+
+        function getShopDataInfo(params) {
+            getShopDataHttps(function (res) {
+                if(res.code == 0001 && res.status){
+
+                    //初始化数据shopIdea
+                    infoVm.nickname = res.data.nickname;//昵称
+                    infoVm.shopName = res.data.shopName;//昵称
+                    infoVm.shopLogo = res.data.shopLogo;//logo
+                    infoVm.shopIdea = res.data.shopIdea;//描述
+                    infoVm.isShopDataStuta = res.data.shopStatus
+
+                    console.log ('sssss----'+JSON.stringify(res))
+                        api.refreshHeaderLoadDone()//关闭下拉刷新效果
+                        }else if(res.code == 0005 || res.code == 0003){
+                        api.refreshHeaderLoadDone()//关闭下拉刷新效果
+							api.toast({msg : '您未开店，尚未店铺信息',duration : 2000,location : 'bottom'});
+
+                        }else{
+                            api.toast({msg : '加载失败',duration : 2000,location : 'bottom'});
+                        api.refreshHeaderLoadDone()//关闭下拉刷新效果
+                        }
+            })  
+        } 
+
+        api.addEventListener({
+		    name: 'shopInfo_send_event'
+		}, function(ret, err) {
+			if(ret){
+				if(ret.value.shopInfoSuccess){
+                    getShopDataInfo()
+				}
+			}
+		});
+    getUserInfoHttps()
+    getShopDataInfo()
+            
+    };
+</script>
+
+</html>

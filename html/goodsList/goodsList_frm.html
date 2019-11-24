@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/goodsList/goodsList.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" />
+    <style>
+        .shop-list-icom {
+            position: absolute;
+            right: 12px;
+            bottom: 4px;
+            /* width: 1rem;
+            height: 1rem;
+            background: red; */
+            z-index: 2;
+            }
+            .goodsStatus {
+                color: #2FC588;
+            }
+            .goodsStatus1 {
+                color: red;
+            }
+            .mescroll{
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                height: auto;
+                width: 70%;
+            }
+            .item-data-null {
+            text-align: center;
+            padding: .4rem 0;
+            font-size: 0.6rem;
+            }
+
+            /* -------- */
+            body {
+    /* background-color: rgb(255, 32, 32); */
+    box-sizing: border-box;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.box-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* background: #259B24; */
+}
+ul,li{ padding:0;margin:0;list-style:none}
+.main {
+    border: 0px solid black;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    flex-direction: row;
+    align-content: flex-start;
+    flex: 1 1 0%;
+    -webkit-box-flex: 1;
+    background-color: rgb(242, 242, 242);
+    overflow: hidden;
+}
+.classify-list {
+    text-align: center;
+    border: 0px solid black;
+    position: relative;
+    box-sizing: border-box;
+    width: 25%;
+    overflow: auto;
+    height: 100vh;
+}
+.goods-list {
+    border: 0px solid black;
+    position: relative;
+    box-sizing: border-box;
+    overflow: auto;
+    width: 75%;
+    height: 100vh;
+}
+.classify-list-li {
+    line-height: 2rem;
+    height: 2rem;
+}
+.goods-list-li {
+    height: 2rem;
+    border:1px solid red;
+}
+
+.classify-item-act {
+    color: #259B24;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .6rem;
+    font-weight: normal;
+}
+.classify-item-act .sel-line {
+    top: 25%;
+    width: 5px;
+    height: 20px;
+    background-color: #259b24;
+    position: absolute;
+    margin-top: 0;
+    left: 0;
+}
+.classify-item {
+    line-height: 2rem;
+    height: 2rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .6rem;
+    font-weight: normal;
+}
+.goods-title {
+    font-size: 10px;
+
+}
+.goods-name {
+    text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;
+    width: 100%;
+    font-size: .6rem;
+    font-weight: normal;
+}
+.goods-title-box {
+}
+.goods-date {
+    font-size: .6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    padding-right: 4px;
+}
+/* --------- */
+.goods-list .aui-list-item {
+    padding-left: 0;
+}
+.goods-list .aui-list-item-media {
+    padding-right: 0;
+    width: 3rem;
+    justify-content: center;
+}
+.goods-list .aui-list-item-media img{
+    width:60px; 
+}
+.goods-list-content {
+    font-size: 0.6rem;
+}
+.goods-list .aui-list-item-inner {
+    padding: 0 2px 0 2px;
+}
+.goods-list ul {
+    font-size: 0.6rem;
+}
+.data-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.aui-list .aui-list-item-title {
+width: 100%;
+}
+
+    </style>
+</head>
+<body>
+    <div id="info_id" class="main" id="tab1-con">
+    <!-- <template>
+            <div class="aui-content aui-margin-b-15">
+                <ul class="aui-list aui-media-list">
+                    <li class="aui-list-item aui-list-item-middle" v-for='(item,index) in goodsList' @click='goodsDetail(item)'>
+                        <i @click="shadeIcon(item,index)" class="aui-iconfont aui-icon-more shop-list-icom"></i>
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="width: 3rem;">
+                                <img :src="item.itemSpec[0][0].imgUrl" class="aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-12">
+                                        <span class="goodsStatus" v-if="item.itemStatus == 2">(已上架)</span>
+                                        <span class="goodsStatus1" v-if="item.itemStatus == 1">(审核中)</span>
+                                        <span class=""  v-if="item.itemStatus == 0">(未上架)</span>
+                                        <span class="goodsStatus1"  v-if="item.itemStatus == 3">(审核不通过)</span>
+                                        {{item.itemName}}
+                                        </div>
+                                    <div class="aui-list-item-right">{{item.lastEditDate}}</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    <span class="goodsInfo">价格：{{item.itemPrice}}</span><span class="goodsInfo">库存：{{item.upNumber}}</span><span class="goodsInfo">单位：{{item.itemUnit}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+    </template> -->
+    <ul class="classify-list mescroll-touch">
+            <li class="classify-list-li" v-for='(classIfy,index) in ClassIfyList' @click='clickIfy(classIfy)'>
+                <div class="classify-item-choose" v-if='classIfy.itemClassId==curFirstClass.itemClassId'>
+                    <div class='classify-item-act'>
+                        <label class='sel-line'></label>
+                        {{classIfy.className}}
+                    </div>
+                </div>
+                <div v-else class='classify-item'>
+                    {{classIfy.className}}
+                </div>
+            </li>
+        </ul>
+        <!-- <ul class="goods-list">
+            <li class="goods-list-li" v-for='(item,index) in goodsList' @click='goodsDetail(item)'>
+                商品1
+            </li>
+
+        </ul> -->
+        <div id="mescroll" class="mescroll goods-list">
+            <p v-if ='showGoodsList' class="downwarp-tip">加载中..</p>
+            <ul v-else class="aui-list aui-media-list">
+                <li class="aui-list-item aui-list-item-middle" v-for='(item,index) in goodsList' @click='goodsDetail(item)'>
+                    <!-- <i @click="shadeIcon(item,index)" class="aui-iconfont aui-icon-more shop-list-icom"></i> -->
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-media">
+                            <img :src="item.itemSpec[0][0].imgUrl" class="aui-list-img-sm">
+                            <!-- <img src="../../image/data.jpg" class="aui-list-img-sm"> -->
+                        </div>
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-text goods-title-box">
+                                <div class="aui-list-item-title aui-font-size-12 aui-row goods-title">
+                                    <span class="aui-ellipsis-2 aui-col-xs-8">{{item.itemName}}</span>
+
+                                    <span class="goods-date aui-col-xs-4">
+                                        <span class="goodsStatus" v-if="item.itemStatus == 2">已上架</span>
+                                        <span class="goodsStatus1" v-if="item.itemStatus == 1">审核中</span>
+                                        <span class="goodsStatus1" v-if="item.itemStatus == 0">未上架</span>
+                                        <span class="goodsStatus1"  v-if="item.itemStatus == 3">审核失败</span>
+                                    </span>
+                                </div>
+                                
+                            </div>
+                            <div class="goods-list-content aui-font-size-12">
+                                <p>
+                                    <span class="goodsInfo aui-font-size-12">价格:{{item.itemPrice}}</span>
+                                    <span class="goodsInfo aui-font-size-12">库存:{{item.upNumber}}</span>
+                                </p>
+                                <p class="data-status aui-font-size-12">
+                                     <span class="goodsInfo aui-font-size-12" v-if='item.lastEditDate'>时间:{{item.lastEditDate}}</span>
+                                     <span class="goodsInfo aui-font-size-12" v-else-if='item.upDate'>时间:{{item.upDate}}</span>
+                                     <span class="goodsInfo aui-font-size-12" v-else='item.submitDate'>时间:{{item.submitDate}}</span>
+                                     
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="item-data-null" v-if ='resNoData'>
+                    <p class="downwarp-progress"></p><p class="downwarp-tip">加载完毕</p>
+                </li>
+            </ul>
+         </div>
+        
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery.mobile.custom.min.js"></script>
+<script type="text/javascript" src="../../script/md5/base64.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/mescroll/mescrollmin.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+    var shopUserId = $api.getStorage("userid")
+    var shopOpenId = $api.getStorage("openId")
+    var infoVm
+    var indexPage=1;//页码
+	var pageNum=30;//每页的数量
+
+    //所有商品列表
+    var getGoodsList = function (param) {
+      var goodsParam = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' +
+                 '&sortType=ASC' + '&startPage=1' +'&recordSize=10' + '&from=shopApp';	
+				_getHttpsData('/shop/getShopItemList',goodsParam,
+					function(ret){
+						if(ret.status){
+                            ret.data.length == 0 ? infoVm.resNoData = true : infoVm.resNoData = false;
+                            infoVm.goodsList = []
+                            infoVm.goodsList = ret.data
+                            for(var ListItem in infoVm.goodsList){//时间格式调整 
+                                if(infoVm.goodsList[ListItem].lastEditDate){
+                                infoVm.goodsList[ListItem].lastEditDate = dataFormatting(infoVm.goodsList[ListItem].lastEditDate)
+                                }
+                                if(infoVm.goodsList[ListItem].upDate){
+                                infoVm.goodsList[ListItem].upDate = dataFormatting(infoVm.goodsList[ListItem].upDate)
+                                }
+                                if(infoVm.goodsList[ListItem].submitDate){
+                                infoVm.goodsList[ListItem].submitDate = dataFormatting(infoVm.goodsList[ListItem].submitDate)
+                                }
+                            }
+                            mescroll.endSuccess();
+                            // var shopItemList = JSON.parse(JSON.stringify(infoVm.goodsData.itemSpec))
+                            //     shopItemList.forEach(function (item,index) {
+                            //     const element = shopItemList[index][index];
+                            //     infoVm.itemSpecData.push(element);
+                            //     });
+                            // infoVm.goodsData.itemSpec = infoVm.itemSpecData
+                            // console.log (JSON.stringify(infoVm.goodsData.itemSpec))
+						}else{
+						}
+					},
+					function(err){
+					}
+				);
+    };
+
+    api.parseTapmode();
+    var tab = new auiTab({
+        element: document.getElementById("tab"),
+    }, function (ret) {
+        if (ret) {
+            //定义获取对象的所有兄弟节点的函数，
+            function siblings(elm) {
+                var a = [];
+                var p = elm.parentNode.children;
+                for (var i = 0, pl = p.length; i < pl; i++) {
+                    if (p[i] !== elm) a.push(p[i]);
+                }
+                return a;
+            }
+            var index = ret.index;
+            var activeC = document.getElementById("tab1-con" + index);
+            activeC.className = "";
+            for (var i = 0; i < siblings(activeC).length; i++) {
+                siblings(activeC)[i].className = "aui-hide";
+            }
+        }
+    });
+
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+        currentIndex:null,//记录当前选中数据
+        isShade:false,
+        goodsList:[], //商品列表
+        resNoData:false,//获取到空数据时
+        showGoodsList:true,
+        ClassIfyList:[],//分类列表
+        curFirstClass: {
+            itemClassId: '',
+            classAllNo: '',
+            className: ''
+        },
+
+      },
+      watch: {
+                goodsList(val,oldval){
+                    if(val){
+                        infoVm.showGoodsList = false
+                    }else{
+                        infoVm.showGoodsList = true
+                    }
+                    }
+            },
+      methods: {
+        goodsDetail: function (e){
+        var goodsInfo = JSON.stringify(e)
+            api.openWin(
+                {
+                    name: 'goodsDetail_win',
+                    url: 'widget://html/goodsDetail/goodsDetail_win.html',
+                    slidBackEnabled: true,
+                    pageParam:{
+                        DetailPageParam:e,
+						    },
+                    delay: 300
+                }
+            );
+    },
+        shadeClick : function(item,index){
+        this.currentIndex=null
+        // alert ('shadeClick'+JSON.stringify (item))
+        // alert ('shadeClick'+JSON.stringify (index))
+    },
+    shadeIcon: function(item,index) {
+        this.currentIndex = index
+        // alert (this.currentIndex)
+        // alert (this.isShade)
+    },
+    butClick: function(item,index) {
+        // alert ('butClick'+JSON.stringify (item))
+        // alert ('butClick'+JSON.stringify (index))
+        this.currentIndex=null
+      },
+
+      appendData:function(data){
+            this.goodsList=this.goodsList.concat(data);
+        },
+
+        //点击左Tab
+        clickIfy:function(item){
+            if (infoVm.curFirstClass.classAllNo == item.classAllNo) return; //防止重复请求 
+                infoVm.curFirstClass.itemClassId = item.itemClassId;
+                infoVm.curFirstClass.classAllNo = item.classAllNo;
+                infoVm.curFirstClass.className = item.className;
+
+            if(item.classAllNo == 'All'){ //判断是否点击 全部分类
+                getGoodsList() //获取全部分类
+            }else {
+                //获取该分类商品
+                var param = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' +
+                '&sortType=ASC' + '&startPage=1'+ '&recordSize=10' + '&from=shopApp' + '&itemClassId=' + infoVm.curFirstClass.itemClassId + '&classAllNo=' + infoVm.curFirstClass.classAllNo;	
+                _getHttpsData('/shop/getShopItemList',param,
+                    function(ret){
+                        if(ret.status){
+                            ret.data.length == 0 ? infoVm.resNoData = true : infoVm.resNoData = false;
+                            infoVm.goodsList = []
+                            infoVm.goodsList = ret.data
+                            for(var ListItem in infoVm.goodsList){//时间格式调整
+                                if(infoVm.goodsList[ListItem].lastEditDate){
+                                infoVm.goodsList[ListItem].lastEditDate = dataFormatting(infoVm.goodsList[ListItem].lastEditDate)
+                                }
+                                if(infoVm.goodsList[ListItem].upDate){
+                                infoVm.goodsList[ListItem].upDate = dataFormatting(infoVm.goodsList[ListItem].upDate)
+                                }
+                            }
+                            mescroll.endSuccess();
+                            // var shopItemList = JSON.parse(JSON.stringify(infoVm.goodsData.itemSpec))
+                            //     shopItemList.forEach(function (item,index) {
+                            //     const element = shopItemList[index][index];
+                            //     infoVm.itemSpecData.push(element);
+                            //     });
+                                // infoVm.goodsData.itemSpec = infoVm.itemSpecData
+                                // console.log (JSON.stringify(infoVm.goodsData.itemSpec))
+                        }else{
+                        }
+                    },
+                    function(err){
+                    }
+                );
+            }
+        },
+
+            //重新获取该商品数据
+			geIfyHttpsData : function(isRefresh){
+                if(isRefresh){
+					indexPage=1;
+				}else{
+					indexPage++;
+				}
+                if(infoVm.curFirstClass.classAllNo == 'All'){ //判断是否点击 全部分类
+                    // getGoodsList() //获取全部分类
+                    var param = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' +'&sortType=ASC' + '&startPage='+indexPage+'&recordSize=' +pageNum+ '&from=shopApp';	
+                }else {
+                     //获取该分类商品
+                        var param = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' + '&sortType=ASC' + '&startPage='+ indexPage + '&recordSize=' +pageNum+ '&from=shopApp' + '&itemClassId=' + infoVm.curFirstClass.itemClassId + '&classAllNo=' + infoVm.curFirstClass.classAllNo;	
+                        }
+                _getHttpsData('/shop/getShopItemList',param,
+                    function(ret){
+                        if(ret.status){
+                            ret.data.length == 0 ? infoVm.resNoData = true : infoVm.resNoData = false;
+                            if(isRefresh){infoVm.goodsList=[]}
+	                        mescroll.endErr();  //隐藏下拉刷新的状态
+                                
+                                ret.data.map(function (item,index) {
+                                infoVm.goodsList.push (item)
+                            });
+                            for(var ListItem in infoVm.goodsList){//时间格式调整
+                                if(infoVm.goodsList[ListItem].lastEditDate){
+                                infoVm.goodsList[ListItem].lastEditDate = dataFormatting(infoVm.goodsList[ListItem].lastEditDate)
+                                }
+                                if(infoVm.goodsList[ListItem].upDate){
+                                infoVm.goodsList[ListItem].upDate = dataFormatting(infoVm.goodsList[ListItem].upDate)
+                                }
+                            }
+                            infoVm.showGoodsList = false
+
+                        }else{
+                            infoVm.showGoodsList = false
+
+	                        mescroll.endErr();  //隐藏下拉刷新的状态
+                            if(indexPage>0){
+								indexPage--;
+							}
+							api.toast({ msg: res.msg+'('+res.code+')',duration: 2000, location: 'bottom'});
+                        }
+                    },
+                    function(err){
+                        api.hideProgress();
+						if(indexPage>0){
+							indexPage--;
+						}
+                    });
+                
+                
+          }
+        }
+    }) //vue end
+
+     //监听
+		api.addEventListener({
+		    name: 'outOfStock_status'
+		}, function(ret, err) {
+			if(ret){
+				if(ret.value.goodsStatus){
+                    infoVm.goodsList=[]
+                    infoVm.classAllNo == 'All'
+                    getClassIfyList()
+                    getGoodsList()
+				}
+			}
+		});
+
+    //获取分类
+    getClassIfyList = function () {
+      _getHttpsData("/shop/getItemClass?classParentId=1&shopId=" + shopUserId, "",
+        function (ret) {
+          if (ret.status) {
+            infoVm.ClassIfyList = []
+            ret.data.forEach(function (item) {
+              infoVm.ClassIfyList.push(item);
+            });
+            var allClass={
+                itemClassId: 'All',
+                classAllNo: 'All',
+                className: '全部商品'
+            }
+            infoVm.ClassIfyList.unshift(allClass)		
+            infoVm.curFirstClass={ //默认选择全部
+                itemClassId: infoVm.ClassIfyList[0].itemClassId,
+                classAllNo: infoVm.ClassIfyList[0].classAllNo,
+                className: infoVm.ClassIfyList[0].className
+                }
+                getGoodsList()
+          } else {
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      );
+    }
+
+        var getUserInfoHttps = function (param) {
+      // 	//获取店铺信息
+      api.showProgress();
+      var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+      _getHttpsData('/shop/getShopInfo', param,
+        function (res) {
+          api.hideProgress();
+          if (res.code == 0005) {
+            infoVm.shopData = false
+            infoVm.affect = false
+            api.confirm({
+              title: '提示',
+              msg: '您未开店，是否申请开店',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.openWin({
+                  name : 'shopManage_win',
+                  url : 'widget://html/shopManage/shopManage_win.html',
+                  reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+          } else if (JSON.stringify(res.data).length > 0) {
+            if(res.data.shopStatus == 1){
+              api.confirm({
+              title: '提示',
+              msg: '店铺审核中，请联系管理员',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+            }
+            if(res.data.shopStatus == 3){
+              api.confirm({
+              title: '提示',
+              msg: '店铺信息审核未通过，请重新提交审核',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+            }
+            getClassIfyList()
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      )
+    };
+    getUserInfoHttps()
+
+    //下拉刷新
+    //创建MeScroll对象
+			var mescroll = new MeScroll("mescroll", {
+				down: {
+					auto: false, //是否在初始化完毕之后自动执行下拉回调callback; 默认true
+					callback: downCallback //下拉刷新的回调
+				},
+				up: {
+					auto: false, //是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
+					isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+					callback: upCallback, //上拉回调,此处可简写; 相当于 callback: function (page) { upCallback(page); }
+					toTop:{ //配置回到顶部按钮
+						src : "../../image/icon/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+						//offset : 1000
+					}
+				}
+            });
+            
+            /*下拉刷新的回调 */
+			function downCallback(){
+                infoVm.showGoodsList = false
+				infoVm.geIfyHttpsData(true)
+            }
+            
+            /*上拉加载的回调  */
+			function upCallback(page){
+            infoVm.showGoodsList = false
+            infoVm.geIfyHttpsData(false)
+			}
+			
+            infoVm.geIfyHttpsData(true)
+
+}
+
+
+</script>
+
+</html>

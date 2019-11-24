@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui_flex.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+  <style>
+            .but-click {
+           display: flex;
+           justify-content: flex-end;
+            align-items: center;
+        }
+        .but-click .aui-btn{
+            margin-left:.3rem;
+        }
+  </style>
+</head>
+
+<body>
+  <div id="info_id">
+    <template>
+      <section class="aui-content-padded">
+        <h4>退货订单信息</h4>
+        <p>商品名称：{{orderData.ITEM_NAME}}</p>
+        <p>规格：{{orderData.SHOP_ITEM_SPEC_ATTR}}</p>
+        <p class="" v-if="orderData.CART_STATUS == 2">状态：申请退货-{{orderData.CART_STATUS}}</p>
+        <p class="" v-if="orderData.CART_STATUS == 3">状态：同意退货-{{orderData.CART_STATUS}}</p>
+        <p class="" v-if="orderData.CART_STATUS == 4">状态：客户发货-{{orderData.CART_STATUS}}</p>
+        <p class="" v-if="orderData.CART_STATUS == 7">状态：确认退货-{{orderData.CART_STATUS}}</p>
+        <p class="" v-if="orderData.CART_STATUS == 8">状态：申请退货-{{orderData.CART_STATUS}}</p>
+        <p class="" v-if="orderData.CART_STATUS == 11">状态：拒绝退货-{{orderData.CART_STATUS}}</p>
+        <p class="" v-if="orderData.CART_STATUS == 6">状态：确认退货-{{orderData.CART_STATUS}}</p>
+        <p class="" v-if="orderData.CART_STATUS == 9">状态：客户发货-{{orderData.CART_STATUS}}</p>
+        <p class="" v-if="orderData.CART_STATUS == 5">状态：拒绝退货-{{orderData.CART_STATUS}}</p>
+        <p>普通单号：{{orderData.ORDER_NO}}</p>
+        <p v-if='orderData.PHOTO_ORDER_ID'>拍照单号：{{orderData.PHOTO_ORDER_ID}}</p>
+        <p>日期：{{orderData.BACK_REASON_DATE}}</p>
+        <p class="aui-row">
+          <span class="aui-col-xs-6"> 金额：{{orderData.ITEM_PRICE}}</span>
+          <span class="aui-col-xs-6"> 数量：{{orderData.ITEM_NUMBER}}</span>
+        </p>
+        <p>描述：{{orderData.BACK_REASON}}</p>
+      </section>
+      <section class="aui-content-padded">
+          <h4>客户信息</h4>
+          <p>名称：{{orderData.CLIENT_NAME}}</p>
+          <p>电话：{{orderData.CLIENT_PHONE}}</p>
+          <p>地址：{{orderData.CLIENT_ADDRESS}}</p>
+        </section>
+        <section class="aui-content-padded">
+            <div class="aui-row but-click">
+                <span aui-col-xs-4>
+                    <div class="aui-btn aui-btn-success" v-if="orderData.agreeToReturn"
+                        @click="confirmSend(orderData)">同意退货</div>
+                </span>
+                <span aui-col-xs-4>
+                    <div class="aui-btn aui-btn-danger" v-if="orderData.refuseToReturn"
+                        @click="cancelOrder(orderData)">
+                        拒绝退货</div>
+                </span>
+                <span aui-col-xs-4>
+                    <div class="aui-btn aui-btn-info" v-if="orderData.confirmToReturn"
+                        @click="achieve(orderData)">确认退货</div>
+                </span>
+            </div>
+        </section>
+      <ul class="aui-list aui-media-list">
+        <li class="aui-list-item">
+          <div class="aui-list-item-inner">
+            <div class="aui-list-item-title">相关图片</div>
+            <!-- <p>图片列表</p> -->
+            <div class="aui-row aui-row-padded">
+              <div class="aui-col-xs-4" v-for='(item,index) in DetailImg'>
+                <img @click="previewImg(index,DetailImg)" :src="item" />
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </template>
+  </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_dialog.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery213min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/picker/pickermin.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+
+<script type="text/javascript">
+  var infoVm;
+  var backbar;
+  var orderStatus;
+  apiready = function () {
+    var itemData = api.pageParam;//页面提交过来的参数
+    var shopUserId = $api.getStorage("userid")
+
+    auiDialog_ = new auiDialog();
+
+
+    var getPageData = function () {
+      infoVm.goodsData = {}
+      infoVm.orderData = itemData.itemData.itemData
+      console.log (JSON.stringify(infoVm.orderData))
+    }
+
+    backbar = function () {
+      //关闭当前window，使用默认动画
+      api.closeWin();
+    }
+
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+        orderData: {},
+        DetailImg: []
+      },
+
+
+
+      methods: {
+
+                    //拒绝退货
+                    cancelOrder: function (data) {
+                    auiDialog_.prompt({
+                        title: "提示",
+                        text: '请输入拒绝原因',
+                        buttons: ['取消', '确定']
+                    }, function (ret) {
+                        if (ret.buttonIndex == 2) {
+                            if (data.refuseToReturn) {
+                                var param = 'MODE=2' + '&SHOP_CART_ID=' + data.SHOP_CART_ID +
+                                    '&BACK_REASON_REFUSE=' + ret.text;
+                                _getHttpsData('/order/confirmBackGoods', param,
+                                    function (ret) {
+                                        if (ret.code == 0) {
+                                            api.sendEvent({
+                                                name: 'cancelOrder_list_status',
+                                                extra: {
+                                                    orderStatus: true,
+                                                }
+                                            });
+                                            api.toast({msg: ret.msg,duration : 2000,location : 'middle'});
+                                            setTimeout(() => {
+                                              backbar();
+                                            }, 2000);
+                                            orderStatus = ''
+                                        }
+                                    },
+                                    function (err) { }
+                                );
+                            }
+                        }
+                    })
+                },
+
+                //同意退货
+                confirmSend: function (data) {
+                    api.confirm({
+                        title: '提示',
+                        msg: '是否确定同意退货？',
+                        buttons: ['确定', '取消']
+                    }, function (ret, err) {
+                        var index = ret.buttonIndex;
+                        if (index == 1) {
+                            if (data.agreeToReturn) {
+                                var param = 'MODE=0' + '&SHOP_CART_ID=' + data.SHOP_CART_ID;
+                                _getHttpsData('/order/confirmBackGoods', param,
+                                    function (ret) {
+                                        if (ret.code == 0) {
+                                            api.sendEvent({
+                                                name: 'cancelOrder_list_status',
+                                                extra: {
+                                                    orderStatus: true,
+                                                }
+                                            });
+                                            api.toast({msg: ret.msg,duration : 2000,location : 'middle'});
+                                            setTimeout(() => {
+                                              backbar();
+                                            }, 2000);
+                                            orderStatus = ''
+                                        }
+                                    },
+                                    function (err) { }
+                                );
+                            }
+                        } else { }
+                    })
+                },
+                //确认退货
+                achieve: function (data) {
+                    api.confirm({
+                        title: '提示',
+                        msg: '是否确认退货？',
+                        buttons: ['确定', '取消']
+                    }, function (ret, err) {
+                        var index = ret.buttonIndex;
+                        if (index == 1) {
+                            if (data.confirmToReturn) {
+                                    var param = 'MODE=1' + '&SHOP_CART_ID=' + data.SHOP_CART_ID;
+                                    _getHttpsData('/order/confirmBackGoods', param,
+                                        function (ret) {
+                                            if (ret.code == 0) {
+                                                api.sendEvent({
+                                                    name: 'cancelOrder_list_status',
+                                                    extra: {
+                                                        orderStatus: true,
+                                                    }
+                                                });
+                                                api.toast({msg: ret.msg,duration : 2000,location : 'middle'});
+                                                setTimeout(() => {
+                                                  backbar();
+                                                }, 2000);
+                                                orderStatus = ''
+                                            }
+                                        },
+                                        function (err) { }
+                                    );
+                            }
+                        }
+                    })
+                },
+
+        getDetailImg : function() { //获取退货截图
+          var param = 'clientId=' + this.orderData.SHOP_CART_ID + '&userType=6&type=shop_after_sale&queryType=order';
+          _getHttpsData("/member/getPhoto", param,
+            function (ret) {
+              this.DetailImg = ret.pic.forEach( function(element,index) {
+                infoVm.DetailImg.push(element.pic)
+              });
+            },
+            function (err) {
+              api.hideProgress();
+            }
+          );
+        },
+
+
+        previewImg : function(position, imgList) {//图片预览
+						var imgListTemp =[];//详情图
+						for(var index in imgList){
+							imgListTemp.push(imgList[index]);
+						}
+						api.openWin({
+							name : 'previewpicture_win',
+							url : 'widget://html/previewpicture/previewpicture_win.html',
+							pageParam : {
+								position : position,
+								imgList : imgListTemp
+							},
+							slidBackEnabled : false,
+							delay : 300
+						});
+          },
+
+
+      },
+      mounted: function () {
+      },
+
+    });
+    getPageData()
+    infoVm.getDetailImg()
+  }
+</script>
+
+</html>

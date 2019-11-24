@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" />
+    <style>
+        body {
+            background: #eee
+        }
+
+        .goodsStatus {
+            color: red;
+        }
+        .goodsStatus {
+            color: red;
+            white-space: nowrap;
+            padding: 2px 4px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .goods-status-null {
+            white-space: nowrap;
+            padding: 2px 4px;
+            border-radius: 10px;
+            text-align: center;
+            color: #11CF9C;
+        }
+        .but-click {
+           display: flex;
+           justify-content: flex-end;
+            align-items: center;
+        }
+        .but-click .aui-btn{
+            margin-left:.3rem;
+        }
+        .goods-list {
+            background: #eee
+        }
+        .goods-list .goods-list-item{
+            margin: .3rem 0 !important;
+            border-radius: 4px;
+            border: #eee solid .5px;
+            background: #fff
+        }
+        .mescroll {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        height: auto;
+        }
+        .item-data-null {
+        text-align: center;
+        padding: 2rem 0;
+        }
+        .date-status {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .order-status {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="info_id" class="aui-padded-5 " id="tab1-con">
+            <template>
+                <div id="mescroll" class="mescroll aui-content aui-margin-b-15">
+                    <ul class="aui-list aui-media-list goods-list">
+                        <li class="item-data-null" v-if ='showGoodsList'>
+                        <p class="downwarp-progress"></p><p class="downwarp-tip">加载中..</p>
+                        </li>
+                        <li v-for='item in goodsList' class="aui-list-item aui-list-item-middle goods-list-item">
+                            <div class="aui-media-list-item-inner">
+                                <div @click="toDetail(item,'cancelOrder')" class="aui-list-item-media" style="width: 3rem;">
+                                    <img :src="item.imgUrl" class="aui-list-img-sm">
+                                </div>
+                                <div class="aui-list-item-inner aui-list-item-arrow">
+                                    <div  @click="toDetail(item,'cancelOrder')">
+                                        <div class="aui-font-size-12 aui-row">
+                                           <span class="aui-ellipsis-2 aui-col-xs-9">{{item.itemName}}</span> 
+                                            <span class="aui-font-size-12 aui-col-xs-3 order-status">
+                                                <span class="goods-status-null" v-if="item.orderStatus == 2">已收货</span>
+                                                <span class="goods-status-null" v-if="item.orderStatus == 3">已发货</span>
+                                                <span class="goods-status-null" v-if="item.orderStatus == 0">未支付</span>
+                                                <span class="goodsStatus" v-if="item.orderStatus == 1">待发货</span>
+                                                <span class="goods-status-null" v-if="item.orderStatus == 6">取消订单</span>
+                                                <span class="goods-status-null" v-if="item.orderStatus == 7">售后</span>
+                                                <span class="goodsStatus" v-if="item.orderStatus == 8">申请退货</span>
+                                                <span class="goods-status-null" v-if="item.orderStatus == 9">客户退货</span>
+                                                <span class="goods-status-null" v-if="item.orderStatus == 11">拒绝退货</span>
+                                                <span class="goods-status-null" v-if="item.orderStatus == 4">待评价</span>
+                                                <!-- <span class="goods-status-null">{{item.orderStatus}}</span> -->
+                                            </span>
+                                        </div>
+                                    <div class="aui-list-item-text aui-row aui-font-size-12">
+                                        <span class="aui-col-xs-12">姓名:{{item.clientName}}</span>
+                                        <!-- <span class="aui-col-xs-6">电话:{{item.clientPhone}}</span> -->
+                                    </div>
+                                    <p class="aui-font-size-12">时间:{{item.createDate}}</p>
+                                    <div class="aui-list-item-text aui-font-size-12 date-status">
+                                        <div>普通单号:{{item.orderNo}}</div>
+                                       
+                                    </div>
+                                    <p class="aui-font-size-12" v-if='item.photoOrderId'>拍照单号:{{item.photoOrderId}}</p>
+                                    <!-- <div class="aui-list-item-text aui-font-size-12">
+                                        地址:{{item.clientAddress}}
+                                    </div> -->
+                                    </div>
+                                    <div class="aui-row but-click">
+                                        <span aui-col-xs-6>
+                                            <div class="aui-btn aui-btn-sm aui-btn-success" v-if="item.orderStatus == 0"
+                                                @click="cancelOrder(item)">取消订单</div>
+                                        </span>
+                                        <span aui-col-xs-6>
+                                                <div class="aui-btn aui-btn-sm aui-btn-success" v-if="item.orderStatus == 1"
+                                                @click="toDetail(item,'cancelOrder')">去发货</div>
+                                        </span>
+                                        <span aui-col-xs-6>
+                                            <div class="aui-btn aui-btn-sm aui-btn-danger" v-if="item.orderStatus == 9" @click="confirmRepeal(item)">
+                                                确认退货</div>
+                                        </span>
+                                        <!-- <span aui-col-xs-6>
+                                            <div class="aui-btn aui-btn-sm aui-btn-info" v-if="item.orderStatus == 1"
+                                                @click="confirmSend(item)">确认发货</div>
+                                        </span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-data-null" v-if ='resNoData'>
+                            <p class="downwarp-progress"></p><p class="downwarp-tip">加载完毕</p>
+                        </li>
+                    </ul>
+                </div>
+            </template>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_dialog.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery.mobile.custom.min.js"></script>
+<script type="text/javascript" src="../../script/md5/base64.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/mescroll/mescrollmin.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+        var infoVm
+        var shopUserId = $api.getStorage("userid")
+        var shopOpenId = $api.getStorage("openId")
+        var shopId = $api.getStorage("shopId"); //
+        var token = $api.getStorage("token")
+        var orderStatus = ''
+        var indexPage=1;//页码
+	    var pageNum=10;//每页的数量
+
+        auiDialog_ = new auiDialog();
+
+        //获取订单列表
+        var getListData = function (isRefresh) {
+            if(isRefresh){
+                indexPage=1;
+            }else{
+                indexPage++;
+            }
+        var goodsParam = 'shopId=' + shopUserId + '&startPage=' + indexPage + '&recordSize='+ pageNum +'&orderStatus=1';
+        _getHttpsData('/order/getShopOrderList', goodsParam,
+            function (ret) {
+                if (ret.status) {
+                    ret.data.length == 0 ? infoVm.resNoData = true : infoVm.resNoData = false;
+                    if(isRefresh){infoVm.goodsList=[]}
+                    mescroll.endErr();  //隐藏下拉刷新的状态
+                    ret.data.forEach(function(element,index){
+                        if(element.orderStatus == 1){
+                            element.createDate = dataFormatting(element.createDate) //时间格式
+                            infoVm.goodsList.push(element)
+                        }
+                    });
+                    infoVm.showGoodsList = false
+
+                } else {
+                    infoVm.showGoodsList = false
+
+                    // alert(ret.msg)
+                }
+            },
+            function (err) {
+                infoVm.showGoodsList = false
+
+            }
+        );
+        }
+
+
+        var fnOrderStatus = function (_STATUS) {
+            switch (_STATUS) {
+                case 1:
+                    orderStatus = 1
+                    break;
+                case 2:
+                    orderStatus = 2
+                    break;
+                case 3:
+                    orderStatus = 3
+                    break;
+                case 4:
+                    orderStatus = 4
+                    break
+                case 5:
+                    orderStatus = 5
+                    break;
+                case 6:
+                    orderStatus = 6 //确认退货
+                    break;
+                case 7:
+                    orderStatus = 7 //确认退货
+                    break;
+                case 8:
+                    orderStatus = 2
+                    break;
+                case 9:
+                    orderStatus = 4
+                    break;
+                case 10:
+                    orderStatus = 3
+                    break;
+                case 11:
+                    orderStatus = 5
+                    break;
+                default:
+            }
+            if (orderStatus == 2) {
+                infoVm.agreeToReturn = true //同意退货
+                infoVm.refuseToReturn = true //拒绝退货
+                infoVm.confirmToReturn = false //确认退货
+            } else if (orderStatus == 4) {
+                infoVm.agreeToReturn = false
+                infoVm.refuseToReturn = false
+                infoVm.confirmToReturn = true
+            } else {
+                infoVm.agreeToReturn = false
+                infoVm.refuseToReturn = false
+                infoVm.confirmToReturn = false
+            }
+        }
+
+        api.parseTapmode();
+        var tab = new auiTab({
+            element: document.getElementById("tab"),
+
+        }, function (ret) {
+            if (ret) {
+                //定义获取对象的所有兄弟节点的函数，
+                function siblings(elm) {
+                    var a = [];
+                    var p = elm.parentNode.children;
+                    for (var i = 0, pl = p.length; i < pl; i++) {
+                        if (p[i] !== elm) a.push(p[i]);
+                    }
+                    return a;
+                }
+                var index = ret.index;
+                var activeC = document.getElementById("tab1-con" + index);
+                activeC.className = "";
+                for (var i = 0; i < siblings(activeC).length; i++) {
+                    siblings(activeC)[i].className = "aui-hide";
+                }
+            }
+        });
+        infoVm = new Vue({
+            el: "#info_id",
+            data: {
+                agreeToReturn: '', //同意退货
+                refuseToReturn: '', //决绝退货
+                confirmToReturn: '', //确认退货
+                goodsList: [],
+                resNoData:false,//获取到空数据时
+                showGoodsList:true,
+            },
+            watch: {
+                goodsList(val,oldval){
+                    if(val){
+                        infoVm.showGoodsList = false
+                    }else{
+                        infoVm.showGoodsList = true
+                    }
+                    }
+            },
+            methods: {
+                //确认退货
+                achieve: function (data) {
+                    api.confirm({
+                        title: '提示',
+                        msg: '是否确认退货？',
+                        buttons: ['确定', '取消']
+                    }, function (ret, err) {
+                        var index = ret.buttonIndex;
+                        if (index == 1) {
+                            fnOrderStatus(data.CART_STATUS)
+                            if (infoVm.confirmToReturn) {
+                                fnOrderStatus(data.CART_STATUS)
+                                if (orderStatus == '确认退货' || infoVm.confirmToReturn) {
+                                    var param = 'MODE=1' + '&SHOP_CART_ID=' + data.SHOP_CART_ID;
+                                    _getHttpsData('/order/confirmBackGoods', param,
+                                        function (ret) {
+                                            if (ret.status) {
+                                                api.sendEvent({
+                                                    name: 'order_list_status',
+                                                    extra: {
+                                                        orderStatus: true,
+                                                    }
+                                                });
+                                                orderStatus = ''
+                                            }
+                                            api.toast({
+                                                msg: ret.msg
+                                            });
+                                        },
+                                        function (err) { }
+                                    );
+                                }
+                            }
+                        }
+                    })
+                },
+
+                toDetail: function (data,cancelOrder) {
+                    api.openWin(
+                        {
+                            name: 'orderDetail_win.html',
+                            url: 'widget://html/orderDetail/orderDetail_win.html',
+                            slidBackEnabled: true,
+                            pageParam: {
+                                state: 100,
+                                title: '全部订单',
+                                itemData: data,
+                                cancelOrder:cancelOrder
+                            },
+                            delay: 300
+                        }
+                    );
+                }
+            },
+        })
+
+        var getUserInfoHttps = function (param) {
+            //获取店铺信息
+            api.showProgress();
+            var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+            _getHttpsData('/shop/getShopInfo', param,
+                function (res) {
+                    api.hideProgress();
+                    if (res.code == 0005) {
+                        infoVm.shopData = false
+                        infoVm.affect = false
+                        api.confirm({
+                            title: '提示',
+                            msg: '您未开店，是否申请开店',
+                            buttons: ['确定', '取消']
+                        }, function (ret, err) {
+                            var index = ret.buttonIndex;
+                            if (index == 1) {
+                                api.openWin({
+                                    name: 'shopManage_win',
+                                    url: 'widget://html/shopManage/shopManage_win.html',
+                                    reload: true,
+                                });
+                            } else {
+                                api.closeToWin({
+                                    name: 'main_win',
+                                    url: 'widget://html/main/main_win.html',
+                                    reload: true,
+                                });
+                            }
+                        })
+                    } 
+                    // else if (JSON.stringify(res.data).length > 0) { }
+                },
+                function (err) {
+                    api.hideProgress();
+                }
+            )
+        };
+
+        //监听
+        api.addEventListener({
+            name: 'order_list_status'
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.value.orderStatus) {
+                    infoVm.goodsList = []
+                    getListData(true)
+                }
+            }
+        });
+
+            //防止重复提交
+			var checkSubmitFlg = false;  
+                var checkSubmit = function () {  
+                alert ('2')
+
+				if (checkSubmitFlg == true) {  
+					console.log("正在查询中..");  
+					return false;  
+				}  
+				checkSubmitFlg = true;  
+		
+				setTimeout(function() {  
+					checkSubmitFlg = false;  
+				}, 5000);  
+				return true;  
+            }
+
+                  //下拉刷新
+    //创建MeScroll对象
+    var mescroll = new MeScroll("mescroll", {
+				down: {
+					auto: false, //是否在初始化完毕之后自动执行下拉回调callback; 默认true
+					callback: downCallback //下拉刷新的回调
+				},
+				up: {
+					auto: false, //是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
+					isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+					callback: upCallback, //上拉回调,此处可简写; 相当于 callback: function (page) { upCallback(page); }
+					toTop:{ //配置回到顶部按钮
+						src : "../../image/icon/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+						//offset : 1000
+					}
+				}
+            });
+            
+            /*下拉刷新的回调 */
+			function downCallback(){
+                infoVm.showGoodsList = false
+				getListData(true)
+            }
+            
+            /*上拉加载的回调  */
+			function upCallback(page){
+            // checkSubmit()
+            infoVm.showGoodsList = false
+                getListData(false)
+            }
+            
+            
+
+
+        getUserInfoHttps() //获取店铺信息
+        getListData(true) //获取list
+
+    }
+</script>
+
+</html>

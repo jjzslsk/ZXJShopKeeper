@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget id="A6004431005832" version="0.0.1"> 
+  <name>ZXJShopKeeper</name>  
+  <description/>  
+  <author email="2809712409@qq.com" href="http://www.apicloud.com">装小匠</author>  
+  <content src="index.html"/>  
+  <preference name="appBackground" value="rgba(0,0,0,0)"/>  
+  <preference name="windowBackground" value="rgba(0,0,0,0)"/>  
+  <preference name="frameBackgroundColor" value="rgba(0,0,0,0)"/>  
+  <preference name="autoLaunch" value="true"/>  
+  <preference name="autoUpdate" value="true"/>  
+  <preference name="smartUpdate" value="false"/>  
+  <preference name="debug" value="true"/>  
+  <preference name="statusBarAppearance" value="true"/>  
+  <permission name="location"/>  
+  <permission name="internet"/>  
+  <access origin="*"/> 
+  <feature name="bMap">
+    <param name="android_api_key" value="Di3RcnqZXCknV0G1qBAzIzvpDEukbRKA" />
+    <param name="ios_api_key" value="hkACmve7qtRiiGr7ybEnT3XCpX05m78V" />
+  </feature>
+  <feature name="wx">
+    <param name="urlScheme" value="wxca017f7146a6cb64"/>
+    <param name="apiKey" value="wxca017f7146a6cb64"/>
+    <param name="apiSecret" value="4ee1fcc0c80f17f79e3737b9054e7ccf"/>
+  </feature>
+</widget>

@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui_flex.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/shopManage.css" />
+  <style>
+	      .footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction:row;
+      flex-wrap:wrap;
+      background: #DCDCDC;
+      position: fixed;
+      left: 0;
+      bottom: 0px;
+      width: 100%;
+      z-index: 99;
+      height: 50px;
+	}
+	.but-green{
+              background: #11CE7C;
+              color: #fff;
+              height: 50px;
+              line-height: 50px;
+              text-align: center;
+            }
+            .but-blue{
+              background: #00A0E9;
+              color: #fff;
+              height: 50px;
+              line-height: 50px;
+              text-align: center;
+              width: 50%;
+            }
+            .but-red{
+              background: #F24A4A;
+              color: #fff;
+              height: 50px;
+              text-align: center;
+              line-height: 50px;
+              width: 50%;
+            }
+            .but-gray {
+              background: #DCDCDC;
+              height: 50px;
+              text-align: center;
+              line-height: 50px;
+              color: #757575;
+              font-weight: normal;
+              font-size: .7rem;
+            }
+            .content-box {
+              margin-bottom: 50px;
+            }
+
+
+            .info-edit-item  {
+            display: flex;
+            align-items: center;
+          }
+          .info-edit-item .title {
+            font-size: 0.6rem;
+            color: #212121;
+            width: 3rem;
+          }
+          .def-phd{color:#aab2bd;font-size: 0.6rem;margin-top: 3px;}
+          .info-edit-item .choose-res{position: relative;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 6px 6px;}
+          .res-icon{color:#aab2bd;font-weight: lighter;width: 1em;position: absolute;right: 5px;font-size: .6rem !important;}
+          .res-icon .aui-iconfont{font-size: .4rem !important;}
+          .text-weight{font-size: 0.6rem;
+            /* margin-top: 3px; */
+            color: #212121;font-style: normal;}
+  </style>
+</head>
+
+<body>
+  <div id="info_id">
+    <!-- <template> -->
+      <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-form-list content-box">
+          <li class="aui-list-header" v-if='applyStatus == 3'>审核不通过原因：{{shopCheckRes}}</li>
+          <h4>店主信息</h2>
+
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">我的姓名：</div>
+              <div class="aui-list-item-input">
+                <input class="aui-font-size-12" placeholder="请输入真实姓名" :disabled='affect' type="text" v-model="shopFzr" />
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">身份证号码：</div>
+              <div class="aui-list-item-input">
+                <input class="aui-font-size-12" :disabled='affect' type="number" placeholder="452******" v-model="shopApplyIdcard" />
+              </div>
+            </div>
+          </li>
+
+          <li class="list-item aui-border-b">
+            <span class="must-star1">*</span>
+            <div class="aui-font-size-14 aui-margin-b-10">
+              <span class="aui-font-size-12">身份证</span><span class="img-ratio">{{idCardImgList.length}}/{{idCardImgMax}}</span>
+            </div>
+            <div class="aui-flex-col aui-flex-middle">
+              <div class="aui-flex-item-3 aui-padded-5" v-for="(budLicItem,idCardIndex) in idCardImgList">
+                <div class="id-img">
+                  <span v-if="applyStatus==0 || applyStatus==2 || applyStatus==3" class="del-tip" tapmode="hover" @click="idCardImgDel(idCardIndex,budLicItem)">—</span>
+                  <img :src="budLicItem.pic" tapmode="hover" @click="previewImg(idCardIndex,idCardImgList)"/>
+                </div>
+              </div>
+              <div class="aui-flex-item-3 aui-padded-5" v-if="idCardImgList.length<idCardImgMax && (applyStatus==0 || applyStatus==2 || applyStatus==3)">
+                <div class="id-img" tapmode="hover" @click="addIdCardImgClick">
+                  <i class="aui-iconfont aui-icon-plus"></i>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">联系方式：</div>
+              <div class="aui-list-item-input">
+                <input class="aui-font-size-12" :disabled='affect' type="number" v-model="shopPhone" />
+              </div>
+            </div>
+          </li>
+          
+          <h4>店铺展示</h2>
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">店铺名称：</div>
+              <div class="aui-list-item-input">
+                <input class="aui-font-size-12" type="text" :disabled='affect' v-model="shopName" />
+              </div>
+            </div>
+          </li>
+
+          <!-- <li class="list-item aui-border-b">
+            <span class="must-star1">*</span>
+            <div class="aui-font-size-14 aui-margin-b-10">
+              <span class="aui-font-size-12">logo</span><span class="img-ratio">{{logoImg.length}}/{{logoImgMax}}</span>
+            </div>
+            <div class="aui-flex-col aui-flex-middle">
+              <div class="aui-flex-item-3 aui-padded-5" v-for="(logoItem,logoIndex) in logoImg">
+                <div class="id-img">
+                  <span v-if="applyStatus==0 || applyStatus==2 || applyStatus==3" class="del-tip" tapmode="hover" @click="logoImgDel(logoIndex,logoItem)">—</span>
+                  <img :src="logoItem.pic" tapmode="hover" @click="previewImg(logoIndex,logoImg)"/>
+                </div>
+              </div>
+              <div class="aui-flex-item-3 aui-padded-5" v-if="logoImg.length<logoImgMax && (applyStatus==0 || applyStatus==2 || applyStatus==3)">
+                <div class="id-img" tapmode="hover" @click="logoImgClick">
+                  <i class="aui-iconfont aui-icon-plus"></i>
+                </div>
+              </div>
+            </div>
+          </li> -->
+
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">
+                所在地区:
+              </div>
+              <div class="aui-list-item-inner aui-list-item-input" tapmode="hover" @click="chooseAddress">
+                <div class="choose-area">
+                  <span class="aui-font-size-12" v-if="areaChoose.length>0">{{areaChoose}}</span>
+                  <span class="aui-font-size-12" v-else class="choose-hint">请选择区域</span>
+                </div>
+                <i class="aui-iconfont aui-icon-location aui-flex-right"></i>
+              </div>
+            </div>
+          </li>
+
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">店铺坐标:</div>
+              <div class="aui-list-item-input" v-if='affect'>
+                <input v-if='shopLong != undefined || shopLat != undefined' class="aui-font-size-12" disabled='false' type="text" v-model="LongAndLat" />
+                <input v-else class="aui-font-size-12" placeholder="请点击获取经纬度" disabled='false' type="text"/>
+              </div>
+              <div class="aui-list-item-input" v-if='!affect' @click='openMap'>
+                  <input v-if='shopLong != undefined || shopLat != undefined' class="aui-font-size-12" disabled='false' type="text" v-model="LongAndLat" />
+                  <input v-else class="aui-font-size-12" placeholder="请点击获取经纬度" disabled='false' type="text"/>
+              </div>
+            </div>
+          </li>
+
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">店铺地址:</div>
+              <div class="aui-list-item-input">
+                <input class="aui-font-size-12" :disabled='affect' type="text" v-model="shopAddress" />
+              </div>
+            </div>
+          </li>
+          <!-- <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">店铺类型:</div>
+              <div class="aui-list-item-input">
+                <select class="aui-font-size-12" v-bind:disabled="affect" v-model="shopType">
+                  <option value="1">工厂店</option>
+                  <option value="2">代理店</option>
+                  <option value="3">专卖店</option>
+                  <option value="4">精品店</option>
+                  <option value="5">建材店</option>
+                </select>
+              </div>
+            </div>
+          </li> -->
+
+          <li class="aui-list-item aui-row">
+              <span class="must-star">*</span>
+              <div class="info-edit-item horizontal aui-col-xs-12">
+                <div class="title">店铺类型:</div>
+                <div class="choose-res horizontal" tapmode="hover" @click="shopItemIndexSelect1()">
+                  <div class="res-info text-weight" v-if="shopTypeName.length>0">{{shopTypeName}}</div>
+                  <div class="res-info def-phd" v-else>请选择</div>
+                  <div class="res-icon"><i class="aui-iconfont aui-icon-down"></i></div>
+                </div>
+              </div>
+          </li>
+
+          <!-- <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">经营范围:</div>
+              <div class="aui-list-item-input">
+                <select class="aui-font-size-12" v-bind:disabled="affect" v-model="shopJyfw" v-on:change="indexSelect(shopJyfw)">
+                  <option v-for="item in shopJyfwData" :key="item.classAllNo" :value="item.itemClassId">
+                    {{item.className}}</option>
+                </select>
+              </div>
+            </div>
+          </li> -->
+
+          <li class="aui-list-item aui-row">
+            <span class="must-star">*</span>
+            <div class="info-edit-item horizontal aui-col-xs-12">
+              <div class="title">经营范围:</div>
+              <div class="choose-res horizontal" tapmode="hover" @click="shopItemIndexSelect()">
+                <div class="res-info text-weight" v-if="shopJyfwName.length>0">{{shopJyfwName}}</div>
+                <div class="res-info def-phd" v-else>请选择</div>
+                <div class="res-icon"><i class="aui-iconfont aui-icon-down"></i></div>
+              </div>
+            </div>
+        </li>
+
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">信用代码:</div>
+              <div class="aui-list-item-input">
+                <input class="aui-font-size-12" :disabled='affect' type="text" v-model="shopYyzzZzjgdm" />
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">营业执照类型:</div>
+              <div class="aui-list-item-input aui-font-size-12" v-if='affect'>
+                  <label>
+                      {{shopYyzzClass}}
+                  </label>
+              </div>
+              <div class="aui-list-item-input" v-else>
+                <label class="aui-font-size-12">
+                  <input v-model="shopYyzzClass" class="aui-radio" value="个人" type="radio"
+                    name="radio2" checked />个人
+                </label>
+                <label class="aui-font-size-12">
+                  <input v-model="shopYyzzClass" class="aui-radio" value="企业" type="radio"
+                    name="radio2" />企业
+                </label>
+              </div>
+            </div>
+          </li>
+
+          <li class="list-item aui-border-b">
+            <!--<span class="must-star1">*</span>-->
+            <div class="aui-font-size-14 aui-margin-b-10">
+              <span class="aui-font-size-12">营业执照</span><span class="img-ratio">{{busLicImgList.length}}/{{busLicImgMax}}</span>
+            </div>
+            <div class="aui-flex-col aui-flex-middle">
+              <div class="aui-flex-item-3 aui-padded-5" v-for="(budLicItem,budLicIndex) in busLicImgList">
+                <div class="id-img">
+                  <span v-if="applyStatus==0 || applyStatus==2 || applyStatus==3" class="del-tip" tapmode="hover" @click="busLicImgDel(budLicIndex,budLicItem)">—</span>
+                  <img :src="budLicItem.pic" tapmode="hover" @click="previewImg(budLicIndex,busLicImgList)"/>
+                </div>
+              </div>
+              <div class="aui-flex-item-3 aui-padded-5" v-if="busLicImgList.length<busLicImgMax && (applyStatus==0 || applyStatus==2 || applyStatus==3)">
+                <div class="id-img" tapmode="hover" @click="addBusLicImgClick">
+                  <i class="aui-iconfont aui-icon-plus"></i>
+                </div>
+              </div>
+            </div>
+          </li>
+          
+
+          <li class="list-item aui-border-b">
+            <div class="aui-font-size-14 aui-margin-b-10">
+              <span class="aui-font-size-12">商家资质</span><span class="img-ratio">{{qualiImgList.length}}/{{qualiImgMax}}</span>
+            </div>
+            <div class="aui-flex-col aui-flex-middle">
+              <div class="aui-flex-item-3 aui-padded-5" v-for="(qualiItem,qualiIndex) in qualiImgList">
+                <div class="id-img">
+                  <span v-if="applyStatus==0 || applyStatus==2 || applyStatus==3" class="del-tip" tapmode="hover" @click="qualiImgDel(qualiIndex,qualiItem)">—</span>
+                  <img :src="qualiItem.pic" tapmode="hover" @click="previewImg(qualiIndex,qualiImgList)"/>
+                </div>
+              </div>
+              <div class="aui-flex-item-3 aui-padded-5" v-if="qualiImgList.length<qualiImgMax && (applyStatus==0 || applyStatus==2 || applyStatus==3)">
+                <div class="id-img" tapmode="hover" @click="addqualiImgClick">
+                  <i class="aui-iconfont aui-icon-plus"></i>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="list-item aui-border-b">
+            <div class="aui-font-size-14 aui-margin-b-10">
+              <span class="aui-font-size-12">经营场所</span><span class="img-ratio">{{proCaseImgList.length}}/{{proCaseImgMax}}</span>
+            </div>
+            <div class="aui-flex-col aui-flex-middle">
+              <div class="aui-flex-item-3 aui-padded-5" v-for="(proCaseItem,proCaseIndex) in proCaseImgList">
+                <div class="id-img">
+                  <span v-if="applyStatus==0 || applyStatus==2 || applyStatus==3" class="del-tip" tapmode="hover" @click="proCaseImgDel(proCaseIndex,proCaseItem)">—</span>
+                  <img :src="proCaseItem.pic" tapmode="hover" @click="previewImg(proCaseIndex,proCaseImgList)"/>
+                </div>
+              </div>
+              <div class="aui-flex-item-3 aui-padded-5" v-if="proCaseImgList.length<proCaseImgMax && (applyStatus==0 || applyStatus==2 || applyStatus==3)">
+                <div class="id-img" tapmode="hover" @click="addProCaseImgClick">
+                  <i class="aui-iconfont aui-icon-plus"></i>
+                </div>
+              </div>
+            </div>
+          </li>
+
+
+
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">店铺理念:</div>
+              <div class="aui-list-item-input">
+                <input class="aui-font-size-12" :disabled='affect' type="text" v-model="shopIdea" />
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">店铺介绍:</div>
+              <div class="aui-list-item-input">
+                <input class="aui-font-size-12" :disabled='affect' type="text" v-model="shopAbstract" />
+              </div>
+            </div>
+          </li>
+		</ul>
+		
+		<div class="footer" v-if="applyStatus != 1">
+				<!-- <div v-if='shopData' class="but-blue" @click="editClick(0)">保存编辑</div> -->
+				<div v-if='shopData' class="but-blue" @click="editClick('updateShop')">重新提交审核</div>
+				<!-- <div v-else class="but-blue" @click="submitClick(0)">保存新建</div> -->
+				<div v-else class="but-blue" @click="submitClick('createShop')">提交审核</div>
+				<div class="but-red" onclick="backbar()">取消</div>
+			</div>
+      </div>
+    </template>
+  </div>
+</body>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery213min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_dialog.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../res/data/citypicker.js"></script>
+<script type="text/javascript" src="../../script/picker/pickermin.js"></script>
+<script type="text/javascript" src="../../script/picker/jyfwpicker.js.js"></script>
+<script type="text/javascript" src="../../script/picker/addresspicker.js"></script>
+<script type="text/javascript" src="../../script/picker/datepicker.js"></script>
+<script type="text/javascript">
+  var infoVm;
+  var backbar;
+  var userId = $api.getStorage("userid");//用户id
+  var delImgList = [];//存放选择删除的图片对象
+  var corpImgResFun; //裁剪回调
+  var corpImgResLogo_status; //监听logo图是否完毕
+  apiready = function () {
+    backbar = function () {api.closeWin();}
+
+    			//获logo
+			var getLogoImgHttps=function(){
+				var param = 'clientId='+userId+'&type=shop_logo';
+				_getHttpsData('/member/getPhoto',param,
+					function(ret){
+						api.hideProgress();
+						if(ret.status){
+							var picList = ret.pic;
+              //var proCaseImgList=[];
+              //for(var index in picList){
+              //proCaseImgList.push(picList[index].pic);
+              //}
+              //infoVm.proCaseImgList=proCaseImgList;
+							infoVm.logoImg=picList;
+							
+						}else{
+							showSingleAuiDialog('获取营业执照失败('+ret.code+')',ret.msg);
+						}
+					},
+					function(err){
+						api.hideProgress();
+					}
+				);
+			}; 
+
+    //获取营业执照图片
+    var getBusLicImgHttps = function () {
+      var param = 'clientId=' + userId + '&type=client_cert' + '&userType=6';
+      _getHttpsData('/member/getPhoto', param,
+        function (ret) {
+          if (ret.status) {
+            var picList = ret.pic;
+            infoVm.busLicImgList = picList;
+          } else {
+            showSingleAuiDialog('获取营业执照失败(' + ret.code + ')', ret.msg);
+          }
+          getLogoImgHttps();//获取Logo
+          getIdCardImgHttps();///获取身份证
+          getProCaseImgHttps();//获取经营场所
+          getQualiImgHttps();//获取行业资质
+
+        },
+        function (err) {
+          getLogoImgHttps();//获取Logo
+          getIdCardImgHttps();///获取身份证
+          getProCaseImgHttps();//获取经营场所
+          getQualiImgHttps();//获取行业资质
+        }
+      );
+    };
+
+    			//获经营场所图片
+			var getProCaseImgHttps=function(){
+				var param = 'clientId='+userId+'&type=client_place' + '&userType=6';
+				_getHttpsData('/member/getPhoto',param,
+					function(ret){
+						api.hideProgress();
+						if(ret.status){
+							var picList = ret.pic;
+//							var proCaseImgList=[];
+//							for(var index in picList){
+//								proCaseImgList.push(picList[index].pic);
+//							}
+//							infoVm.proCaseImgList=proCaseImgList;
+							infoVm.proCaseImgList=picList;
+							
+						}else{
+							showSingleAuiDialog('获取营业执照失败('+ret.code+')',ret.msg);
+						}
+					},
+					function(err){
+						api.hideProgress();
+					}
+				);
+			}; 
+
+      //获经行业资质
+			var getQualiImgHttps=function(){
+				var param = 'clientId='+userId+'&type=client_quali' + '&userType=6';
+				_getHttpsData('/member/getPhoto',param,
+					function(ret){
+						api.hideProgress();
+						if(ret.status){
+							var picList = ret.pic;
+							infoVm.qualiImgList=picList;
+							
+						}else{
+							showSingleAuiDialog('获取行业资质失败('+ret.code+')',ret.msg);
+						}
+					},
+					function(err){
+						api.hideProgress();
+					}
+				);
+			}; 
+
+    			//获身份证图片
+			var getIdCardImgHttps=function(){
+				var param = 'clientId='+userId+'&type=client_idcard&userType=6';
+				_getHttpsData('/member/getPhoto',param,
+					function(ret){
+						api.hideProgress();
+						if(ret.status){
+							var picList = ret.pic;
+              infoVm.idCardImgList=picList;
+						}else{
+							showSingleAuiDialog('获取身份证失败('+ret.code+')',ret.msg);
+						}
+					},
+					function(err){
+						api.hideProgress();
+					}
+				);
+			}; 
+
+      			//删除图片
+			var delImgHtts=function(funCal){
+				var totalCount=delImgList.length;
+				
+				var countTemp=0;
+				if(totalCount>0){
+					for(var index in delImgList){
+						api.showProgress({
+							title : '删除图片'
+						});
+						var param="clientId="+userId+'&type='+delImgList[index].attFkName+'&userType='+'&attName='+delImgList[index].attName;
+						console.log('图片删除param：'+param)
+						_getHttpsData('/member/deletPhoto',param,
+							function(ret){
+								console.log(JSON.stringify(ret))
+								if(ret.status){
+									countTemp++;
+									if(countTemp==totalCount){
+										funCal(true);
+									}
+								}else{
+									totalCount--;
+									api.toast({ msg: '删除图片'+delImgList[index].attName+'失败',duration: 2000, location: 'middle'});
+									if(countTemp==totalCount){
+										funCal(true);
+									}
+								}
+							},
+							function(err){
+								funCal(false);
+							}
+						);
+					}
+				}else{
+					funCal(true);
+				}
+      };
+      
+            	/**
+			 *上传身份证图片
+			 *idCardImgList 身份证图片 
+			 */
+			var uploadIdCardImgList = function(idCardImgList, funCal) {
+				if (idCardImgList.length > 0) {
+					//检测压缩身份证
+					api.showProgress({
+						title : '压缩身份证'
+          });
+          var CardNum = [0,1]
+          CardNum.forEach(function (element,index){
+            if(index == 0){
+              batchCompressList('6_client_idcard', 'shop_idcard_on', idCardImgList, function(attNameList, attFkNameList, imgArray) {
+						  if(imgArray.length>0) {
+							var param = {};
+							param.attUser = userId;
+							param.attFkId = userId;
+							param.attName = attNameList;
+							param.attFkName = attFkNameList;
+							param.attNoWater = '1';
+							api.showProgress({
+								title : '上传身份证'
+							});
+							uploadFileHttps(param, imgArray[0], function(ret) {
+								if (ret.status) {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(true);
+									}
+								} else {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(false);
+									}
+									showSingleAuiDialog('上传身份证失败(' + ret.code + ')', ret.msg);
+								}
+							}, function(err) {
+								api.hideProgress();
+							});
+						}else{
+							if (funCal != undefined && typeof funCal === "function") {
+								funCal(true);
+							}
+						}
+						
+					});
+        }else if (index == 1){
+              batchCompressList('6_client_idcard', 'shop_idcard_off', idCardImgList, function(attNameList, attFkNameList, imgArray) {
+						  if(imgArray.length>0) {
+							var param = {};
+							param.attUser = userId;
+							param.attFkId = userId;
+							param.attName = attNameList;
+							param.attFkName = attFkNameList;
+							param.attNoWater = '1';
+							api.showProgress({
+								title : '上传身份证'
+							});
+							uploadFileHttps(param, imgArray[1], function(ret) {
+								if (ret.status) {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(true);
+									}
+								} else {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(false);
+									}
+									showSingleAuiDialog('上传身份证失败(' + ret.code + ')', ret.msg);
+								}
+							}, function(err) {
+								api.hideProgress();
+							});
+						}else{
+							if (funCal != undefined && typeof funCal === "function") {
+								funCal(true);
+							}
+						}
+						
+					});
+            }
+          });
+          
+					
+				} else {
+					if (funCal != undefined && typeof funCal === "function") {
+						funCal(true);
+					}
+				}
+			};
+
+       /**
+			 *上传logo
+			 *proCaseImgList logo
+			 */
+			var uploadLogoImgList = function(logoImg, funCal) {
+				if (logoImg.length > 0) {
+					//检测压缩经营场所
+					api.showProgress({
+						title : '压缩logo'
+					});
+					batchCompressList('shop_logo', 'shop_logo', logoImg, function(attNameList, attFkNameList, imgArray) {
+						if(imgArray.length>0) {
+							var param = {};
+							param.attUser = userId;
+							param.attFkId = userId;
+							param.attName = attNameList;
+							param.attFkName = attFkNameList;
+							param.attNoWater = '1';
+							api.showProgress({
+								title : '上传logo'
+							});
+							uploadFileHttps(param, imgArray, function(ret) {
+								if (ret.status) {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(true);
+									}
+								} else {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(false);
+									}
+									showSingleAuiDialog('上传logo失败(' + ret.code + ')', ret.msg);
+								}
+							}, function(err) {
+								api.hideProgress();
+							});
+						}else{
+							if (funCal != undefined && typeof funCal === "function") {
+								funCal(true);
+							}
+						}
+						
+					});
+				} else {
+					if (funCal != undefined && typeof funCal === "function") {
+						funCal(true);
+					}
+				}
+			};
+		
+      	/**
+			 *上传经营场所图片
+			 *proCaseImgList 经营场所图片
+			 */
+			var uploadCaseImgList = function(proCaseImgList, funCal) {
+				if (proCaseImgList.length > 0) {
+					//检测压缩经营场所
+					api.showProgress({
+						title : '压缩场所照'
+					});
+					batchCompressList('6_client_place', 'shop_place', proCaseImgList, function(attNameList, attFkNameList, imgArray) {
+						if(imgArray.length>0) {
+							var param = {};
+							param.attUser = userId;
+							param.attFkId = userId;
+							param.attName = attNameList;
+							param.attFkName = attFkNameList;
+							param.attNoWater = '0';
+							api.showProgress({
+								title : '上传场所照'
+							});
+							uploadFileHttps(param, imgArray, function(ret) {
+								if (ret.status) {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(true);
+									}
+								} else {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(false);
+									}
+									showSingleAuiDialog('上传经营场所失败(' + ret.code + ')', ret.msg);
+								}
+							}, function(err) {
+								api.hideProgress();
+							});
+						}else{
+							if (funCal != undefined && typeof funCal === "function") {
+								funCal(true);
+							}
+						}
+						
+					});
+				} else {
+					if (funCal != undefined && typeof funCal === "function") {
+						funCal(true);
+					}
+				}
+      };
+      
+       /**
+			 *上传行业资质
+			 */
+			var uploadQualiImgList = function(qualiImgList, funCal) {
+				if (qualiImgList.length > 0) {
+					//检测压缩经营场所
+					api.showProgress({
+						title : '压缩行业资质'
+					});
+					batchCompressList('6_client_quali', 'shop_quali', qualiImgList, function(attNameList, attFkNameList, imgArray) {
+						if(imgArray.length>0) {
+							var param = {};
+							param.attUser = userId;
+							param.attFkId = userId;
+							param.attName = attNameList;
+							param.attFkName = attFkNameList;
+							param.attNoWater = '0';
+							api.showProgress({
+								title : '上传行业资质'
+							});
+							uploadFileHttps(param, imgArray, function(ret) {
+								if (ret.status) {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(true);
+									}
+								} else {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(false);
+									}
+									showSingleAuiDialog('上传行业资质失败(' + ret.code + ')', ret.msg);
+								}
+							}, function(err) {
+								api.hideProgress();
+							});
+						}else{
+							if (funCal != undefined && typeof funCal === "function") {
+								funCal(true);
+							}
+						}
+						
+					});
+				} else {
+					if (funCal != undefined && typeof funCal === "function") {
+						funCal(true);
+					}
+				}
+			};
+
+      	/**
+			 *上传图片
+			 * busLicImgList 营业执照图片
+			 * proCaseImgList 经营场所图片
+			 */
+			var uploadFileBatch = function(busLicImgList, proCaseImgList,idCardImgList,logoImg,qualiImgList,funCal) {
+				if (busLicImgList.length > 0) {
+					//检测压缩营业执照
+					api.showProgress({
+						title : '压缩执照'
+					});
+					batchCompressList('6_client_cert', 'shop_cert', busLicImgList, function(attNameList, attFkNameList, imgArray) {
+						if(imgArray.length>0) {
+							var param = {};
+							param.attUser = userId;
+							param.attFkId = userId;
+							param.attName = attNameList;
+              param.attFkName = attFkNameList;
+              param.attNoWater = '0';//1没有水印
+							api.showProgress({
+								title : '上传执照'
+							});
+							uploadFileHttps(param, imgArray, function(ret) {
+								if (ret.status) {
+									//营业执照上传成功uploadLogoImgList
+									//开始上传经营场所
+									uploadLogoImgList(logoImg,funCal)
+                  uploadCaseImgList(proCaseImgList, funCal);
+                  uploadIdCardImgList(idCardImgList, funCal);
+                  uploadQualiImgList(qualiImgList, funCal);
+                  
+								} else {
+									if (funCal != undefined && typeof funCal === "function") {
+										funCal(false);
+									}
+									showSingleAuiDialog('上传营业执照失败(' + ret.code + ')', ret.msg);
+								}
+							}, function(err) {
+								api.hideProgress();
+							});
+						}else{
+							//开始上传经营场所
+							uploadLogoImgList(logoImg,funCal)
+              uploadCaseImgList(proCaseImgList, funCal);
+              uploadIdCardImgList(idCardImgList, funCal);
+              uploadQualiImgList(qualiImgList, funCal);
+						}
+					});
+				} else {
+					//上传经营场所
+					uploadLogoImgList(logoImg,funCal)
+          uploadCaseImgList(proCaseImgList, funCal);
+          uploadIdCardImgList(idCardImgList, funCal);
+          uploadQualiImgList(qualiImgList, funCal);
+				}
+			};
+
+      			/***
+			 * 提交用户信息
+			 * param 用户信息
+			 * busLicImgList 营业执照图片
+			 * proCaseImgList 经营场所图片
+			 */
+			var submitUserInfoHttps = function(param, busLicImgList, proCaseImgList,idCardImgList,logoImg,qualiImgList,clockStatus) {
+				api.showProgress({title : '提交信息'});
+				_postHttpsData('/shop/'+clockStatus,param,
+					function(ret){
+						if(ret.status){
+              api.sendEvent({
+								    name: 'shopInfo_send_event',
+								    extra: {
+								        shopInfoSuccess: true,
+								    }
+								});
+//							uploadFileBatch(busLicImgList, proCaseImgList, function(upSuccess) {
+//								api.hideProgress();
+//								if(upSuccess){
+//									showSingleAuiDialog('提交', '提交成功','确定',function(ret){
+//										api.closeWin({
+//										    name: 'auth_step_win'
+//										})
+//										api.closeWin();
+//									});
+//								}else{
+//									api.toast({msg : '上传图片异常',duration : 2000,location : 'middle'});
+//								}
+//							});
+							uploadFileBatch(busLicImgList, proCaseImgList,idCardImgList,logoImg,qualiImgList, function(upSuccess) {
+								delImgHtts(function(res){
+									api.hideProgress();
+									if(upSuccess){
+										showSingleAuiDialog('提交', '提交成功','确定',function(ret){
+                      backbar()
+											api.closeWin({
+											    name: 'auth_step_win'
+											})
+											api.sendEvent({
+											    name: 'authstepsend_event',
+											    extra: {
+											        isSuccess: true,
+											    }
+											});
+                      // api.closeWin();
+										});
+									}else{
+										api.toast({msg : '上传图片异常',duration : 2000,location : 'middle'});
+									}
+								});
+							});
+						} else{
+							api.hideProgress();
+							api.toast({msg : ret.msg+'('+ret.code+')',duration : 2000,location : 'middle'});
+						}
+					},
+					function(err){
+						api.hideProgress();
+					}
+				);
+			};
+			
+			
+
+    var getUserInfoHttps = function (param) {
+      // 	//获取店铺信息
+      api.showProgress();
+      var shopUserId = $api.getStorage("userid")
+      var shopOpenId = $api.getStorage("openId")
+
+      var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+      _getHttpsData('/shop/getShopInfo', param,
+        function (res) {
+          api.hideProgress();
+          if (res.code == 0005) {
+            infoVm.shopData = false
+            infoVm.affect = false
+            api.confirm({
+              title: '提示',
+              msg: '请填写店铺信息',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                console.log('点击了确定按钮')
+              } else {
+                api.closeToWin({
+                  name : 'main_win',
+                  url : 'widget://html/main/main_win.html',
+                   reload:true,
+                });
+              }
+            })
+          } else if (JSON.stringify(res.data).length > 0) {
+            infoVm.shopRefreshData(res.data);
+            infoVm.refreshApplyStatus(res.data.shopStatus);
+
+            
+            if (res.data.shopStatus == 1) {
+              infoVm.affect = true
+            } else {
+              infoVm.affect = false
+            }
+
+            infoVm.shopData = true;
+            getBusLicImgHttps();//获取营业执照
+
+          }
+          else {
+            // JSON.stringify(res.data.length)
+            // showSingleAuiDialog('获取信息失败(' + res.code + ')', res.msg);
+          }
+        },
+        function (err) {
+          //api.hideProgress();
+        }
+      )
+
+      infoVm.getInfoTpye() ////获取所有经营范围
+
+
+    };
+
+
+
+
+    function BMapTransqqMap(lng, lat) {
+
+      let x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+
+      let x = lng - 0.0065;
+
+      let y = lat - 0.006;
+
+      let z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+
+      let theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+
+      let lngs = z * Math.cos(theta);
+
+      let lats = z * Math.sin(theta);
+
+      return {
+
+        lng: lngs,
+
+        lat: lats
+
+      };
+
+    }
+
+
+
+
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+        shopTypeArr:[
+        {value:'1',className:'工厂店'},
+        {value:'2',className:'代理店'},
+        {value:'3',className:'专卖店'},
+        {value:'4',className:'精品店'},
+        {value:'5',className:'建材店'},
+        ],
+        shopJyfwName:'',
+
+        ImgCutUrl: '',// 裁剪后得到的图片路径
+
+        checkoutForm:'', //表单校验
+        shopJyfwValue: '',
+        applyStatus: '',//审核状态
+
+        affect: '',//是否可编辑
+
+        logoImg : [], //身份证
+        logoImgMax : 1, //身份证最多能添加多少张
+        idCardImgList : [], //身份证
+        idCardImgMax : 2, //身份证最多能添加多少张
+        busLicImgList : [], //营业执照
+        busLicImgMax : 9, //营业执照最多能添加多少张
+        qualiImgList : [], //行业资质
+        qualiImgMax : 9, //行业资质最多能添加多少张
+        proCaseImgList : [], //经营场所
+        proCaseImgMax : 9, //经营场所图片最多能添加多少张
+      
+
+
+        shopData: false,//店铺是否有数据
+
+        areaChooseId: '', //区域Id
+        areaChoose: '', //区域选择
+
+        shopJyfwData: [],
+        paramData: "",
+        shopName: "", //商铺名称
+        shopFzr: "", //负责人
+        shopApplyIdcard: "", //负责人 身份证
+        shopPhone: "", //联系电话
+        shopAddress: "", //商铺地址
+        // shopArea: "", //店铺区域
+        shopType: "", //店铺类型
+        shopTypeName: "", //店铺类型名称 
+        shopYyzzName: "营业执照", //营业执照名称
+        shopYyzzClass: 1, //营业执照类型
+        shopYyzzZzjgdm: "", //机构代码
+        shopYyzzYxq: "", //有效期
+        shopStatus: 1, //状态 0-保存  1-提交
+        shopAbstract: "", //简介
+        shopJyfw: "", //经营范围
+        shopScale: "", //商铺规模
+        shopIdea: "", //店铺理念
+        shopLong: '', //经度
+        shopLat: '', //纬度
+        clientId: "", //
+        orgId: "", //区域Id
+        shopId: "",
+        userid: "",
+        shopCheckRes:'',//审核不通过文字
+        LongAndLat:null,
+
+      },
+      methods: {
+
+        //重新获取定位
+        openMap: function (params) {
+          if(checkLocPer()){
+            infoVm.LongAndLat = '',infoVm.shopLong = '',infoVm.shopLat = '';
+            api.showProgress()
+            startLocation(function (successCal) {
+            if(successCal.status){
+              infoVm.shopLong = $api.getStorage("curLng");
+              infoVm.shopLat = $api.getStorage("curLat");
+              infoVm.LongAndLat = '经:' + infoVm.shopLong + ',纬:' + infoVm.shopLat
+              if(infoVm.LongAndLat && infoVm.shopLong && infoVm.shopLat){
+                var BMapAndTMap = ''
+                BMapAndTMap = BMapTransqqMap(infoVm.shopLong,infoVm.shopLat)
+                if(BMapAndTMap){
+                  infoVm.shopLong = BMapAndTMap.lng
+                  infoVm.shopLat = BMapAndTMap.lat
+                  console.log ('定位成功')
+                  api.hideProgress()}
+                }
+              }
+
+              setTimeout(() => {
+                if(infoVm.LongAndLat == ''){
+                  infoVm.openMapSetTimeout();
+                  console.log ('定位超时，重新定位')
+                }
+              }, 10000);
+
+          },function (index,err) {
+            
+          })
+          }
+        },
+
+        openMapSetTimeout: function (params) { //重新定位
+          if(checkLocPer()){
+            infoVm.LongAndLat = '',infoVm.shopLong = '',infoVm.shopLat = '';
+            api.showProgress()
+            startLocation(function (successCal) {
+            if(successCal.status){
+              infoVm.shopLong = $api.getStorage("curLng");
+              infoVm.shopLat = $api.getStorage("curLat");
+              infoVm.LongAndLat = '经:' + infoVm.shopLong + ',纬:' + infoVm.shopLat
+              if(infoVm.LongAndLat && infoVm.shopLong && infoVm.shopLat){
+                var BMapAndTMap = ''
+                BMapAndTMap = BMapTransqqMap(infoVm.shopLong,infoVm.shopLat)
+                if(BMapAndTMap){
+                  infoVm.shopLong = BMapAndTMap.lng
+                  infoVm.shopLat = BMapAndTMap.lat
+                }
+                api.hideProgress()}
+              }
+
+
+          },function (index,err) {
+            
+          })
+          }
+        },
+
+
+
+        imgObjPackag:function(attFkName,attName,pic){
+						var imgObj={};
+						imgObj.attFkName=attFkName;
+						imgObj.attName=attName;
+						imgObj.pic=pic;
+						return imgObj;
+          },
+
+
+          appendlogoImg : function(pathList) {
+						//追加logo
+						if (this.logoImg.length < this.logoImgMax) {
+							// for(var index in pathList){
+								var imgObj = this.imgObjPackag('','',pathList);
+								this.logoImg.push(imgObj);
+							// }
+//							this.idCardImgList = this.idCardImgList.concat(pathList);
+							// this.nextTick();
+						} else {
+							api.toast({
+								msg : '身份证图片最多只能添加' + this.logoImgMax + '张',
+								duration : 1000,
+								location : 'bottom'
+							});
+						}
+					},
+          
+          appendIdCardImg : function(pathList) {
+						//追加身份证图
+						if (this.idCardImgList.length < this.idCardImgMax) {
+							for(var index in pathList){
+								var imgObj = this.imgObjPackag('','',pathList[index]);
+								this.idCardImgList.push(imgObj);
+							}
+//							this.idCardImgList = this.idCardImgList.concat(pathList);
+							// this.nextTick();
+						} else {
+							api.toast({
+								msg : '身份证图片最多只能添加' + this.idCardImgMax + '张',
+								duration : 1000,
+								location : 'bottom'
+							});
+						}
+					},
+
+          appendBusLicImg : function(pathList) {
+						//追加营业执照图
+						if (this.busLicImgList.length < this.busLicImgMax) {
+							for(var index in pathList){
+								var imgObj = this.imgObjPackag('','',pathList[index]);
+								this.busLicImgList.push(imgObj);
+							}
+//							this.busLicImgList = this.busLicImgList.concat(pathList);
+							// this.nextTick();
+						} else {
+							api.toast({
+								msg : '营业执照图片最多只能添加' + this.busLicImgMax + '张',
+								duration : 1000,
+								location : 'bottom'
+							});
+						}
+          },
+          appendQualiImg : function(pathList) {
+						//追加行业资质
+						if (this.qualiImgList.length < this.qualiImgMax) {
+							for(var index in pathList){
+								var imgObj = this.imgObjPackag('','',pathList[index]);
+								this.qualiImgList.push(imgObj);
+							}
+//							this.qualiImgList = this.qualiImgList.concat(pathList);
+							// this.nextTick();
+						} else {
+							api.toast({
+								msg : '营业执照图片最多只能添加' + this.busLicImgMax + '张',
+								duration : 1000,
+								location : 'bottom'
+							});
+						}
+					},
+					appendProCaseImgImg : function(pathList) {
+						//追加经营场所图片
+						if (this.proCaseImgList.length < this.proCaseImgMax) {
+							for(var index in pathList){
+								var imgObj = this.imgObjPackag('','',pathList[index]);
+								this.proCaseImgList.push(imgObj);
+							}
+//							this.proCaseImgList = this.proCaseImgList.concat(pathList);
+							// this.nextTick();
+						} else {
+							api.toast({
+								msg : '经营场所图片最多只能添加' + this.proCaseImgMax + '张',
+								duration : 1000,
+								location : 'bottom'
+							});
+						}
+          },
+
+          logoImgClick : function() {
+						//添加logo图片
+						var chooseNum = Number(this.logoImgMax) - Number(this.logoImg.length);
+						chooseCameraSheet(function(retList) {
+            imgCutUp(retList[0]); //跳转去裁剪  , 裁剪后得到图片路径 infoVm.retDestPath
+
+            corpImgResLogo_status = true
+              api.addEventListener({//监听轮播截图是否完毕
+                name: 'corpImgResLogo_status'
+            }, function(ret, err) {
+              if(ret){
+                if(ret.value.Logo_status){
+                  infoVm.appendlogoImg(infoVm.ImgCutUrl);
+                  corpImgResLogo_status = false
+                }
+              }
+            });
+
+							// infoVm.appendlogoImg(retList);
+						}, chooseNum, '完成');
+					},
+
+          addIdCardImgClick : function() {
+						//添加身份证图片
+						var chooseNum = Number(this.idCardImgMax) - Number(this.idCardImgList.length);
+						chooseCameraSheet(function(retList) {
+							infoVm.appendIdCardImg(retList);
+						}, chooseNum, '完成');
+					},
+					addBusLicImgClick : function() {
+						//添加营业执照图片
+						var chooseNum = Number(this.busLicImgMax) - Number(this.busLicImgList.length);
+						chooseCameraSheet(function(retList) {
+							infoVm.appendBusLicImg(retList);
+						}, chooseNum, '完成');
+          },
+          addqualiImgClick : function() {
+						//添加行业资质图片
+						var chooseNum = Number(this.qualiImgMax) - Number(this.qualiImgList.length);
+						chooseCameraSheet(function(retList) {
+							infoVm.appendQualiImg(retList);
+						}, chooseNum, '完成');
+					},
+					addProCaseImgClick : function() {
+						//添加经营场所图片
+						var chooseNum = Number(this.proCaseImgMax) - Number(this.proCaseImgList.length);
+						chooseCameraSheet(function(retList) {
+							infoVm.appendProCaseImgImg(retList);
+						}, chooseNum, '完成');
+          },
+          logoImgDel : function(position,data) {
+						//删除logo
+						this.logoImg.splice(position, 1);
+						if(data.attFkName!=undefined && data.attFkName!=null && data.attFkName!=''){
+							delImgList.push(data)
+						}
+					},
+          idCardImgDel : function(position,data) {
+						//删除营业执照图片
+						this.idCardImgList.splice(position, 1);
+						if(data.attFkName!=undefined && data.attFkName!=null && data.attFkName!=''){
+							delImgList.push(data)
+						}
+					},
+					busLicImgDel : function(position,data) {
+						//删除营业执照图片
+						this.busLicImgList.splice(position, 1);
+						if(data.attFkName!=undefined && data.attFkName!=null && data.attFkName!=''){
+							delImgList.push(data)
+						}
+          },
+          qualiImgDel : function(position,data) {
+						//删除行业资质图片
+						this.qualiImgList.splice(position, 1);
+						if(data.attFkName!=undefined && data.attFkName!=null && data.attFkName!=''){
+							delImgList.push(data)
+						}
+					},
+					proCaseImgDel : function(position,data) {
+						//删除经营场所图片
+						this.proCaseImgList.splice(position, 1);
+						if(data.attFkName!=undefined && data.attFkName!=null && data.attFkName!=''){
+							delImgList.push(data)
+						}
+					},
+					previewImg : function(position, imgList) { //预览
+						var imgListTemp =[];//营业执照
+						for(var index in imgList){
+							imgListTemp.push(imgList[index].pic);
+						}
+						api.openWin({
+							name : 'previewpicture_win',
+							url : 'widget://html/previewpicture/previewpicture_win.html',
+							pageParam : {
+								position : position,
+								imgList : imgListTemp
+							},
+							slidBackEnabled : false,
+							delay : 300
+						});
+					},
+
+        refreshApplyStatus: function (applyStatus) {
+          this.applyStatus = applyStatus == undefined ? 0 : applyStatus;
+          api.execScript({
+            name: 'shopManage_win',
+            script: 'refreshCheckPro(' + infoVm.applyStatus + ')'
+          });
+        },
+
+        indexSelect: function (data) {
+          infoVm.shopJyfwValue = ''
+          infoVm.shopJyfw = ''
+          infoVm.shopJyfwValue = data
+          infoVm.shopJyfw = data
+          console.log (data)
+        },
+
+        shopItemIndexSelect: function () {//选择店铺分类
+          console.log (JSON.stringify(infoVm.shopJyfwData))
+          if(infoVm.affect) return
+          var tempList=[];
+					var actionList=infoVm.shopJyfwData;
+					for(var index in actionList){
+						tempList.push(actionList[index].className);
+					}
+          api.actionSheet({
+              cancelTitle: '取消',
+              buttons: tempList
+          }, function(ret, err) {
+              var index = ret.buttonIndex-1;
+              if(index>actionList.length-1) return;
+              infoVm.shopJyfw = actionList[index].itemClassId
+              infoVm.shopJyfwName = actionList[index].className
+          });
+        },
+
+        shopItemIndexSelect1: function () {//选择店铺分类
+          if(infoVm.affect) return
+          var tempList=[];
+					var actionList=infoVm.shopTypeArr;
+					for(var index in actionList){
+						tempList.push(actionList[index].className);
+					}
+          api.actionSheet({
+              cancelTitle: '取消',
+              buttons: tempList
+          }, function(ret, err) {
+              var index = ret.buttonIndex-1;
+              if(index>actionList.length-1) return;
+              infoVm.shopTypeName = actionList[index].className
+              infoVm.shopType = actionList[index].value
+          });
+        },
+
+
+        //获取店铺名称 显示给页面
+        getShopItemClassIdName: function (id) {
+          infoVm.shopItemClassIds.forEach(function(element,index) {
+            if(id==element.itemClassId){
+              infoVm.shopItemClassIdName = element.className
+            }
+          });
+        },
+
+
+
+        shopRefreshData: function (data) {
+          this.shopLong = data.shopLong;
+          this.shopLat = data.shopLat;
+          if(this.shopLong && this.shopLat){
+            this.LongAndLat = '经:' + this.shopLong + ',纬:' + this.shopLat;
+
+          }
+
+          this.shopFzr = data.shopFzr;
+          this.shopCheckRes = data.shopCheckRes
+          this.shopApplyIdcard = data.shopApplyIdcard;
+          this.shopPhone = data.shopPhone;
+          this.shopName = data.shopName;
+          if(data.shopArea){this.areaChoose = data.shopArea;}
+          this.shopAddress = data.shopAddress;
+          this.shopType = data.shopType;
+          this.shopTypeName = data.shopTypeName;
+          // this.shopJyfw = data.shopJyfw.toString();
+          this.shopJyfw = data.shopJyfw;
+          this.shopYyzzZzjgdm = data.shopYyzzZzjgdm;
+          this.shopYyzzClass = data.shopYyzzClass;
+          this.shopIdea = data.shopIdea;
+          this.shopAbstract = data.shopAbstract;
+          // this.shopStatus = data.shopStatus;//状态
+          this.shopIdea = data.shopIdea;
+
+          //获取所有经营范围
+          infoVm.getInfoTpye(this.shopJyfw)
+
+
+        },
+
+        chooseAddress: function (key) {
+          if (!this.affect) {
+            //选择地址
+            if (true) {
+              //区域选择
+              shopAddressPicker(getAreaListPicker(), function (addressObj1, addressObj2, addressObj3, fullAddress) {
+                infoVm.areaChooseId = addressObj3.id;
+                infoVm.areaChoose = fullAddress;
+              });
+            } else {
+
+            }
+          }
+        },
+
+        //获取所有经营范围
+        getInfoTpye: function (data) {
+          _getHttpsData("/shop/getItemClass?classParentId=1", "",
+            function (ret) {
+              if (ret.status) {
+                ret.data.map(function (item) {
+                  infoVm.shopJyfwData.push(item);
+                });
+                infoVm.shopJyfwData.forEach(function(element,index){
+                    if(element.itemClassId == data){
+                      infoVm.shopJyfwName = element.className
+                    }
+                });
+              } else {
+              }
+            },
+            function (err) {
+              api.hideProgress();
+            }
+          );
+        },
+
+        //校验表单
+        checkout: function(){
+          if(infoVm.shopName.length <= 0 ){api.toast({msg: '请完善，商铺名称'});}else
+          if(infoVm.shopFzr.length <= 0 ){api.toast({msg: '请完善，店主名字'});}else
+          if(infoVm.shopPhone.length <= 0 ){api.toast({msg: '请完善，联系方式'});}else
+          if(infoVm.shopApplyIdcard.length <= 0 ){api.toast({msg: '请完善，身份证号码'});}else
+          if(infoVm.areaChoose.length <= 0 ){api.toast({msg: '请完善，所在地区'});}else
+          if(infoVm.shopAddress.length <= 0 ){api.toast({msg: '请完善，商铺地址'});}else
+          if(infoVm.shopType.length <= 0 ){api.toast({msg: '请完善，店铺类型'});}else
+          if(infoVm.shopYyzzClass.length <= 0 ){api.toast({msg: '请完善，营业执照类型'});}else
+          if(infoVm.shopJyfw.length <= 0 ){api.toast({msg: '请完善，经营范围'});}else{
+          if(infoVm.shopYyzzZzjgdm.length <= 0 ){api.toast({msg: '请完善，信用代码'});}else
+          infoVm.checkoutForm = true 
+          }
+        },
+
+
+        //提交审核
+        submitClick: function (clockStatus) {
+          this.paramData = {}
+          this.paramData = {
+            shopFzr: this.shopFzr, //负责人
+            shopApplyIdcard: this.shopApplyIdcard, //负责人 身份证
+            shopPhone: this.shopPhone, //联系电话
+
+            shopName: this.shopName, //商铺名称
+            shopArea: this.areaChoose, //店铺区域
+            shopLong: this.shopLong, //纬度
+            shopLat: this.shopLat, //经度
+            shopAddress: this.shopAddress, //商铺地址
+            shopType: this.shopType, //店铺类型
+            shopJyfw: this.shopJyfw, //经营范围 产品类型
+            shopYyzzZzjgdm: this.shopYyzzZzjgdm, //机构代码 信用代码
+            shopYyzzClass: this.shopYyzzClass, //营业执照类型
+            // shopYyzzName: this.shopYyzzName, //营业执照名称
+            // shopYyzzYxq: this.shopYyzzYxq, //有效期
+
+            shopIdea: this.shopIdea, //店铺理念
+            shopAbstract: this.shopAbstract, //简介 店铺介绍
+            // shopScale: this.shopScale, //商铺规模
+            shopStatus: this.shopStatus, //状态 0-保存  1-提交
+            clientId: this.userid, //
+            orgId: this.areaChooseId, //区域Id
+            shopId: this.userid
+          };
+
+          if(this.shopFzr==undefined || this.shopFzr==null || this.shopFzr==''){
+							api.toast({msg : '请输入真实姓名',duration : 2000,location: 'bottom'});
+							return;
+						}
+						if(!checkPersonName(this.shopFzr)){
+							return;
+            }
+            
+						if(this.shopApplyIdcard==undefined || this.shopApplyIdcard==null || this.shopApplyIdcard==''){
+							api.toast({msg : '请输入身份证号',duration : 2000,location: 'bottom'});
+							return;
+						}
+						if(!checkIdCardNumber(this.shopApplyIdcard)){
+							return;
+            }
+            
+            if(this.shopPhone==undefined || this.shopPhone==null || this.shopPhone==''){
+							api.toast({msg : '请输入手机号',duration : 2000,location: 'bottom'});
+							return;
+            }
+
+            if(!checkPhone(this.shopPhone)){
+              api.toast({ msg: '请输入正确的手机号',duration: 2000, location: 'bottom'});
+              return;
+            }
+
+            var logoImg =[];//logo
+						for(var index in this.logoImg){
+							var attFkName=this.logoImg[index].attFkName;
+							if(attFkName==undefined || attFkName==null || attFkName==''){
+								logoImg.push(this.logoImg[index].pic);
+							}
+						}
+
+          var idCardImgList =[];//身份证
+						for(var index in this.idCardImgList){
+							var attFkName=this.idCardImgList[index].attFkName;
+							if(attFkName==undefined || attFkName==null || attFkName==''){
+								idCardImgList.push(this.idCardImgList[index].pic);
+							}
+						}
+
+
+          var busLicImgList =[];//营业执照
+						for(var index in this.busLicImgList){
+							var attFkName=this.busLicImgList[index].attFkName;
+							if(attFkName==undefined || attFkName==null || attFkName==''){
+								busLicImgList.push(this.busLicImgList[index].pic);
+							}
+						}
+//						var proCaseImgList = this.proCaseImgList;//经营场所
+						var proCaseImgList =[];//经营场所
+						for(var index in this.proCaseImgList){
+							var attFkName=this.proCaseImgList[index].attFkName;
+							if(attFkName==undefined || attFkName==null || attFkName==''){
+								proCaseImgList.push(this.proCaseImgList[index].pic);
+							}
+            }
+            
+            var qualiImgList =[];//行业资质
+						for(var index in this.qualiImgList){
+							var attFkName=this.qualiImgList[index].attFkName;
+							if(attFkName==undefined || attFkName==null || attFkName==''){
+								qualiImgList.push(this.qualiImgList[index].pic);
+							}
+						}
+
+
+            infoVm.checkout()
+
+
+            if(infoVm.checkoutForm){
+              //提交
+              api.confirm({
+                title: '提示',
+                msg: '是否确定提交审核？',
+                buttons: ['确定', '取消']
+              }, function (ret, err) {
+                var index = ret.buttonIndex;
+                if (index == 1) {
+                  submitUserInfoHttps(infoVm.paramData, busLicImgList, proCaseImgList,idCardImgList,logoImg,qualiImgList,clockStatus);
+                } else {
+                }
+              })
+          }
+
+        },
+
+         
+
+        editClick: function (clockStatus) {
+          this.paramData = {
+            shopFzr: this.shopFzr, //负责人
+            shopApplyIdcard: this.shopApplyIdcard, //负责人 身份证
+            shopPhone: this.shopPhone, //联系电话
+            shopName: this.shopName, //商铺名称
+            shopArea: this.areaChoose, //店铺区域
+            shopLong: this.shopLong, //纬度
+            shopLat: this.shopLat, //经度
+            shopAddress: this.shopAddress, //商铺地址
+            shopType: this.shopType, //店铺类型
+            shopJyfw: this.shopJyfw, //经营范围 产品类型
+            shopYyzzZzjgdm: this.shopYyzzZzjgdm, //机构代码 信用代码
+            shopYyzzClass: this.shopYyzzClass, //营业执照类型
+            shopIdea: this.shopIdea, //店铺理念
+            shopAbstract: this.shopAbstract, //简介 店铺介绍
+            shopStatus: this.shopStatus, //状态 0-保存  1-提交
+            clientId: this.userid, //
+            orgId: this.areaChooseId, //区域Id
+            shopId: this.userid
+          };
+
+          if(this.shopFzr==undefined || this.shopFzr==null || this.shopFzr==''){
+							api.toast({msg : '请输入真实姓名',duration : 2000,});
+							return;
+						}
+						if(!checkPersonName(this.shopFzr)){
+							return;
+            }
+            
+						if(this.shopApplyIdcard==undefined || this.shopApplyIdcard==null || this.shopApplyIdcard==''){
+							api.toast({msg : '请输入身份证号',duration : 2000,});
+							return;
+						}
+						if(!checkIdCardNumber(this.shopApplyIdcard)){
+							return;
+            }
+            
+            if(this.shopPhone==undefined || this.shopPhone==null || this.shopPhone==''){
+							api.toast({msg : '请输入手机号',duration : 2000,});
+							return;
+            }
+            
+            if(!checkPhone(this.shopPhone)){
+              api.toast({ msg: '请输入正确的手机号',duration: 2000, location: 'bottom'});
+              return;
+            }
+
+            var logoImg =[];//logo
+						for(var index in this.logoImg){
+							var attFkName=this.logoImg[index].attFkName;
+							if(attFkName==undefined || attFkName==null || attFkName==''){
+								logoImg.push(this.logoImg[index].pic);
+							}
+						}
+
+          var idCardImgList =[];//身份证
+						for(var index in this.idCardImgList){
+							var attFkName=this.idCardImgList[index].attFkName;
+							if(attFkName==undefined || attFkName==null || attFkName==''){
+								idCardImgList.push(this.idCardImgList[index].pic);
+							}
+						}
+
+          var busLicImgList =[];//营业执照
+						for(var index in this.busLicImgList){
+							var attFkName=this.busLicImgList[index].attFkName;
+							if(attFkName==undefined || attFkName==null || attFkName==''){
+								busLicImgList.push(this.busLicImgList[index].pic);
+							}
+						}
+//						var proCaseImgList = this.proCaseImgList;//经营场所
+						var proCaseImgList =[];//经营场所
+						for(var index in this.proCaseImgList){
+							var attFkName=this.proCaseImgList[index].attFkName;
+							if(attFkName==undefined || attFkName==null || attFkName==''){
+								proCaseImgList.push(this.proCaseImgList[index].pic);
+							}
+            }
+            
+            var qualiImgList =[];//营业执照
+						for(var index in this.qualiImgList){
+							var attFkName=this.qualiImgList[index].attFkName;
+							if(attFkName==undefined || attFkName==null || attFkName==''){
+								qualiImgList.push(this.qualiImgList[index].pic);
+							}
+						}
+
+          
+
+          //提交
+          api.confirm({
+            title: '提示',
+            msg: '是否确定提交？',
+            buttons: ['确定', '取消']
+          }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+              submitUserInfoHttps(infoVm.paramData, busLicImgList, proCaseImgList,idCardImgList,logoImg,qualiImgList,clockStatus);
+            }
+          })
+
+        }
+      },
+      mounted: function () {
+        //定位成功
+        // this.shopLong = $api.getStorage("curLng");
+        // this.shopLat = $api.getStorage("curLat");
+        // this.shopAddress = $api.getStorage("curAddress"); //当前地址
+        this.userid = $api.getStorage("userid");
+
+
+        //店铺信息
+        // $api.setStorage("shopArea")//店铺所在区域
+        // $api.setStorage("favStatus")//
+        // $api.setStorage("submitDate")//
+        // $api.setStorage("shopName")//
+        // $api.setStorage("shopYyzzZzjgdm")//
+        // $api.setStorage("shopApplyIdcard")//
+        // $api.setStorage("shopAddress")//
+        // $api.setStorage("orgId")//
+        // $api.setStorage("shopJyfw")//
+        // $api.setStorage("shopLongTx")//
+        // $api.setStorage("shopStatus")//
+        // $api.setStorage("shopAbstract")//
+        // $api.setStorage("shopPhone")//
+        // $api.setStorage("shopId")//
+        // $api.setStorage("createDate")//
+        // // $api.setStorage("clientId")//
+        // $api.setStorage("commentTotal")//
+        // $api.setStorage("shopLatTx")//
+        // $api.setStorage("shopIdea")//
+        // $api.setStorage("shopLong")//
+        // $api.setStorage("shopYyzzClass")//
+        // $api.setStorage("shopType")//
+        // $api.setStorage("shopFzr")//
+        // $api.setStorage("shopLat")//
+        // $api.setStorage("shopTypeName")//
+      },
+
+    });
+
+    var imgCutUp = function (path) {
+      api.openWin({
+        name: 'cropimg_win',
+        url: 'widget://html/cropimg/cropimg_win.html',
+        pageParam: {
+          winName: 'shopManage_win',
+          frmName: 'shopManage_frm',
+          funCal: 'corpImgResFun',
+          path: path,
+          shearBoxW: 300,
+          shearBoxH: 300,
+          appearance: 'rectangle'
+        },
+        delay: 300,
+        slidBackEnabled: false
+      });
+    }
+
+    corpImgResFun = function (ret) {
+      infoVm.ImgCutUrl = ''
+      infoVm.ImgCutUrl = ret.destPath
+
+      if (corpImgResLogo_status){
+        api.sendEvent({ //监听规格截图是否完毕
+        name: 'corpImgResLogo_status',
+        extra: {
+          Logo_status: true,
+        }
+      });
+      }
+
+      // if (corpImgResPic_status) {
+      //   api.sendEvent({ //监听轮播截图是否完毕
+      //   name: 'corpImgResPic_status',
+      //   extra: {
+      //     Pic_status: true,
+      //   }
+      // });
+      // }
+
+      // if (corpImgResPro_status) {
+      //   api.sendEvent({ //监听轮播截图是否完毕
+      //   name: 'corpImgResPro_status',
+      //   extra: {
+      //     Pro_status: true,
+      //   }
+      // });
+      // }
+      // uploadUserAvatarHttps(ret.destPath);
+    }
+
+    //获取店铺信息
+    getUserInfoHttps();
+
+  };
+</script>
+
+</html>

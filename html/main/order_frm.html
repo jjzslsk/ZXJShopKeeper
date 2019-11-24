@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+    <style>
+        body {}
+        .goodsStatus {
+                color: red;
+            }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="aui-tab aui-border-b" id="tab">
+        <div class="aui-tab-item aui-active">全部</div>
+        <div class="aui-tab-item">未支付</div>
+        <div class="aui-tab-item">待发货</div>
+        <div class="aui-tab-item">取消订单</div>
+    </div> -->
+    <div id="info_id" class="aui-padded-5 " id="tab1-con">
+    <template>
+    <!-- <div class="aui-padded-5 " id="tab1-con"> -->
+        <!-- <div class="aui-hide" id="tab1-con1"> -->
+            <div class="aui-content aui-margin-b-15">
+                <ul class="aui-list aui-media-list">
+                    <li v-for='item in goodsList' class="aui-list-item aui-list-item-middle">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="width: 3rem;">
+                                <img :src="item.imgUrl" class="aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">
+                                            <span class="" v-if="item.orderStatus == 2">(已收货)</span>
+                                            <span class="" v-if="item.orderStatus == 3">(待收货)</span>
+                                            <span class="" v-if="item.orderStatus == 0">(未支付)</span>
+                                            <span class="goodsStatus" v-if="item.orderStatus == 1">(待发货)</span>
+                                            <span class="" v-if="item.orderStatus == 6">(取消订单)</span>
+                                            <span class="" v-if="item.orderStatus == 7">(退货)</span>
+                                            <span class="" v-if="item.orderStatus == 9">(其他)</span>
+                                            {{item.itemName}}
+                                    </div>
+                                    <div class="aui-list-item-right">{{item.createDate}}</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    电话：{{item.clientPhone}}  姓名：{{item.clientName}} 
+                                </div>
+                                <div class="aui-list-item-text">
+                                    订号：{{item.orderNo}}
+                                </div>
+                                <div class="aui-list-item-text">
+                                    地址：{{item.clientAddress}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        <!-- </div> -->
+        <!-- <div class="aui-hide" id="tab1-con2">
+            <div class="aui-content aui-margin-b-15">
+                <ul class="aui-list aui-media-list">
+                    <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="width: 3rem;">
+                                <img src="../../image/deal.jpg" class="aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">大板金拉丝五孔</div>
+                                    <div class="aui-list-item-right">08:00</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    名字：李老板
+                                </div>
+                                <div class="aui-list-item-text">
+                                    订单编号：45879534517
+                                </div>
+                                <div class="aui-list-item-text">
+                                    联系电话：155554845798
+                                </div>
+                                <div class="aui-list-item-text">
+                                    地址：广西南宁明秀路0001号
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="aui-hide" id="tab1-con3">
+            <div class="aui-content aui-margin-b-15">
+                <ul class="aui-list aui-media-list">
+                    <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="width: 3rem;">
+                                <img src="../../image/deal.jpg" class="aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">大板金拉丝五孔</div>
+                                    <div class="aui-list-item-right">08:00</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    名字：李老板
+                                </div>
+                                <div class="aui-list-item-text">
+                                    订单编号：45879534517
+                                </div>
+                                <div class="aui-list-item-text">
+                                    联系电话：155554845798
+                                </div>
+                                <div class="aui-list-item-text">
+                                    地址：广西南宁明秀路0001号
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="width: 3rem;">
+                                <img src="../../image/money.jpg" class="aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">大板金拉丝五孔</div>
+                                    <div class="aui-list-item-right">08:00</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    名字：王老板
+                                </div>
+                                <div class="aui-list-item-text">
+                                    订单编号：45879534517
+                                </div>
+                                <div class="aui-list-item-text">
+                                    联系电话：155554845798
+                                </div>
+                                <div class="aui-list-item-text">
+                                    地址：广西南宁明秀路0001号
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="aui-hide" id="tab1-con4">
+            <div class="aui-content aui-margin-b-15">
+                <ul class="aui-list aui-media-list">
+                    <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="width: 3rem;">
+                                <img src="../../image/deal.jpg" class="aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner aui-list-item-arrow">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">大板金拉丝五孔</div>
+                                    <div class="aui-list-item-right">08:00</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    名字：李老板
+                                </div>
+                                <div class="aui-list-item-text">
+                                    订单编号：45879534517
+                                </div>
+                                <div class="aui-list-item-text">
+                                    联系电话：155554845798
+                                </div>
+                                <div class="aui-list-item-text">
+                                    地址：广西南宁明秀路0001号
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+    <!-- </div> -->
+    </template>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery.mobile.custom.min.js"></script>
+<script type="text/javascript" src="../../script/md5/base64.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+        var infoVm
+        var shopUserId = $api.getStorage("userid")
+        var shopOpenId = $api.getStorage("openId")
+        var token = $api.getStorage("token")
+        var orderStatus = ''
+      //获取订单列表
+      var goodsParam = 'shopId=' + shopUserId +'&startPage=1'+ '&recordSize=10';	
+            _getHttpsData('/order/getShopOrderList',goodsParam,
+            function(ret){
+                if(ret.status){
+                    infoVm.goodsList = ret.data
+                }else{
+                }
+            },
+            function(err){
+            }
+        );
+
+
+    api.parseTapmode();
+    var tab = new auiTab({
+        element: document.getElementById("tab"),
+
+    }, function (ret) {
+        if (ret) {
+            //定义获取对象的所有兄弟节点的函数，
+            function siblings(elm) {
+                var a = [];
+                var p = elm.parentNode.children;
+                for (var i = 0, pl = p.length; i < pl; i++) {
+                    if (p[i] !== elm) a.push(p[i]);
+                }
+                return a;
+            }
+            var index = ret.index;
+            var activeC = document.getElementById("tab1-con" + index);
+            activeC.className = "";
+            for (var i = 0; i < siblings(activeC).length; i++) {
+                siblings(activeC)[i].className = "aui-hide";
+            }
+        }
+    });
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+        goodsList:[]
+      }
+    })
+}
+</script>
+</html>

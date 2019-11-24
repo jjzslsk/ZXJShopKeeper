@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui_flex.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/goodsDetail.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/quill_snow.css" />
+  <style>
+      .info-edit-item  {
+    display: flex;
+    align-items: center;
+  }
+  .info-edit-item .title {
+    font-size: 0.6rem;
+    color: #212121;
+    width: 3rem;
+  }
+  .def-phd{color:#aab2bd;font-size: 0.6rem;margin-top: 3px;}
+  .info-edit-item .choose-res{position: relative;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 6px 6px;}
+  .res-icon{color:#aab2bd;font-weight: lighter;width: 1em;position: absolute;right: 5px;font-size: .6rem !important;}
+  .res-icon .aui-iconfont{font-size: .4rem !important;}
+  .text-weight{font-size: 0.6rem;
+    /* margin-top: 3px; */
+    color: #212121;font-style: normal;}
+  .info-input {height: 1.6rem;line-height: 1.6rem;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;
+    padding: 0 6px;} 
+  .info-input input{
+    height: 1.6rem !important;
+    font-size: 0.6rem !important;
+    color: #212121 !important;
+  } 
+  .info-input .radio-text {margin: 0 1rem 0 .3rem; }
+  .aui-list .aui-list-item {
+  margin: 0;
+  }
+
+  #editor{
+    margin-bottom: 50px;
+    min-height: 6rem;
+  }
+  .aui-list .aui-list-header .list-item-title{
+    -webkit-justify-content: flex-start !important;
+    justify-content: flex-start !important;
+  }
+  .add-spec {
+    position: absolute;
+    top: 0.3rem !important;
+    right: 0.75rem !important;
+  }
+  .itemNotesa {
+    display: none;
+  }
+  *{
+    -webkit-user-select:text !important;  
+  }
+  </style>
+</head>
+
+<body>
+  <div id="info_id">
+    <!-- <template> -->
+      <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-form-list">
+          <li class="aui-list-header">商品信息
+            <span style="color: red" v-if='goodsData.itemStatus == 2 || goodsData.itemStatus == 1'>(如需修改或删除商品，必须是下架状态)</span>
+            <span style="color: red" v-if='goodsData.itemStatus == 3'>(审核不通过：{{goodsData.memo}})</span>
+          </li>
+          <li class="aui-list-item aui-row">
+              <!-- <span class="must-star">*</span> -->
+              <div class="info-edit-item horizontal aui-col-xs-12">
+                <div class="title">商品名称：</div>
+                <div class="info-input" tapmode="hover">
+                  <input type="text" :disabled='goodsItemStatus' v-model="goodsData.itemName" />
+                </div>
+              </div>
+            </li>
+
+          <li class="aui-list-item aui-row">
+              <div class="info-edit-item horizontal aui-col-xs-12">
+                <div class="title">店铺分类：</div>
+                <div class="choose-res horizontal" tapmode="hover" @click="shopItemIndexSelect()">
+                  <div class="res-info text-weight" v-if="shopItemClassIdName.length>0">{{shopItemClassIdName}}</div>
+                  <div class="res-info def-phd" v-else>请选择</div>
+                  <div class="res-icon"><i class="aui-iconfont aui-icon-down"></i></div>
+                </div>
+              </div>
+
+              <!-- <div class="info-edit-item horizontal aui-col-xs-6">
+                  <div class="title">配送方式：</div>
+                  <div class="choose-res horizontal" tapmode="hover" @click="deliveryModeSelect()">
+                    <div class="res-info text-weight" v-if="goodsData.deliveryMode.length>0">{{goodsData.deliveryMode}}</div>
+                    <div class="res-info def-phd" v-else>请选择</div>
+                    <div class="res-icon"><i class="aui-iconfont aui-icon-down"></i></div>
+                  </div>
+                </div> -->
+          </li>
+         
+         
+          <!-- <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">平台分类：</div>
+              <div class="aui-list-item-input">
+                <select v-bind:disabled="goodsItemStatus" v-model="this.parentId"
+                  @change="itemIndexSelect($event)">
+                  <option v-for="item in itemClassIds" :key="item.itemClassId" :value="item.itemClassId">
+                    {{item.className}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-down"></i>
+            </div>
+          </li> -->
+
+          <li class="aui-list-item aui-row">
+              <div class="info-edit-item horizontal aui-col-xs-6">
+                <div class="title">平台分类：</div>
+                <div class="choose-res horizontal" tapmode="hover" @click="itemIndexSelect()">
+                  <div class="res-info text-weight" v-if="parentIdName.length>0">{{parentIdName}}</div>
+                  <div class="res-info def-phd" v-else>请选择</div>
+                  <div class="res-icon"><i class="aui-iconfont aui-icon-down"></i></div>
+                </div>
+              </div>
+              <div class="info-edit-item horizontal aui-col-xs-6">
+                  <div class="title">二级分类：</div>
+                  <div class="choose-res horizontal" tapmode="hover" @click="itemIndexSelectSublevel()">
+                    <div class="res-info text-weight" v-if="itemClassIdName.length>0">{{itemClassIdName}}</div>
+                    <div class="res-info def-phd" v-else>请选择</div>
+                    <div class="res-icon"><i class="aui-iconfont aui-icon-down"></i></div>
+                  </div>
+                </div>
+          </li>
+
+          <!-- <li class="aui-list-item">
+            <span class="must-star"></span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label ifyClass">平台二级分类：</div>
+              <div class="aui-list-item-input">
+                <select v-bind:disabled="goodsItemStatus" v-model="this.itemClassIdInfo"
+                  v-on:change="itemIndexSelectSublevel(this.itemClassIdInfo)">
+                  <option v-for="item in itemClassIdsSublevel" :key="item.itemClassId" :value="item.itemClassId">
+                    {{item.className}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-down"></i>
+            </div>
+          </li> -->
+
+
+
+          <!-- <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">店铺分类：</div>
+              <div class="aui-list-item-input">
+                <select v-bind:disabled="goodsItemStatus" v-model="this.shopItemClassIdInfo"
+                  @change="shopItemIndexSelect($event)">
+                  <option v-for="item in shopItemClassIds" :key="item.itemClassId" :value="item.itemClassId">
+                    {{item.className}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-down"></i>
+            </div>
+          </li> -->
+
+          <!-- <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">商品名称：</div>
+              <div class="aui-list-item-input">
+                <input :disabled='goodsItemStatus' type="text" v-model="goodsData.itemName" />
+              </div>
+            </div>
+          </li> -->
+
+          <li class="aui-list-item aui-row">
+              <div class="info-edit-item horizontal aui-col-xs-6">
+                <div class="title">商品单价：</div>
+                <div class="info-input" tapmode="hover">
+                    <input type="number" maxlength="10" v-on:input="limitiTemPrice(goodsData.itemPrice,10)" v-model="goodsData.itemPrice" />
+                </div>
+              </div><div class="info-edit-item horizontal aui-col-xs-6">
+                  <div class="title">商品单位：</div>
+                  <div class="info-input" tapmode="hover">
+                      <input type="tel" maxlength="5" @input="limitiItemUnit(goodsData.itemUnit,5)" v-model="goodsData.itemUnit"/>
+                  </div>
+                </div>
+            </li>
+
+          <!-- <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">商品单价：</div>
+              <div class="aui-list-item-input">
+                <input :disabled='goodsItemStatus' type="number" v-model="goodsData.itemPrice" />
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">商品单位：</div>
+              <div class="aui-list-item-input">
+                <input :disabled='goodsItemStatus' type="text" v-model="goodsData.itemUnit" />
+              </div>
+            </div>
+          </li> -->
+
+          <li class="aui-list-item aui-row">
+              <div class="info-edit-item horizontal aui-col-xs-6">
+                <div class="title">商品数量：</div>
+                <div class="info-input" tapmode="hover">
+                    <input type="number" maxlength="8" v-on:input="limitUpNumber(goodsData.upNumber,8)" v-model="goodsData.upNumber" />
+                </div>
+              </div><div class="info-edit-item horizontal aui-col-xs-6">
+                  <div class="title">商品排序：</div>
+                  <div class="info-input" tapmode="hover">
+                      <input type="number" maxlength="4" v-on:input="limitItemSort(goodsData.itemSort,4)" v-model="goodsData.itemSort" />
+                  </div>
+                </div>
+            </li>
+          <!-- <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">商品数量：</div>
+              <div class="aui-list-item-input">
+                <input :disabled='goodsItemStatus' type="number" v-model="goodsData.upNumber" />
+              </div>
+            </div>
+          </li>
+          <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">商品排序：</div>
+              <div class="aui-list-item-input">
+                <input :disabled='goodsItemStatus' type="number" v-model="goodsData.itemSort" />
+              </div>
+            </div>
+          </li> -->
+          <!-- <li class="aui-list-item aui-row">
+              <div class="info-edit-item horizontal aui-col-xs-12">
+                <div class="title">邮费金额：</div>
+                <div class="info-input" tapmode="hover">
+                  <input :disabled='goodsItemStatus' type="number" v-model="goodsData.postageAmnt" />
+                </div>
+              </div>
+            </li> -->
+
+          <!-- <li class="aui-list-item">
+              <span class="must-star">*</span>
+              <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">邮费：</div>
+                <div class="aui-list-item-input">
+                  <input :disabled='goodsItemStatus' type="number" v-model="goodsData.postageAmnt" />
+                </div>
+              </div>
+            </li> -->
+
+            <!-- <li class="aui-list-item aui-row">
+                <div class="info-edit-item horizontal aui-col-xs-12">
+                  <div class="title">邮寄方式：</div>
+                  <div class="info-input" tapmode="hover">
+                      <div class="" v-if='goodsItemStatus'>
+                          <label>
+                            {{goodsData.postageType}}
+                          </label>
+                      </div>
+                <label>
+                    <input v-model="goodsData.postageType" class="aui-radio" value="包邮" type="radio" name="包邮"
+                    checked /><span class="radio-text">包邮</span>
+                </label>
+                <label>
+                    <input v-model="goodsData.postageType" class="aui-radio" value="非包邮" type="radio" name="非包邮" /><span class="radio-text">非包邮</span>
+                  </label>
+                  </div>
+                </div>
+              </li> -->
+
+          <!-- <li class="aui-list-item">
+            <span class="must-star">*</span>
+            <div class="aui-list-item-inner">
+              <div class="aui-list-item-label">邮寄方式：</div>
+              <div class="" v-if='goodsItemStatus'>
+                <label>
+                  {{goodsData.postageType}}
+                </label>
+              </div>
+              <div class=" list-item-radio" v-else>
+                <label>
+                  <input v-model="goodsData.postageType" class="aui-radio" value="包邮" type="radio" name="包邮"
+                    checked />包邮
+                </label>
+                <label>
+                  <input v-model="goodsData.postageType" class="aui-radio" value="非包邮" type="radio" name="非包邮" />非包邮
+                </label>
+              </div>
+
+            </div>
+          </li> -->
+          <!-- <li class="aui-list-item">
+              <span class="must-star">*</span>
+              <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">配送方式：</div>
+                <div class="aui-list-item-input">
+                  <select v-model="goodsData.deliveryMode" v-bind:disabled="goodsItemStatus">
+                    <option value="物流">物流</option>
+                    <option value="快递">快递</option>
+                    <option value="自提">自提</option>
+                    <option value="商家配送">商家配送</option>
+                  </select>
+                </div>
+              </div>
+              <div class="aui-list-item-label-icon">
+                  <i class="aui-iconfont aui-icon-down"></i>
+              </div>
+            </li> -->
+
+            <li class="aui-list-item aui-row">
+              <div class="info-edit-item horizontal aui-col-xs-6">
+                <div class="title">邮寄方式：</div>
+                <div class="choose-res horizontal" tapmode="hover" @click="postageModeSelect()">
+                  <div class="res-info text-weight" v-if="goodsData.postageType.length>0">{{goodsData.postageType}}</div>
+                  <div class="res-info def-phd" v-else>请选择</div>
+                  <div class="res-icon"><i class="aui-iconfont aui-icon-down"></i></div>
+                </div>
+              </div>
+
+              <div class="info-edit-item horizontal aui-col-xs-6">
+                  <div class="title">配送方式：</div>
+                  <div class="choose-res horizontal" tapmode="hover" @click="deliveryModeSelect()">
+                    <div class="res-info text-weight" v-if="goodsData.deliveryMode.length>0">{{goodsData.deliveryMode}}</div>
+                    <div class="res-info def-phd" v-else>请选择</div>
+                    <div class="res-icon"><i class="aui-iconfont aui-icon-down"></i></div>
+                  </div>
+                </div>
+            </li>
+            <li class="aui-list-item aui-row">
+              <div class="info-edit-item horizontal aui-col-xs-12">
+                <div class="title">邮费金额：</div>
+                <div class="info-input" tapmode="hover">
+                    <input type="number" maxlength="8" v-on:input="limitPostageAmnt(goodsData.postageAmnt,8)" v-model="goodsData.postageAmnt" />
+                </div>
+              </div>
+            </li>
+
+          <!-- <li class="list-item aui-border-b">
+              <li class="aui-list-item">
+                  <span class="must-star">*</span>
+                  <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">商品推荐：</div>
+                    <div class="" v-if='goodsItemStatus'>
+                      <label v-if="goodsData.tzStatus == 0">
+                        推荐
+                      </label>
+                      <label v-if="goodsData.tzStatus == 1">
+                        非推荐
+                      </label>
+                      <label>
+                    </div>
+                    <div class=" list-item-radio" v-else>
+                      <label>
+                        <input v-model="goodsData.tzStatus" class="aui-radio" value="1" type="radio" name="推荐商品"
+                          checked />推荐商品
+                      </label>
+                      <label>
+                        <input v-model="goodsData.tzStatus" class="aui-radio" value="0" type="radio" name="非推荐商品" />非推荐商品
+                      </label>
+                    </div>
+                  </div>
+                </li>
+            <li class="list-item aui-border-b"> -->
+                <!-- <div class="aui-font-size-12 aui-margin-b-10">
+            <span>轮播图：</span><span class="img-ratio">{{picImgList.length}}/{{picImgMax}}</span>
+          </div>
+            <div class="aui-flex-col aui-flex-middle">
+              <div class="aui-flex-item-3 aui-padded-5" v-for="(picItem,picIndex) in picImgList">
+                <div class="id-img">
+                  <span v-if="!goodsItemStatus" class="del-tip" tapmode="hover"
+                    @click="picImgDel(picIndex,picItem)">—</span>
+                  <img :src="picItem.pic" tapmode="hover" @click="previewImg(picIndex,picImgList)" />
+                </div>
+              </div>
+              <div class="aui-flex-item-3 aui-padded-5" v-if="picImgList.length < picImgMax && !goodsItemStatus">
+                <div class="id-img" tapmode="hover" @click="addPicImgClick">
+                  <i class="aui-iconfont aui-icon-plus"></i>
+                </div>
+              </div>
+            </div>
+          </li> -->
+
+          <li class="list-item aui-border-b">
+              <div class="aui-font-size-12 aui-margin-b-10">
+                <span>轮播图</span><span class="img-ratio">{{picImgList.length}}/{{picImgMax}}</span>
+              </div>
+              <div class="aui-flex-col aui-flex-middle">
+                <div class="aui-flex-item-3 aui-padded-5" v-for="(picItem,picIndex) in picImgList">
+                  <div class="id-img">
+                    <span v-if='!goodsItemStatus' class="del-tip" tapmode="hover" @click="picImgDel(picIndex,picItem)">—</span>
+                    <img :src="picItem.pic" tapmode="hover" @click="previewImg(picIndex,picImgList)"/>
+                  </div>
+                </div>
+                <div class="aui-flex-item-3 aui-padded-5" v-if="picImgList.length<picImgMax">
+                  <div v-if='!goodsItemStatus' class="id-img" tapmode="hover" @click="addPicImgClick">
+                    <i class="aui-iconfont aui-icon-plus"></i>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+          <!-- <li class="list-item aui-border-b">
+            <span class="must-star">*</span>
+              <span>详情图：</span><span class="img-ratio">{{proCaseImgList.length}}/{{proCaseImgMax}}</span>
+              <div class="aui-flex-col aui-flex-middle">
+              <div class="aui-flex-item-3 aui-padded-5" v-for="(proCaseItem,proCaseIndex) in proCaseImgList">
+                <div class="id-img">
+                  <span class="del-tip" tapmode="hover" @click="proCaseImgDel(proCaseIndex,proCaseItem)">—</span>
+                  <img :src="proCaseItem.pic" tapmode="hover" @click="previewImg(proCaseIndex,proCaseImgList)" />
+                </div>
+              </div>
+              <div class="aui-flex-item-3 aui-padded-5" v-if="proCaseImgList.length<proCaseImgMax">
+                <div class="id-img" tapmode="hover" @click="addDetailImgClick">
+                  <i class="aui-iconfont aui-icon-plus"></i>
+                </div>
+              </div>
+            </div>
+          </li> -->
+        </ul>
+        <!-- listImgs上传的图片:{{listImgs}}
+        <p>itemSpecData显示的图片:{{itemSpecData}}</p> -->
+
+            <ul class="aui-list aui-form-list goods-pic">
+                <li class="aui-list-header list-item-title">商品规格
+                <span v-if="!goodsItemStatus" style="color: #757575;margin-right: 1.2rem;">如单一规格,应与上方商品单价一致</span>
+                <i @click="addSpec" v-if="!goodsItemStatus" class="aui-iconfont aui-icon-plus aui-text-danger add-spec"></i></li>
+                <li class="aui-list-item">
+            <div class="aui-card-list-content">
+              <ul class="aui-list aui-media-list">
+                <li v-for='(item,index) in itemSpecData' class="aui-list-item aui-list-item-middle">
+                  <div class="aui-media-list-item-inner goods-pic-info">
+                      <div class="pic-radio">
+                          <p>默认</p>
+                      <input :disabled='goodsItemStatus' @click="getRadioVal(item.selected,index)" class="aui-radio"
+                        type="radio" name="默认规格" :checked='item.selected'>
+                    </div>
+                    <div class="addBusLic-img" tapmode="hover" @click="addBusLicImgClick(index)">
+                      <img v-if='itemSpecData[index].imgUrl' :src="itemSpecData[index].imgUrl" class="pic-img">
+                      <i class="aui-iconfont aui-icon-plus" v-if='!itemSpecData[index].imgUrl&&!goodsItemStatus'></i>
+                    </div>
+                    <!-- <div class="aui-list-item-media" @click="addBusLicImgClick(index)">
+                      <img :src="itemSpecData[index].imgUrl" class="pic-img">
+                    </div> -->
+                    <div class="goods-pic-input">
+                    <div class="aui-list-item-input">
+                      <span>规格</span>
+                      <input :disabled='goodsItemStatus' type="text" v-model="itemSpecData[index].spec"
+                        placeholder="请输入商品规格">
+                    </div>
+                    <div class="aui-list-item-input">
+                        <span>单价</span> <input type="number" maxlength="10" v-on:input="limitDigits(itemSpecData[index].price,10,index)" style="font-size:0.6rem" v-model="itemSpecData[index].price" placeholder="输入单价">
+                    </div>
+                  </div>
+                    <span v-if="!goodsItemStatus" class="aui-iconfont aui-icon-close del-icon"
+                      @click="delSpec(index)"></span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+
+        <ul class="aui-list aui-form-list">
+          <li class="aui-list-header">商品详情
+            <span v-if="!goodsItemStatus" style="color: #757575">如需插入详情图,先上传图片后,方可编辑</span>
+          </li>
+          <li v-if="!goodsItemStatus" class="list-item aui-border-b">
+            <div class="aui-font-size-12 aui-margin-b-10 case-img-label">
+            <span>
+              <span>详情图：</span><span class="img-ratio">{{proCaseImgList.length}}/{{proCaseImgMax}}</span>
+            </span>
+            <span v-if='prohibit' class="aui-btn aui-btn aui-btn-success" onclick="addDetailImg()">插入详情图</span>
+            <span v-else class="aui-btn" onclick="addDetailUrl()">已插入详情图</span>
+            </div>
+              <div class="aui-flex-col aui-flex-middle">
+              <div class="aui-flex-item-3 aui-padded-5" v-for="(proCaseItem,proCaseIndex) in proCaseImgList">
+                <div class="id-img">
+                  <span v-if='prohibit' class="del-tip" tapmode="hover" @click="proCaseImgDel(proCaseIndex,proCaseItem)">—</span>
+                  <img :src="proCaseItem.pic" tapmode="hover" @click="previewImg(proCaseIndex,proCaseImgList)"/>
+                </div>
+              </div>
+              <div class="aui-flex-item-3 aui-padded-5" v-if="proCaseImgList.length<proCaseImgMax && !goodsItemStatus" v-if="picImgList.length < picImgMax && !goodsItemStatus">
+                <div class="id-img" tapmode="hover" @click="addDetailImgClick" v-if='prohibit'>
+                  <i class="aui-iconfont aui-icon-plus"></i>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <ul v-if="!goodsItemStatus" class="aui-list aui-form-list">
+          <li class="aui-list-header">图/文编辑
+            <span v-if="!goodsItemStatus" style="color: #757575">插入详情图时,编辑区内容将被清空</span>
+          </li>
+        </ul>
+        <!-- <div class="aui-font-size-12 aui-margin-b-10  case-img-label img-btn">
+            <span>(图/文)编辑</span>
+            <span v-if='!prohibit' class="aui-btn aui-btn-success" onclick="addDetailUrl()">插入详情图</span>
+            <span v-else class="aui-btn" onclick="addDetailUrl()">插入详情图</span>
+            </div> -->
+        
+        <div class="footer aui-row" v-if='goodsData.itemStatus == 0 || goodsData.itemStatus == 3'>
+          <div v-if='goodsData.itemStatus == 0 || goodsData.itemStatus == 3' v-bind:class="[goodsData.itemStatus == '0' || goodsData.itemStatus == '3' ?  'aui-col-xs-4':'','but-blue']" onclick="globalSubmitClick()">重新上架审核</div>
+          <div v-if='goodsData.itemStatus == 0 || goodsData.itemStatus == 3' v-bind:class="[goodsData.itemStatus == '0' || goodsData.itemStatus == '3' ?  'aui-col-xs-4':'','but-green']"
+            @click="delClick()">删除商品</div>
+          <div class="but-red aui-col-xs-4" onclick="backbar()">返回</div>
+        </div>
+
+        <div class="footer aui-row" v-else>
+          <!-- <div v-if='goodsData.itemStatus == 0 || goodsData.itemStatus == 3' class="aui-btn aui-btn-success" @click="saveClick">保存</div> -->
+          <!-- <div v-if='goodsData.itemStatus == 0 || goodsData.itemStatus == 3' class="aui-col-5 but-red" @click="submitClick">上架待审核</div> -->
+          <div class="aui-col-xs-6 but-green" @click="outOfStock(0)">下架</div>
+          <!-- <div v-if='goodsData.itemStatus == 0 || goodsData.itemStatus == 3' class="aui-col-5 but-red" @click="updateClick()">提交编辑</div> -->
+          <div class="aui-col-xs-6 but-red" onclick="backbar()">返回</div>
+        </div>
+      </div>
+      <!-- </template> -->
+    </div>
+    <div id="editor"></div>
+    <div id="itemNotesa"></div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery213min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_dialog.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/custom/bmap.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../res/data/citypicker.js"></script>
+<script type="text/javascript" src="../../script/picker/pickermin.js"></script>
+<script type="text/javascript" src="../../script/picker/addresspicker.js"></script>
+<script type="text/javascript" src="../../script/picker/datepicker.js"></script>
+<script type="text/javascript" src="../../script/quill.js"></script>
+<script type="text/javascript">
+  var infoVm;
+  var backbar;
+  var addDetailImg
+  var proCaseImgList = []//详情图
+  var picImgList =[];//轮播图
+  var corpImgResFun;//裁剪回调
+  var corpImgResGoods_status; //监听规格截图是否完毕
+  var corpImgResPic_status; //监听轮播截图是否完毕
+  var corpImgResPro_status; //监听详情截图是否完毕
+  var addDetailUrl
+  var globalSubmitClick
+  var delImgList = [];//存放选择删除的图片对象
+
+  apiready = function () {
+
+    //富文本
+    var toolbarOptions = [
+    ['bold','underline', 'strike',{ 'color': [] }, { 'background': [] },{ 'align': [] },
+        // { 'size': ['small', false, 'large', 'huge'] },
+        { 'header': [1, 2, 3, 4, 5, 6, false] }
+      ],
+  ];
+  var options ={
+          theme: 'snow',
+          placeholder:'开始输入...',
+          modules: {
+            toolbar: toolbarOptions
+          },
+        }
+   var quill = new Quill('#editor', options)
+   
+    //end
+
+    var pageParam = api.pageParam;//页面提交过来的参数
+    var shopUserId = $api.getStorage("userid")
+    var shopOpenId = $api.getStorage("openId")
+    var itemName_
+    var getPageData = function () {
+      infoVm.goodsData = {}
+      infoVm.goodsData = pageParam.DetailPageParam.DetailPageParam
+      infoVm.goodsData.shopItemId = pageParam.DetailPageParam.DetailPageParam.shopItemId
+      itemName_ = pageParam.DetailPageParam.DetailPageParam.itemName
+      // alert (pageParam.DetailPageParam.DetailPageParam.itemStatus)
+
+      if (pageParam.DetailPageParam.DetailPageParam.itemStatus == 0 || pageParam.DetailPageParam.DetailPageParam.itemStatus == 3) {//上架状态   0 . 3 未上架   2上架
+        infoVm.goodsItemStatus = false //允许编辑
+        $('#itemNotesa').addClass('itemNotesa'); 
+        $('#editor').removeClass('itemNotesa'); 
+      } else {
+        infoVm.goodsItemStatus = true //禁止编辑
+        $('#itemNotesa').removeClass('itemNotesa'); 
+        $('#editor').addClass('itemNotesa'); 
+      }
+
+      
+
+      var shopItemList = JSON.parse(JSON.stringify(infoVm.goodsData.itemSpec))
+      shopItemList.forEach(function (item, index) {
+        const element = shopItemList[index][index];
+        infoVm.itemSpecData.push(element);
+      });
+
+      //   for(let index=0;index<shopItemList.length;index++){
+      //   const element = shopItemList[index][index];
+      //   infoVm.itemSpecData.push(element);
+      // }
+
+      infoVm.itemClassIdInfo = pageParam.DetailPageParam.DetailPageParam.itemClassId //平台二级分类
+      infoVm.shopItemClassIdInfo = pageParam.DetailPageParam.DetailPageParam.shopItemClassId
+      getAttch() //获取详情对象
+      getDetaiContent() //富文本
+
+      getSelectGoodsType() //获取分类
+
+
+
+      api.execScript({
+        name: 'goodsDetail_win',
+        script: 'itemStatus(' + JSON.stringify(infoVm.goodsData.itemStatus) + ')'
+      });
+      // getGoodsId();
+      quill.blur() //移除富文本焦点
+    }
+
+    var getAttch = function () { //获取详情对象
+      var param = 'zxj_repertory&AJAX_MODE=AJAX_MODE_QUERY&QUERY_MODE=list&DATASET=attach_page&ATT_FK_ID=' + pageParam.DetailPageParam.DetailPageParam.shopItemId + '&ATT_FK_NAME=item_img';
+      api.ajax({
+        url: serviceAjaxUrl + param,
+        method: 'get',
+        returnAll: false, //（可选项）是否需要返回所有 response 信息（包括响应头、消息体、状态码），为 true 时，返回的头信息获取方法(ret.headers)，消息体信息获取方法(ret.body)，状态码获取方法(ret.statusCode)
+        dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          token: this.token
+        }
+      }
+        , function (ret, err) {
+          if (ret.msg.length > 0) {
+            infoVm.getAttchObj = JSON.parse(ret.msg)
+
+
+
+            //有infoVm.getAttchObj，才能‘获取商品详情’，  防止轮播图加载不出来
+            getGoodsDetail(pageParam.DetailPageParam.DetailPageParam.shopItemId) //获取商品详情
+          } else {
+            api.toast({ msg: '未配置轮播图', duration: 2000, location: 'bottom' });
+           }
+          api.hideProgress();
+        });
+    }
+
+
+    var getGoodsId = function () {
+      _getHttpsData('/utils/getPK', '',
+        function (res) {
+          if (res.status) {
+            infoVm.goodsData.shopItemId = res.data
+            alert(JSON.stringify(infoVm.goodsData.shopItemId))
+          } else {
+            alert(res.msg)
+          }
+        },
+        function (err) {
+          //api.hideProgress();
+        })
+    }
+
+    var getSelectGoodsType = function () {
+      //获取平台分类
+      _getHttpsData('/shop/getItemClass?classParentId=1', '',
+        function (res) {
+          if(res.status){
+            infoVm.itemClassIds = []
+            res.data.forEach( function (element,index) {
+              infoVm.itemClassIds.push(element)
+            });
+            if(infoVm.itemClassIds.length <= 0){ 
+            api.toast({ msg: '未分配分类', duration: 2000, location: 'bottom' });
+            }else {
+              infoVm.getParentInfo()//通过子分类查询查父节点， 平台分类是否有子分类
+            }
+          }
+        },
+        function (err) {
+          //api.hideProgress();
+        })
+
+      //获取店铺分类
+      _getHttpsData('/shop/getItemClass?classParentId=1&shopId=' + shopUserId, '',
+        function (res) {
+          infoVm.shopItemClassIds = res.data
+          infoVm.getShopItemClassIdName(infoVm.shopItemClassIdInfo) //获取店铺分类名称
+        },
+        function (err) {
+          //api.hideProgress();
+        })
+    }
+
+    //获取商品详情 / 图
+    var getGoodsDetail = function (ItemDetailId) {
+      var param = 'shopItemId=' + ItemDetailId;
+      _getHttpsData('/shop/getShopItem', param,
+        function (res) {
+          if (res.data.picUrl.length > 0) {
+            infoVm.picImgList = []
+            for (var index in res.data.picUrl) {
+              for (var item in infoVm.getAttchObj) {
+                if (infoVm.getAttchObj[item].ATT_WEB_URL.substring(infoVm.getAttchObj[item].ATT_WEB_URL.lastIndexOf('/') + 1) == res.data.picUrl[index].substring(res.data.picUrl[index].lastIndexOf('/') + 1)) {
+                  var imgObj = infoVm.imgObjPackag(infoVm.getAttchObj[item].ATT_FK_NAME, infoVm.getAttchObj[item].ATT_NAME, infoVm.getAttchObj[item].ATT_ID, res.data.picUrl[index]);
+                  infoVm.picImgList.push(imgObj);
+                }
+              }
+            }
+            console.log('infoVm.picImgList......' + JSON.stringify(infoVm.picImgList))
+
+          }
+        },
+        function (err) {
+          //api.hideProgress();
+        })
+    }
+
+
+    backbar = function () {
+      //关闭当前window，使用默认动画
+      api.closeWin();
+    }
+
+    //删除图片
+    var delImgHtts = function (funCal) {
+      var totalCount = delImgList.length;
+      var countTemp = 0;
+      if (totalCount > 0) {
+        for (var index in delImgList) {
+          api.showProgress({
+            title: '删除图片'
+          });
+          var param = 'attId=' + delImgList[index].attId;
+          console.log('图片删除param：' + param)
+          _getHttpsData('/shop/deletePhoto', param,
+            function (ret) {
+              if (ret.status) {
+                countTemp++;
+                if (countTemp == totalCount) {
+                  funCal(true);
+                }
+              } else {
+                totalCount--;
+                api.toast({ msg: '删除图片' + delImgList[index].attName + '失败', duration: 2000, location: 'bottom' });
+                if (countTemp == totalCount) {
+                  funCal(true);
+                }
+              }
+            },
+            function (err) {
+              funCal(false);
+            }
+          );
+        }
+      } else {
+        funCal(true);
+      }
+    };
+
+    /**
+    *上传商品详情图片
+    *proCaseImgList 商品详情图片
+    */
+    var uploadCaseImgList = function (proCaseImgList, funCal) {
+      if (proCaseImgList.length > 0) {
+        //检测压缩商品详情
+        api.showProgress({
+          title: '压缩商品详情图'
+        });
+        batchCompressList('item_detail_pic', 'item_detail_pic', proCaseImgList, function (attNameList, attFkNameList, imgArray) {
+          if (imgArray.length > 0) {
+            var param = {};
+            param.attUser = shopUserId;
+            param.attFkId = shopUserId;
+            param.attName = attNameList;
+            param.attFkName = attFkNameList;
+            param.attNoWater = '0';
+            api.showProgress({
+              title: '上传商品详情图'
+            });
+            uploadFileHttps(param, imgArray, function (ret) {
+              if (ret.status) {
+                ret.pic.forEach(function (element, index) {
+                  infoVm.goodsDetailImg.push('<br><p><img src='+element.pic+'></p><br><br><br><br><br>')
+                });
+                if (funCal != undefined && typeof funCal === "function") {
+                  funCal(true);
+                }
+              } else {
+                if (funCal != undefined && typeof funCal === "function") {
+                  funCal(false);
+                }
+                showSingleAuiDialog('上传商品详情失败(' + ret.code + ')', ret.msg);
+              }
+            }, function (err) {
+              api.hideProgress();
+            });
+          } else {
+            if (funCal != undefined && typeof funCal === "function") {
+              funCal(true);
+            }
+          }
+
+        });
+      } else {
+        if (funCal != undefined && typeof funCal === "function") {
+          funCal(true);
+        }
+      }
+    };
+
+    /**
+    *上传图片
+    * picImgList 轮播图图片
+    * proCaseImgList 商品详情图片
+    */
+    var uploadFileBatch = function (picImgList, proCaseImgList, funCal) {
+      if (picImgList.length > 0) {
+        //检测压缩轮播图
+        api.showProgress({
+          title: '压缩轮播图'
+        });
+        batchCompressList('item_img', 'item_img', picImgList, function (attNameList, attFkNameList, imgArray) {
+          if (imgArray.length > 0) {
+            var param = {};
+            param.attUser = infoVm.goodsData.shopItemId;
+            param.attFkId = infoVm.goodsData.shopItemId;
+            param.attName = attNameList;
+            param.attFkName = attFkNameList;
+            param.attNoWater = '1';
+            api.showProgress({
+              title: '上传轮播图'
+            });
+            uploadFileHttps(param, imgArray, function (ret) {
+              if (ret.status) {
+                //轮播图上传成功
+                //开始上传商品详情
+                if (proCaseImgList.length > 0) {
+                  uploadCaseImgList(proCaseImgList, funCal);
+                }
+              } else {
+                if (funCal != undefined && typeof funCal === "function") {
+                  funCal(false);
+                }
+                showSingleAuiDialog('上传轮播图失败(' + ret.code + ')', ret.msg);
+              }
+            }, function (err) {
+              api.hideProgress();
+            });
+          } else {
+            //开始上传商品详情
+            if (proCaseImgList.length > 0) {
+              uploadCaseImgList(proCaseImgList, funCal);
+            }
+
+          }
+        });
+      } else {
+        //上传商品详情
+        if (proCaseImgList.length > 0) {
+          uploadCaseImgList(proCaseImgList, funCal);
+        }
+
+        uploadCaseImgList('', funCal); //无传图，仅触发删除操作
+      }
+    };
+
+    /***
+    * 提交用户信息
+    * param 用户信息
+    * picImgList 行业资质图片
+    * proCaseImgList 商品详情图片
+    */
+    var submitUserInfoHttps = function (picImgList, proCaseImgList,handle) {
+      uploadFileBatch(picImgList, proCaseImgList, function (upSuccess) {
+
+        if(handle== 'isPro' && upSuccess){ //禁止操作详情图
+          infoVm.prohibit = false
+
+          //插入详情图到编辑器
+          addDetailUrl()
+
+        }else{infoVm.prohibit = true}
+
+        delImgHtts(function (res) {
+          api.hideProgress();
+          if (upSuccess) {
+            showSingleAuiDialog('提交', '提交成功', '确定', function (ret) {
+              api.closeWin({
+                name: 'auth_step_win'
+              })
+              api.sendEvent({
+                name: 'authstepsend_event',
+                extra: {
+                  isSuccess: true,
+                }
+              });
+              // api.closeWin();
+            });
+          } else {
+            api.toast({ msg: '上传图片异常', duration: 2000, location: 'bottom' });
+          }
+        });
+      });
+    };
+
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+
+          
+        isActive:false,//按钮状态
+
+        prohibit:true,//禁止操作详情图
+        specIndex: '',// 操作规格图的下标index
+        ImgCutUrl: '',// 裁剪后得到的图片路径
+
+        goodsDetailImg: [],//获取商品详情图
+
+        getAttchObj: [], 
+
+        offspringClassInfo: '',//子节点信息
+        parentId: '',//父节点CLASS_PARENT_ID
+        parentIdName:'', //平台父名称
+        itemClassIdName:'', //平台子名称
+        shopItemClassIdName:'',//店铺分类名称
+
+        picImgList: [], //轮播图
+        picImgMax: 5, //轮播图图片最多能添加多少张
+        proCaseImgList: [], //商品详情
+        proCaseImgMax: 9, //商品详情图片最多能添加多少张
+
+        goodsItemStatus: '',//商品状态
+
+        shopItemClassIds: '',//店铺分类
+        itemClassIds: '',//平台商品分类
+
+        shopItemClassIdsSublevel: '',//店铺子分类 []
+        itemClassIdsSublevel: '',//平台子分类 []
+
+        itemClassIdInfo: '',//选中平台类属性
+        shopItemClassIdInfo: '',//选中店铺类属性
+
+        itemClassIdInfoSublevel: '',//选中平台子类属性
+        shopItemClassIdInfoSublevel: '',//选中店铺子类属性
+
+        itemSpecDataJson: [],
+
+        itemSpecData: [
+          // {spec:'7602黄金柚木1', price:'95.00',selected:true},
+          //  {spec:'7602黄金柚木2', price:'98.00',selected:false}
+        ],
+
+
+        // itemSpecData:[
+        //  {'0': {spec:'7602黄金柚木1', price:'95.00',selected:true}},
+        //  {'1': {spec:'7602黄金柚木2', price:'98.00',selected:false}}
+        // ],
+
+        goodsData: {
+          picUrl: '',
+          shopItemId: "",//商品ID
+          storeId: shopUserId,//所在店铺
+          itemStatus: "",//商品状态 0新增
+          itemNotes: "",//描述
+          itemNotesa: "",//描述
+          shopId: shopUserId,//店铺ID 不显示在html
+          classAllNo: "",//
+          itemClassId: "",//平台商品分类 classAllNo
+          shopClassAllNo: "",//
+          shopItemClassId: "",//店铺商品分类ID shopClassAllNo
+          itemName: "",//商品名称
+          itemUnit: "",//单位
+          itemPrice: "",//单价
+          upNumber: "",//数量
+          itemSort: "",//排序
+          deliveryMode: "",//配送方式
+          // tzStatus: "",//推荐
+          postageType: "",//包邮
+          postageAmnt: "",//邮费
+          // itemSpec: this.itemSpecData//多商品规格
+          itemSpec: [] //多商品规格
+        },
+        token: '',
+        pitchItem: '', //手机上传图片，1开始
+        listImgs: [],
+        addSpecItem: '',//规格累加
+        searchingstate: true
+
+      },
+      methods: {
+
+                //商品单价
+                limitiTemPrice(data,index){
+          infoVm.goodsData.itemPrice = (data.match(/^\d*(\.?\d{0,2})/g)[0]) || null
+          if(data.length == index){
+                api.toast({msg : '已是最大值',duration : 1000,location : 'bottom'});
+              }
+          },
+          //商品单位
+          limitiItemUnit(data,index){
+            if(data.length == index){
+              api.toast({msg : '已是最大值',duration : 1000,location : 'bottom'});
+            }
+          },
+          //商品数量
+          limitUpNumber(data,index){
+            infoVm.goodsData.upNumber = parseInt(data)
+            if(data.length == index){
+                api.toast({msg : '已是最大值',duration : 1000,location : 'bottom'});
+              }
+          },
+          //商品排序
+          limitItemSort(data,index){
+            infoVm.goodsData.itemSort = parseInt(data)
+            if(data.length == index){
+                api.toast({msg : '已是最大值',duration : 1000,location : 'bottom'});
+              }
+          },
+          
+          //邮费金额：
+          limitPostageAmnt(data,index){
+            infoVm.goodsData.postageAmnt = (data.match(/^\d*(\.?\d{0,2})/g)[0]) || null
+            if(data.length == index){
+                api.toast({msg : '已是最大值',duration : 1000,location : 'bottom'});
+              }
+          },
+          //规格单价
+          limitDigits(data,index,_index){
+            infoVm.itemSpecData[_index].price = (data.match(/^\d*(\.?\d{0,2})/g)[0]) || null
+            if(data.length == index){
+                api.toast({msg : '已是最大值',duration : 1000,location : 'bottom'});
+              }
+            },
+
+          //邮寄方式
+          postageModeSelect:  function () {
+          if(infoVm.goodsItemStatus)return
+          var postage = ['包邮','非包邮','包运费','运费自付']
+          api.actionSheet({
+              cancelTitle: '取消',
+              buttons: postage
+          }, function(ret, err) {
+            var index = ret.buttonIndex;
+						if(index<=postage.length){
+              infoVm.goodsData.postageType=postage[index-1];//推广选择结果名称
+						}
+          });
+          // this.getSublevel(this.goodsData.itemClassId,sublevel)//获取子分类 PS:参照后台，店铺子分类暂时停用
+        },
+
+          //配送方式
+          deliveryModeSelect:  function () {
+          if(infoVm.goodsItemStatus)return
+          var delivery = ['物流','快递','自提','商家配送']
+          api.actionSheet({
+              cancelTitle: '取消',
+              buttons: delivery
+          }, function(ret, err) {
+            var index = ret.buttonIndex;
+						if(index<=delivery.length){
+              infoVm.goodsData.deliveryMode=delivery[index-1];//推广选择结果名称
+						}
+          });
+          // this.getSublevel(this.goodsData.itemClassId,sublevel)//获取子分类 PS:参照后台，店铺子分类暂时停用
+        },
+
+        //反查父节点
+        getParentInfo: function () {
+          var param = 'key=zxj_repertory&AJAX_MODE=AJAX_MODE_QUERY&QUERY_MODE=map&DATASET=item_class_form&ITEM_CLASS_ID=' + pageParam.DetailPageParam.DetailPageParam.itemClassId;
+          api.ajax({
+            url: serviceAjaxUrl + param,
+            method: 'get',
+            returnAll: false, //（可选项）是否需要返回所有 response 信息（包括响应头、消息体、状态码），为 true 时，返回的头信息获取方法(ret.headers)，消息体信息获取方法(ret.body)，状态码获取方法(ret.statusCode)
+            dataType: 'json',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8',
+              token: this.token
+            }
+          }
+            , function (ret, err) {
+              if (ret.msg.length > 0) {
+                this.offspringClassInfo = JSON.parse(ret.msg)
+                if (this.offspringClassInfo.CLASS_PARENT_ID == 1) { //父节点CLASS_PARENT_ID
+                  //只有父分类
+                  infoVm.parentId = this.offspringClassInfo.ITEM_CLASS_ID
+                  infoVm.getItemClassName(infoVm.parentId) //将拿到infoVm.parentId平台父 遍历得到平台父类名称
+                } else {
+                  //有子分类
+                  infoVm.parentId = this.offspringClassInfo.CLASS_PARENT_ID
+                  infoVm.getItemClassName(infoVm.parentId) //将拿到infoVm.parentId平台父 遍历得到平台父类名称
+                }
+
+                infoVm.getSublevel(JSON.stringify(infoVm.parentId), 1)//获取子分类
+              } else { }
+              api.hideProgress();
+            });
+        },
+
+        //将拿到infoVm.parentId平台父 遍历得到平台父类名称
+        getItemClassName : function (id) {
+          if (!infoVm.itemClassIds.length <= 0){
+            infoVm.itemClassIds.forEach(function (element,index){
+            if(id==element.itemClassId){
+              infoVm.parentIdName = element.className
+            }
+          });
+          }
+        },
+
+        //添加轮播图
+        addPicImgClick: function (index) {
+          var chooseNum = Number(this.picImgMax) - Number(this.picImgList.length);
+          chooseCameraSheet(function (retList) {
+
+            imgCutUp(retList[0]); //跳转去裁剪  , 裁剪后得到图片路径 infoVm.retDestPath
+
+            corpImgResPic_status = true
+              api.addEventListener({//监听轮播截图是否完毕
+                name: 'corpImgResPic_status'
+            }, function(ret, err) {
+              if(ret){
+                if(ret.value.Pic_status){
+                  infoVm.appendPicImgImg(infoVm.ImgCutUrl);
+                  corpImgResPic_status = false
+                }
+              }
+            });
+
+            // infoVm.appendPicImgImg(retList);
+          }, chooseNum, '完成');
+        },
+        //添加详情图
+        addDetailImgClick: function (index) {
+          var chooseNum = Number(this.proCaseImgMax) - Number(this.proCaseImgList.length);
+          chooseCameraSheet(function (retList) {
+            imgCutUp(retList[0]); //跳转去裁剪  , 裁剪后得到图片路径 infoVm.retDestPath
+
+            corpImgResPro_status = true
+              api.addEventListener({//监听轮播截图是否完毕
+                name: 'corpImgResPro_status'
+              }, function(ret, err) {
+              if(ret){
+                if(ret.value.Pro_status){
+                  infoVm.appendProCaseImgImg(infoVm.ImgCutUrl);
+                  corpImgResPro_status = false
+                }
+              }
+              });
+
+            // infoVm.appendProCaseImgImg(retList);
+          }, 1, '完成');
+        },
+        picImgDel: function (position, data) {
+          //删除轮播图
+          this.picImgList.splice(position, 1);
+          if (data.attFkName != undefined && data.attFkName != null && data.attFkName != '') {
+            delImgList.push(data)
+          }
+        },
+
+        proCaseImgDel: function (position, data) {
+          //删除详情图片
+          this.proCaseImgList.splice(position, 1);
+          if (data.attFkName != undefined && data.attFkName != null && data.attFkName != '') {
+            delImgList.push(data)
+          }
+        },
+        appendPicImgImg: function (pathList) {
+          //追加轮播图
+          if (this.picImgList.length < this.picImgMax) {
+            // for (var index in pathList) {
+              var imgObj = this.imgObjPackag('', '', '', pathList);
+              this.picImgList.push(imgObj);
+            // }
+            //this.picImgList = this.picImgList.concat(pathList);
+            // this.nextTick();
+          } else {
+            api.toast({
+              msg: '轮播图片最多只能添加' + this.picImgMax + '张',
+              duration: 1000,
+              location: 'bottom'
+            });
+          }
+        },
+
+        appendProCaseImgImg: function (pathList) {
+          //追加详情图片
+          if (this.proCaseImgList.length < this.proCaseImgMax) {
+            // for (var index in pathList) {
+              var imgObj = this.imgObjPackag('', '', '', pathList);
+              this.proCaseImgList.push(imgObj);
+            // }
+            //this.proCaseImgList = this.proCaseImgList.concat(pathList);
+            // this.nextTick();
+          } else {
+            api.toast({
+              msg: '详情图片最多只能添加' + this.proCaseImgMax + '张',
+              duration: 1000,
+              location: 'bottom'
+            });
+          }
+        },
+
+        previewImg: function (position, imgList) {//图片预览
+          var imgListTemp = [];//详情图
+          for (var index in imgList) {
+            imgListTemp.push(imgList[index].pic);
+          }
+          api.openWin({
+            name: 'previewpicture_win',
+            url: 'widget://html/previewpicture/previewpicture_win.html',
+            pageParam: {
+              position: position,
+              imgList: imgListTemp
+            },
+            slidBackEnabled: false,
+            delay: 300
+          });
+        },
+
+        imgObjPackag: function (attFkName, attName, attId, pic) {
+          var imgObj = {};
+          imgObj.attFkName = attFkName;
+          imgObj.attName = attName;
+          imgObj.attId = attId;
+          imgObj.pic = pic;
+          return imgObj;
+        },
+
+        //检索规格
+        searchingSpecInput: function () {
+          infoVm.searchingstate = false
+
+          if (this.itemSpecData <= 0) {
+            var specList = { imgUrl: '', spec: '', price: '', selected: false }
+            // this.itemSpecData.push(specList)
+            // this.addSpecItem ++
+            infoVm.searchingstate = true
+          } else {
+            var specList = { imgUrl: '', spec: '', price: '', selected: false }
+            infoVm.itemSpecData.forEach(function (item, index) {
+              var _index = index+=1
+              if (item.imgUrl == undefined || item.imgUrl.length <= 0) {
+                alert('请在第' + _index + '个规格添加图片')
+                infoVm.searchingstate = false
+                return
+              } else if (item.spec.length <= 0) {
+                alert('请在第' + _index + '个规格填写规格')
+                infoVm.searchingstate = false
+                return
+              } else if (item.price.length <= 0) {
+                alert('请在第' + _index + '个规格填写单价')
+                infoVm.searchingstate = false
+                return
+              } else {
+                // infoVm.itemSpecData.push(specList)
+                // infoVm.addSpecItem ++
+                infoVm.searchingstate = true
+              }
+
+            })
+          }
+        },
+
+        //校验表单
+        checkout: function(){
+          if(infoVm.goodsData.itemClassId.length <= 0 ){api.toast({msg: '请完善，平台商品分类'}); infoVm.checkoutForm = false;return}else
+          if(infoVm.goodsData.shopItemClassId.length <= 0 ){api.toast({msg: '请完善，店铺商品分类'}); infoVm.checkoutForm = false;return}else
+          if(infoVm.goodsData.itemName.length <= 0 ){api.toast({msg: '请完善，商品名称'}); infoVm.checkoutForm = false;return}else
+          if(infoVm.goodsData.itemPrice.length <= 0 ){api.toast({msg: '请完善，商品单价'}); infoVm.checkoutForm = false;return}else
+          if(infoVm.goodsData.itemUnit.length <= 0 ){api.toast({msg: '请完善，商品单位'}); infoVm.checkoutForm = false;return}else
+          if(infoVm.itemSpecData.length == 1 && Number(infoVm.goodsData.itemPrice) !== Number(infoVm.itemSpecData[0].price)){api.toast({msg: '单一规格时,规格价格必须和商品价格一致'}); infoVm.checkoutForm = false; return}else 
+          
+          {
+          infoVm.checkoutForm = true 
+          }
+
+          //判断二级分类是否值，有值则提交，无则选择一级分类提交
+          if(this.itemClassIdInfoSublevel.length > 0){
+            this.itemClassId = this.itemClassIdInfoSublevel
+          }else
+          if(this.shopItemClassIdInfoSublevel.length > 0){
+            this.shopItemClassId = this.shopItemClassIdInfoSublevel
+          }else {
+          }
+          
+        },
+
+        
+
+        //上架待审核
+        submitClick: function () {
+          this.checkout()//校验表表单
+          if (infoVm.checkoutForm) {
+
+            var quillItemNotes = quill.container.firstChild.innerHTML //富文本内容
+
+//判断二级分类是否值，有值则提交，无则选择一级分类提交
+if (infoVm.itemClassIdInfoSublevel.length > 0) {
+  infoVm.itemClassId = infoVm.itemClassIdInfoSublevel
+}
+if (infoVm.shopItemClassIdInfoSublevel.length > 0) {
+  infoVm.shopItemClassId = infoVm.shopItemClassIdInfoSublevel
+}
+
+infoVm.searchingSpecInput()//检索规格 是否填写 infoVm.searchingstate = true  通过
+
+
+if (infoVm.searchingstate && infoVm.itemSpecData.length > 0) {//检索规格 是否填写 infoVm.searchingstate = true  通过
+  // imgCutUp(infoVm.listImgs);//执行上传图片
+  infoVm.specJson(infoVm.itemSpecData) //提交规格，格式化 
+
+  // var proCaseImgList =[];//商品详情图
+  //       for(var index in infoVm.proCaseImgList){
+  //         var attFkName=infoVm.proCaseImgList[index].attFkName;
+  //         if(attFkName==undefined || attFkName==null || attFkName==''){
+  //           proCaseImgList.push(infoVm.proCaseImgList[index].pic);
+  //         }
+  //       }
+
+  var picImgList = [];//轮播图
+  for (var index in infoVm.picImgList) {
+    var attFkName = infoVm.picImgList[index].attFkName;
+    if (attFkName == undefined || attFkName == null || attFkName == '') {
+      picImgList.push(infoVm.picImgList[index].pic);
+    }
+  }
+
+  // 提交
+  api.confirm({
+    title: '提示',
+    msg: '是否确定提交？',
+    buttons: ['确定', '取消']
+  }, function (ret, err) {
+    var index = ret.buttonIndex;
+    if (index == 1) {
+      api.showProgress();
+      infoVm.specJson(infoVm.itemSpecData)
+      infoVm.goodsData.lastEditDate = null
+      infoVm.goodsData.submitDate = null
+      infoVm.goodsData.upDate = null
+      infoVm.goodsData.itemStatus = 1
+      var quillItemNotes = quill.container.firstChild.innerHTML //富文本内容
+      infoVm.goodsData.itemNotes = quill.container.firstChild.innerHTML //富文本内容
+      _postHttpsData('/shop/updateShopItem', infoVm.goodsData,
+        function (ret) {
+          api.hideProgress();
+          if (ret.status) {
+            submitUserInfoHttps(picImgList, '');//传轮播图
+            alert(JSON.stringify(ret.msg))
+            api.hideProgress();
+            backbar()
+            api.sendEvent({
+              name: 'outOfStock_status',
+              extra: {
+                goodsStatus: true,
+              }
+            });
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      );
+    } else {
+    }
+  })
+
+} else {
+  api.toast({  msg: '请完善规格信息',  duration: 1000,  location: 'bottom'});
+}
+
+          }
+
+
+        },
+
+        addSpecItemImg:function(){ //规格图增删改操作
+              if(infoVm.listImgs.length > 0 && infoVm.specIndex == 0){    //操作第一个规格有图片时，先删除再追加 （替换）
+                infoVm.listImgs.shift()                       //把数组的第一个元素从其中删除，并返回第一个元素的值。
+                infoVm.listImgs.unshift(infoVm.ImgCutUrl)           //向数组的开头添加一个或更多元素，并返回新的长度
+              }
+              if(infoVm.listImgs.length <= 0 && infoVm.specIndex == 0){  //操作第一个规格无图片时，直接添加图片 （添加）
+                infoVm.listImgs.push(infoVm.ImgCutUrl)
+              }
+              if(infoVm.listImgs.length > 0 && infoVm.specIndex != 0){   //操作非第一个规格图片， 指定某个规格图片操作时，对应infoVm.specIndex下标先删除，再infoVm.specIndex下标追加infoVm.ImgCutUrl （替换）
+              infoVm.listImgs.splice(infoVm.specIndex, infoVm.specIndex,infoVm.ImgCutUrl);//在指定位置添加元素,第一个参数指定位置,第二个参数指定要删除的元素,如果为0,则追加
+              }
+          },
+
+        addBusLicImgClick: function (index) {
+          if (!this.goodsItemStatus) {
+            chooseCameraSheet(function (retList) {
+            //从相册获取图片后操作
+            infoVm.specIndex = ''
+            infoVm.specIndex = index
+            imgCutUp(retList[0]); //跳转去裁剪  , 裁剪后得到图片路径 infoVm.retDestPath
+
+            corpImgResPic_status = true
+              api.addEventListener({//监听规格截图是否完毕
+                name: 'corpImgResPic_status'
+            }, function(ret, err) {
+              if(ret){
+                if(ret.value.Pic_status){
+                  corpImgResPic_status = false
+                  uploadUserAvatarHttps(infoVm.ImgCutUrl, index + 1)
+                }
+              }
+            });
+
+            }, 1, '完成');
+          }
+        },
+
+        //获取子分类
+        getSublevel: function (itemId, index) { 
+          api.showProgress();
+          if (index == 1) { //查平台子分类
+            infoVm.itemClassIdsSublevel = ''
+            var param = 'classParentId=' + itemId
+          }
+          else if (index == 2) { //查店铺子分类 未启用
+            infoVm.shopItemClassIdsSublevel = ''
+            var param = "classParentId=" + itemId + '&shopId=' + shopUserId
+          }
+          _getHttpsData('/shop/getItemClass', param,
+            function (res) {
+              if (index == 1) { //查平台子分类
+                infoVm.itemClassIdsSublevel = res.data
+                infoVm.getItemClassIdName(infoVm.itemClassIdInfo)//获取平台子类名称 显示给页面
+              } else if (index == 2) { //查店铺子分类 未启用
+                infoVm.shopItemClassIdsSublevel = res.data
+              }
+              api.hideProgress();
+            },
+            function (err) {
+              api.hideProgress();
+            }
+          )
+        },
+
+        //获取平台子类名称 显示给页面
+        getItemClassIdName : function (id) {
+          infoVm.itemClassIdsSublevel.forEach(function(element,index) {
+            if(id==element.itemClassId){
+              infoVm.itemClassIdName = element.className
+            }
+          });
+        },
+
+        //获取店铺名称 显示给页面
+        getShopItemClassIdName: function (id) {
+          infoVm.shopItemClassIds.forEach(function(element,index) {
+            if(id==element.itemClassId){
+              infoVm.shopItemClassIdName = element.className
+            }
+          });
+        },
+
+        itemIndexSelect: function (data) {//平台分类选择  parentId    sublevel 1（平台）
+          if(infoVm.goodsItemStatus)return
+          // var sublevel = 1
+          // if (data.target.value) {
+          //   infoVm.goodsData.itemClassId = data.target.value
+          //   infoVm.parentId = data.target.value
+          //   infoVm.itemClassIds.forEach(function (element) {
+          //     if (data.target.value == element.itemClassId) {
+          //       infoVm.goodsData.classAllNo = element.classAllNo
+          //     }
+          //   });
+          // }
+          // infoVm.getSublevel(infoVm.goodsData.itemClassId, sublevel)//获取子分类
+
+          var sublevel = 1
+          var tempList=[];
+					var actionList=infoVm.itemClassIds;
+					for(var index in actionList){
+						tempList.push(actionList[index].className);
+					}
+          api.actionSheet({
+              cancelTitle: '取消',
+              buttons: tempList
+          }, function(ret, err) {
+              var index = ret.buttonIndex-1;
+              if(index>actionList.length-1) return;
+              infoVm.goodsData.itemClassId = actionList[index].itemClassId
+              infoVm.parentId = actionList[index].itemClassId
+              infoVm.parentIdName = actionList[index].className 
+              infoVm.goodsData.classAllNo = actionList[index].classAllNo
+              infoVm.getSublevel(infoVm.goodsData.itemClassId,sublevel)//获取子分类
+              infoVm.itemClassIdName = '' // 选择父时，子名为空
+          });
+
+        },
+
+        itemIndexSelectSublevel: function (data) {//选择平台子分类
+          if(infoVm.goodsItemStatus)return
+          // if (data) {
+          //   this.goodsData.itemClassId = data
+          //   this.itemClassIdsSublevel.forEach(function (element) {
+          //     if (data == element.itemClassId) {
+          //       infoVm.goodsData.classAllNo = element.classAllNo
+          //     }
+          //   });
+          // }
+
+          var tempList=[];
+					var actionList=infoVm.itemClassIdsSublevel;
+					for(var index in actionList){
+						tempList.push(actionList[index].className);
+					}
+          api.actionSheet({
+              cancelTitle: '取消',
+              buttons: tempList
+          }, function(ret, err) {
+              var index = ret.buttonIndex-1;
+              if(index>actionList.length-1) return;
+              infoVm.goodsData.itemClassId = actionList[index].itemClassId
+              infoVm.itemClassIdName = actionList[index].className
+              infoVm.goodsData.classAllNo = actionList[index].classAllNo
+          });
+
+        },
+
+        shopItemIndexSelect: function (data) {//店铺分类选择  sublevel 2（店铺）
+          if(infoVm.goodsItemStatus)return
+          // var sublevel = 2
+          // if (data.target.value) {
+          //   this.goodsData.shopItemClassId = data.target.value
+          //   this.shopItemClassIds.forEach(function (element) {
+          //     if (data.target.value == element.itemClassId) {
+          //       infoVm.goodsData.shopClassAllNo = element.classAllNo
+          //     }
+          //   });
+          // }
+
+          var sublevel = 2 
+          var tempList=[];
+					var actionList=infoVm.shopItemClassIds;
+					for(var index in actionList){
+						tempList.push(actionList[index].className);
+					}
+          api.actionSheet({
+              cancelTitle: '取消',
+              buttons: tempList
+          }, function(ret, err) {
+              var index = ret.buttonIndex-1;
+              if(index>actionList.length-1) return;
+              infoVm.goodsData.shopItemClassId = actionList[index].itemClassId
+              infoVm.goodsData.shopClassAllNo = actionList[index].classAllNo
+              infoVm.shopItemClassIdName = actionList[index].className
+          });
+
+          // this.getSublevel(this.goodsData.itemClassId,sublevel)//获取子分类 PS:参照后台，店铺子分类暂时停用
+        },
+
+        shopItemIndexSelectSublevel: function (data) {//选择店铺子分类
+          if(infoVm.goodsItemStatus)return
+          this.goodsData.shopItemClassId = data.itemClassId
+          this.goodsData.shopClassAllNo = data.classAllNo
+        },
+
+        getRadioVal: function (value, index) {
+          this.itemSpecData[index].selected = true
+          this.itemSpecData.forEach(function (item, i) {
+            if (i != index) {
+              infoVm.itemSpecData[i].selected = false
+            }
+          })
+        },
+
+        addSpec: function () {
+          var addSpecItem = false //是否可添加
+          if (this.itemSpecData <= 0) {
+            addSpecItem = true
+            var specList = { imgUrl: '', spec: '', price: '', selected: false }
+            this.itemSpecData.push(specList)
+          } else {
+            var specList = { imgUrl: '', spec: '', price: '', selected: false }
+            this.itemSpecData.forEach(function (item, index) {
+              var numItem = index + 1
+              if (item.imgUrl.length <= 0 && item.spec.length <= 0 && item.price.length <= 0) {
+                addSpecItem = false
+                alert('请完善第' + numItem + '个规格信息')
+              } else {
+                addSpecItem = true
+              }
+            })
+            if (addSpecItem) {
+              infoVm.itemSpecData.push(specList)
+            }
+          }
+        },
+
+        delSpec: function (indexSpec) {
+          this.addSpecItem--
+          this.itemSpecData.forEach(function (element, index) {
+            if (indexSpec == index) {
+              infoVm.itemSpecData.splice(index, 1)
+            }
+          });
+          this.listImgs.forEach(function (element, index) {
+            if (indexSpec == index) {
+              infoVm.listImgs.splice(index, 1)
+            }
+          });
+        },
+
+
+        updateClick: function () {
+          api.showProgress();
+          this.specJson(this.itemSpecData)
+          this.goodsData.lastEditDate = null
+          this.goodsData.submitDate = null
+          this.goodsData.upDate = null
+          this.goodsData.itemStatus = 1
+          _postHttpsData('/shop/updateShopItem', this.goodsData,
+            function (ret) {
+              api.hideProgress();
+              if (ret.status) {
+                alert(JSON.stringify(ret.msg))
+                api.hideProgress();
+                backbar()
+                api.sendEvent({
+                  name: 'outOfStock_status',
+                  extra: {
+                    goodsStatus: true,
+                  }
+                });
+              }
+            },
+            function (err) {
+              api.hideProgress();
+            }
+          );
+        },
+
+         
+
+        outOfStock: function (key) {
+          api.confirm({
+            title: '提示',
+            msg: '是否确定下架？',
+            buttons: ['确定', '取消']
+          }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+              api.showProgress({ title: "提交信息" });
+              infoVm.goodsData.itemStatus = key
+              var param = {
+                itemName: itemName_,
+                itemStatus: key,
+                shopItemId: infoVm.goodsData.shopItemId
+              }
+              _postHttpsData('/shop/updateShopItem', param,
+                function (res) {
+                  if (res.status) {
+                    alert(JSON.stringify(res.msg))
+                    api.hideProgress();
+                    // backbar()
+                    infoVm.goodsItemStatus = false
+                    $('#itemNotesa').addClass('itemNotesa'); 
+                    $('#editor').removeClass('itemNotesa'); 
+                    infoVm.goodsData.itemStatus = 0
+                    api.execScript({
+                      name: 'goodsDetail_win',
+                      script: 'itemStatus(' + infoVm.goodsData.itemStatus + ')'
+                    });
+                    api.sendEvent({
+                      name: 'outOfStock_status',
+                      extra: {
+                        goodsStatus: true,
+                      }
+                    });
+                  }
+                },
+                function (err) {
+                  api.hideProgress();
+                })
+            } else {
+            }
+          })
+
+
+
+
+        },
+
+        //提交规格，格式化 加KEY
+        specJson: function (data) {
+          infoVm.goodsData.itemSpec = []
+          data.forEach(function (element, index) {
+            var jsonItem = {}
+            jsonItem[index] = element
+            infoVm.goodsData.itemSpec.push(jsonItem);
+          });
+          infoVm.goodsData.itemSpec = JSON.stringify(infoVm.goodsData.itemSpec)
+        },
+
+        //
+        submitClick1: function () {
+          api.showProgress({ title: "提交信息" });
+          this.spanFoJson(this.itemSpecData)
+          this.goodsData.itemSpec = this.itemSpecDataJson
+          this.goodsData.itemStatus = 0
+          this.goodsData.lastEditDate = null
+          this.goodsData.submitDate = null
+          this.goodsData.upDate = null
+          _postHttpsData('/shop/updateShopItemd', this.goodsData,
+            function (res) {
+              api.hideProgress();
+              alert(res.msg)
+            },
+            function (err) {
+              api.hideProgress();
+            })
+        },
+
+
+        //保存
+        saveClick: function () {
+          if (this.goodsData.itemStatus == 0 || this.goodsData.itemStatus == 3) {
+            api.showProgress();
+            this.spanFoJson(this.itemSpecData)
+
+            this.goodsData.lastEditDate = null
+            this.goodsData.submitDate = null
+            this.goodsData.upDate = null
+            this.goodsData.itemSpec = JSON.stringify(this.goodsData.itemSpec)
+            this.goodsData.itemStatus = 0
+            _postHttpsData('/shop/updateShopItem', this.goodsData,
+              function (ret) {
+                if (ret.status) {
+                  alert(JSON.stringify(ret.msg))
+                  api.hideProgress();
+                  backbar()
+                  api.sendEvent({
+                    name: 'outOfStock_status',
+                    extra: {
+                      goodsStatus: true,
+                    }
+                  });
+                }
+              },
+              function (err) {
+                api.hideProgress();
+              }
+            );
+          } else if (this.goodsData.itemStatus = 3) {
+            api.showProgress();
+            this.goodsData.itemStatus = 3
+            _postHttpsData('/shop/updateShopItem', this.goodsData,
+              function (ret) {
+                if (ret.status) {
+                  alert(JSON.stringify(ret.msg))
+                  api.hideProgress();
+                  backbar()
+                  api.sendEvent({
+                    name: 'outOfStock_status',
+                    extra: {
+                      goodsStatus: true,
+                    }
+                  });
+                }
+              },
+              function (err) {
+                api.hideProgress();
+              }
+            );
+          }
+        },
+
+        delClick: function () {
+          api.confirm({
+            title: '提示',
+            msg: '是否确定删除？',
+            buttons: ['确定', '取消']
+          }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+              api.showProgress();
+              var param = 'SHOP_ITEM_ID=' + infoVm.goodsData.shopItemId;
+              _getHttpsData('/shop/deleteShopItem', param,
+                function (ret) {
+                  if (ret.status) {
+                    alert(JSON.stringify(ret.msg))
+                    api.hideProgress();
+                    backbar()
+                    api.sendEvent({
+                      name: 'outOfStock_status',
+                      extra: {
+                        goodsStatus: true,
+                      }
+                    });
+                  }else{
+                    api.alert({
+                        title: '提示',
+                        msg: ret.msg,
+                      }, function(ret, err) {
+                      api.sendEvent({
+                        name: 'outOfStock_status',
+                        extra: {
+                          goodsStatus: true,
+                        }
+                      });	
+                      backbar()
+                      });
+                    api.hideProgress();
+                  }
+                },
+                function (err) {
+                  alert(JSON.stringify(err))
+                  api.hideProgress();
+                }
+              );
+            } else {
+            }
+          })
+
+
+
+        },
+
+        setUpImg: function (path, index) {
+          // alert(index)
+          // alert(path)
+          infoVm.itemSpecData[index - 1].imgUrl = path
+          // this.avatar = path;
+          // console.log('setUpImg:' + this.avatar);
+        }
+      },
+      mounted: function () {
+        this.token = $api.getStorage('token')
+      },
+
+    });
+
+      //上架待审核
+      globalSubmitClick = function () {
+          infoVm.submitClick()
+    };
+
+    var imgCutUp = function (path) {
+      api.openWin({
+        name: 'cropimg_win',
+        url: 'widget://html/cropimg/cropimg_win.html',
+        pageParam: {
+          winName: 'goodsDetail_win',
+          frmName: 'goodsDetail_frm',
+          funCal: 'corpImgResFun',
+          path: path,
+          shearBoxW: 300,
+          shearBoxH: 300,
+          appearance: 'rectangle'
+        },
+        delay: 300,
+        slidBackEnabled: false
+      });
+    }
+
+    corpImgResFun = function (ret) {
+      infoVm.ImgCutUrl = ''
+      infoVm.ImgCutUrl = ret.destPath
+      if (corpImgResGoods_status){
+        api.sendEvent({ //监听规格截图是否完毕
+        name: 'corpImgResGoods_status',
+        extra: {
+          Goods_status: true,
+        }
+      });
+      }
+
+      if (corpImgResPic_status) {
+        api.sendEvent({ //监听轮播截图是否完毕
+        name: 'corpImgResPic_status',
+        extra: {
+          Pic_status: true,
+        }
+      });
+      }
+
+      if (corpImgResPro_status) {
+        api.sendEvent({ //监听轮播截图是否完毕
+        name: 'corpImgResPro_status',
+        extra: {
+          Pro_status: true,
+        }
+      });
+      }
+
+      // uploadUserAvatarHttps(ret.destPath);
+    }
+
+
+
+    //上传规格图片
+    var uploadUserAvatarHttps = function (avatarPath, index) {
+      var param = {};
+      param.clientId = shopUserId;
+      param.attUser = shopUserId;
+      param.attFkId = infoVm.goodsData.shopItemId;
+      param.attNoWater = '1';
+      api.showProgress({ title: '压缩图片' });
+      var imgArray = [];
+      checkCompressImg(avatarPath, function (imgPathPos) {
+        var attFkName = [];
+        var attName = [];
+        if (imgPathPos != null) {
+          imgArray.push(imgPathPos);
+          attFkName.push('item_img_spec_' + index);
+          attName.push('item_img_spec_' + index + '.jpg');
+        }
+        if (imgArray.length > 0) {
+          //开始上传
+          param.attFkName = attFkName;
+          param.attName = attName;
+          api.showProgress({ title: '上传图片' });
+          uploadFileHttps(param, imgArray,
+            function (ret) {
+              api.hideProgress();
+              if (ret.status) {
+                //上传成功
+                api.toast({ msg: ret.msg, duration: 2000, location: 'bottom' });
+                // setAvatarStor(ret.pic[0].pic);
+                infoVm.setUpImg(ret.pic[0].pic, index);
+                // api.sendEvent({
+                //     name: 'update_img',
+                //     extra: {
+                //       upDateImg: true,
+                //     }
+                // });
+              } else {
+                showSingleAuiDialog('上传图片失败(' + ret.code + ')', ret.msg);
+              }
+            },
+            function (err) {
+              api.hideProgress();
+            }
+          );
+        } else {
+          api.hideProgress();
+        }
+      });
+    };
+
+    //监听
+    // api.addEventListener({
+    //     name: 'update_img'
+    // }, function(ret, err) {
+    // 	if(ret){
+    // 		if(ret.value.upDateImg){
+
+    // 		}
+    // 	}
+    // });
+
+    var getUserInfoHttps = function (param) {
+      // 	//获取店铺信息
+      api.showProgress();
+      var param = "clientId=" + shopUserId + '&openId=' + shopOpenId + '&shopId=' + shopUserId + '&from=1'
+      _getHttpsData('/shop/getShopInfo', param,
+        function (res) {
+          api.hideProgress();
+          if (res.code == 0005) {
+            infoVm.shopData = false
+            infoVm.affect = false
+            api.confirm({
+              title: '提示',
+              msg: '您未开店，是否申请开店',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.openWin({
+                  name: 'shopManage_win',
+                  url: 'widget://html/shopManage/shopManage_win.html',
+                  reload: true,
+                });
+              } else {
+                api.closeToWin({
+                  name: 'main_win',
+                  url: 'widget://html/main/main_win.html',
+                  reload: true,
+                });
+              }
+            })
+          } else if (JSON.stringify(res.data).length > 0) {
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      )
+    };
+    //插入图片
+    addDetailUrl = function () {
+      if(infoVm.goodsDetailImg.length == 0 || infoVm.goodsDetailImg.length == null){
+        //详情图未上传
+              }else {
+                quill.pasteHTML(JSON.stringify(infoVm.goodsDetailImg.join('')).slice(1,-1)) //获取到的图片，放入编辑器中
+              }
+    }
+
+    addDetailImg = function () {
+      var proCaseImgList = [];//商品详情图
+      for (var index in infoVm.proCaseImgList) {
+        var attFkName = infoVm.proCaseImgList[index].attFkName;
+        if (attFkName == undefined || attFkName == null || attFkName == '') {
+          proCaseImgList.push(infoVm.proCaseImgList[index].pic);
+        }
+      }
+
+
+      if(proCaseImgList.length == 0 || proCaseImgList.length == null){
+          alert ("请添加详情图")
+        }else {
+      submitUserInfoHttps('', proCaseImgList,'isPro');//传图
+        }
+
+    }
+    var getDetaiContent = function () {
+      quill.pasteHTML(infoVm.goodsData.itemNotes) //获取到的详情，放入编辑器中
+      $("#itemNotesa").html(infoVm.goodsData.itemNotes);
+    }
+    getUserInfoHttps()
+    getPageData()
+  }
+</script>
+
+</html>

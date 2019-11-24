@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui_flex.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+  <style>
+            .star-box {
+            display: flex;
+            align-items: center;
+            color: #757575;
+        }
+        .star-box span {
+            display: inline-block;
+        }
+        .star-item {
+            display: inline-flex;
+            align-items: center;
+        }
+        .star-img{
+            margin-right: .5rem;
+            width: .6rem;
+        }
+  </style>
+</head>
+
+<body>
+  <div id="info_id">
+    <template>
+      <section class="aui-content-padded aui-list">
+        <div class="aui-list-header">订单信息</div>
+        <div><img src="orderData.IMG_URL" alt=""></div>
+        <p>商品名称：{{orderData.ITEM_NAME}}</p>
+        <p>普通单号：{{orderData.ORDER_NO}}</p>
+        <p>拍照单号：{{orderData.PHOTO_ORDER_ID}}</p>
+        <p>日期：{{orderData.COMMENT_DATE}}</p>
+        <div class="star-box"><span>好评：</span><div class="star-item"></div><img class="star-img" src="../../image/star.png" v-for='indexItem in orderData.N1_STAR_LEVEL'></img></div></div>
+        <div class="star-box"><span>服务：</span><div class="star-item"></div><img class="star-img" src="../../image/star.png" v-for='indexItem in orderData.N2_STAR_LEVEL'></img></div></div>
+        <div class="star-box"><span>物流：</span><div class="star-item"></div><img class="star-img" src="../../image/star.png" v-for='indexItem in orderData.N3_STAR_LEVEL'></img></div></div>
+        <!-- <p class="aui-row">
+          <span class="aui-col-xs-6"> 订单金额：{{orderData.amount}}</span>
+          <span class="aui-col-xs-6"> 折扣后金额：{{orderData.amount}}</span>
+        </p> -->
+      </section>
+      <section class="aui-content-padded aui-list" v-if ='orderData.COMMENT_NOTES2 == null'>
+        <div class="aui-list-header">评论内容：</div>
+        <p>客户评论：{{orderData.COMMENT_NOTES1}}</p>
+        <ul class="aui-list aui-form-list">
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <!-- <div class="aui-list-item-label">
+                    回复内容
+                </div> -->
+                <div class="aui-list-item-input">
+                    <textarea v-model='orderTextarea' placeholder="请输入评论回复"></textarea>
+                </div>
+            </div>
+        </li>
+      </ul>
+        <div class="aui-btn aui-btn-info aui-pull-right aui-margin-t-10" @click="achieve()">回复</div>
+      </section>
+      <section class="aui-content-padded aui-list" v-else>
+        <div class="aui-list-header">评论内容：</div>
+        <p>客户评论：{{orderData.COMMENT_NOTES1}}</p>
+        <p>店主回复：{{orderData.COMMENT_NOTES2}}</p>
+      </section>
+    </template>
+  </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery213min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/picker/pickermin.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+
+<script type="text/javascript">
+  var infoVm;
+  var backbar;
+  apiready = function () {
+    var itemData = api.pageParam;//页面提交过来的参数
+    var shopUserId = $api.getStorage("userid")
+    var getPageData = function () {
+      infoVm.goodsData = {}
+      infoVm.orderData = itemData.itemData.itemData
+    }
+    backbar = function () {
+      //关闭当前window，使用默认动画
+      api.closeWin();
+    }
+
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+        shopJyfwValue: '',//物流
+        shopJyfwData: [],
+        shopJyfw: '',
+        goodsNum: '',
+        orderData: {},
+        token: '',
+        orderTextarea:'', //评论内容
+      },
+
+
+
+      methods: {
+        //标记为已发货
+        achieve: function () {
+          api.confirm({
+            title: '提示',
+            msg: '是否确定提交？',
+            buttons: ['确定', '取消']
+          }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+              var param={};
+              var shopItemComment=[];//商品评价列表
+              var eveObj = {};
+                  eveObj.shopItemId=infoVm.orderData.SHOP_ITEM_ID;//商品id
+                  eveObj.commentNotes =infoVm.orderTextarea;//评价内容
+                  eveObj.clientId =shopUserId;//用户id
+                  eveObj.orderNo =infoVm.orderData.ORDER_NO;//订单id
+                  eveObj.n1StarLevel= infoVm.orderData.N1_STAR_LEVEL; //商品得分
+                  eveObj.n2StarLevel= infoVm.orderData.N2_STAR_LEVEL; //服务态度得分
+                  eveObj.n3StarLevel= infoVm.orderData.N3_STAR_LEVEL; //物流服务得分
+                  eveObj.shopId= shopUserId;//商铺id
+                  eveObj.commentParentId= infoVm.orderData.SHOP_ITEM_COMMENT_ID;//商铺评论id
+                  eveObj.replyFlag= 1;//商铺id
+              shopItemComment.push(eveObj);
+              param.shopItemComment = shopItemComment;
+            _postHttpsData("/shop/createShopItemComment", param,
+            function (ret) {
+              if(ret.status){
+                api.sendEvent({
+                    name: 'cancelOrder_list_status',
+                    extra: {
+                        orderStatus: true,
+                    }
+                });
+                api.alert({
+                    title: '提示',
+                    msg: '提交成功',
+                  }, function(ret, err) {
+                    backbar()
+                  });
+              }
+            },
+            function (err) {
+              api.hideProgress();
+            }
+          );
+            } else {
+            }
+          })
+        },
+
+        indexSelect: function (data) {
+          this.shopJyfwValue = data
+          console.log(data)
+        },
+
+        //获取物流公司
+        getInfoTpye: function () {
+          var param = 'key=zxj_repertory&AJAX_MODE=AJAX_MODE_QUERY&QUERY_MODE=list&DATASET=goods_page';
+          api.ajax({
+            url: serviceAjaxUrl + param,
+            method: 'get',
+            returnAll: false, //（可选项）是否需要返回所有 response 信息（包括响应头、消息体、状态码），为 true 时，返回的头信息获取方法(ret.headers)，消息体信息获取方法(ret.body)，状态码获取方法(ret.statusCode)
+            dataType: 'json',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8',
+              token: this.token
+            }
+          }
+            , function (ret, err) {
+              if (ret.msg.length > 0) {
+                infoVm.shopJyfwData = JSON.parse(ret.msg)
+              } else { }
+              api.hideProgress();
+            });
+        },
+
+      },
+      mounted: function () {
+        // this.token = $api.getStorage('token')
+      },
+
+    });
+    infoVm.getInfoTpye()
+
+    getPageData()
+  }
+</script>
+
+</html>

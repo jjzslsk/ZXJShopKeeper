@@ -1,0 +1,44 @@
+.this-bg-theme {
+    background: linear-gradient(to right, #11ce7c 20%,#11cfc8 100%);
+    }
+
+    /* 头部 */
+    body{
+        /* background-color: aquamarine; */
+    }
+    .head {
+        margin: 0 auto;
+    }
+    .head .head-select {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 0;
+    }
+    .head .head-select-title {
+        /* background: rgb(226, 127, 127); */
+        text-align: center;
+        padding: 4px;
+        display: inline;
+    }
+    .head .head-select-title span {
+        font-size: 18px;
+        color: #eee;
+    }
+    .head-skip {
+        padding: 16px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        color: #fff;
+    }
+    .head-skip .head-skip-left {
+        width: 50%;
+        text-align: center;
+    }
+    .head-skip .head-skip-right {
+        width: 50%;
+        text-align: center;
+    }
+    

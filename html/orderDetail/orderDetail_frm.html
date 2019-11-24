@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/aui/aui_flex.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+  <style>
+
+.footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction:row;
+      flex-wrap:wrap;
+      background: #DCDCDC;
+      position: fixed;
+      left: 0;
+      bottom: 0px;
+      width: 100%;
+      z-index: 99;
+      height: 50px;
+	}
+	.but-green{
+              background: #11CE7C;
+              color: #fff;
+              height: 50px;
+              line-height: 50px;
+              text-align: center;
+            }
+            .but-blue{
+              background: #00A0E9;
+              color: #fff;
+              height: 50px;
+              line-height: 50px;
+              text-align: center;
+              width: 50%;
+            }
+            .but-red{
+              background: #F24A4A;
+              color: #fff;
+              height: 50px;
+              text-align: center;
+              line-height: 50px;
+              width: 50%;
+            }
+            .but-gray {
+              background: #DCDCDC;
+              height: 50px;
+              text-align: center;
+              line-height: 50px;
+              color: #757575;
+              font-weight: normal;
+              font-size: .7rem;
+            }
+            .content-box {
+              margin-bottom: 10px;
+            }
+
+
+            .info-edit-item  {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .info-edit-item .title {
+            font-size: 0.6rem;
+            color: #212121;
+            width: 3rem;
+          }
+          .def-phd{color:#aab2bd;font-size: 0.6rem;margin-top: 3px;}
+          .info-edit-item .choose-res{position: relative;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 6px 6px;}
+          .res-icon{color:#aab2bd;font-weight: lighter;width: 1em;position: absolute;right: 5px;font-size: .6rem !important;}
+          .res-icon .aui-iconfont{font-size: .4rem !important;}
+          .text-weight{font-size: 0.6rem;
+            /* margin-top: 3px; */
+            color: #212121;font-style: normal;}
+
+            /* ------------- */
+
+
+    .item-img {
+      height: 4rem;
+      width: 4rem;
+      margin-right: .5rem;
+    }
+    .item-img img {
+      height: 100%;
+      width: 100%;
+    }
+    .goods-list-item {
+      border: 1px solid rgb(211, 211, 211);
+      margin-top: .5rem;
+      padding: .2rem;
+      border-radius: 2px;
+    }
+    .order-list-header {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: block;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      background-color: #e0e0e0;
+      color: #212121;
+      line-height: 1;
+      padding: 0.4rem;
+      font-size: 0.6rem;
+    }
+    .info-item {
+      /* margin-bottom: 6px;  */
+      padding: 6px 6px 6px 0;
+    }
+    .info-item select, .info-item input {
+      border-radius: 4px;
+      border: 1px solid #03a9f4;
+      padding: 0 6px;
+    }
+    .achieve-btn {
+      margin-right: 6px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .material .aui-list-item-input{
+      padding-right: 0;
+      width: calc(100% - 3rem);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="info_id">
+    <!-- <template> -->
+      <section class="aui-content-padded">
+        <div class="order-list-header">订单信息</div>
+        <p>商品名称：{{orderData.itemName}}</p>
+        <p v-if="orderData.orderStatus == 2">订单状态：已收货</p>
+        <p v-if="orderData.orderStatus == 3">订单状态：已发货</p>
+        <p v-if="orderData.orderStatus == 0">订单状态：未支付</p>
+        <p v-if="orderData.orderStatus == 1">订单状态：待发货</p>
+        <p v-if="orderData.orderStatus == 6">订单状态：取消订单</p>
+        <p v-if="orderData.orderStatus == 7">订单状态：售后</p>
+        <p v-if="orderData.orderStatus == 8">订单状态：申请退货</p>
+        <p v-if="orderData.orderStatus == 9">订单状态：客户退货</p>
+        <p v-if="orderData.orderStatus == 11">订单状态：拒绝退货</p>
+        <p v-if="orderData.orderStatus == 4">订单状态：待评价</p>
+        <p v-if="orderData.orderStatus == 10">订单状态：同意退货</p>
+        <p>普通单号：{{orderData.orderNo}}</p>
+        <p v-if='orderData.photoOrderId'>拍照单号：{{orderData.photoOrderId}}</p>
+        <!-- <p>交易号：{{orderData.orderId}}</p> -->
+        <p v-if='orderData.createDate !=undefined'>下单日期：{{orderData.createDate}}</p>
+        <p v-if='orderData.thireCallDate !=undefined'>支付时间：{{orderData.thireCallDate}}</p>
+        <p v-if='orderData.endTransactionDate !=undefined && orderData.orderStatus == 4'>成交时间：{{orderData.endTransactionDate}}</p>
+        <p class="aui-row">
+          <span class="aui-col-xs-6"> 订单金额：{{orderData.amount}}</span>
+          <span class="aui-col-xs-6"> 支付方式：{{orderData.payment}}</span>
+          <!-- <span class="aui-col-xs-6"> 折扣后金额：{{orderData.amount}}</span> -->
+        </p>
+        <!-- <p class="aui-row">
+          <span class="aui-col-xs-6"> 应收金额：{{orderData.amount}}</span>
+          <span class="aui-col-xs-6"> 实收金额：{{orderData.itemPrice}}</span>
+        </p> -->
+      </section>
+      <section class="aui-content-padded">
+        <div class="order-list-header">邮寄人信息</div>
+        <p>收件人姓名：{{orderData.clientName}}</p>
+        <p>联系电话：{{orderData.clientPhone}}</p>
+        <p>所在省市：{{orderData.clientCity}}</p>
+        <p>邮编：{{orderData.clientMailbox}}</p>
+        <!-- <p>交易号：{{orderData.shopItemId}}</p> -->
+        <!-- <p>支付时间：{{orderData.remindTime}}</p> -->
+        <p>详细地址：{{orderData.clientAddress}}</p>
+      </section>
+      
+      <span v-if='cancelOrder'></span>
+      <section class="aui-content-padded" v-else>
+        <div class="order-list-header">快递信息</div>
+        <p>快递公司：
+          <span v-if="orderData.goodsChannel == 'undefined'">暂无物流信息 </span>
+          <span v-else>{{orderData.goodsChannel}}</span>
+        </p>
+        <p>快递单号：{{orderData.goodsNo}}</p>
+      </section>
+      <section class="aui-content-padded material" v-if='orderData.orderStatus == 1'>
+        <div class="order-list-header">物流信息</div>
+        <ul class="aui-list aui-form-list content-box">
+            <li class="aui-list-item aui-row">
+                <div class="info-edit-item horizontal aui-col-xs-12">
+                  <div class="title">物流公司:</div>
+                  <div class="choose-res horizontal" tapmode="hover" @click="shopItemIndexSelect1()">
+                    <div class="res-info text-weight" v-if="shopJyfw.GOODS_NAME">{{shopJyfw.GOODS_NAME}}</div>
+                    <div class="res-info def-phd" v-else>请选择物流公司</div>
+                    <div class="res-icon"><i class="aui-iconfont aui-icon-down"></i></div>
+                  </div>
+                </div>
+            </li>
+            <li class="aui-list-item aui-row"  v-if='showElseLogistics'>
+              <div class="info-edit-item horizontal aui-col-xs-12">
+                <div class="title">其他物流:</div>
+                <div class="aui-list-item-input info-item">
+                  <input type="text" v-model='elseLogistics' placeholder="输入其他物流公司">
+              </div>
+              </div>
+          </li>
+          <li class="aui-list-item aui-row">
+            <div class="info-edit-item horizontal aui-col-xs-12">
+              <div class="title">物流单号:</div>
+              <div class="aui-list-item-input info-item">
+                <input type="text" v-model='goodsNum' placeholder="输入物流单号">
+            </div>
+            </div>
+        </li>
+        </ul>
+
+        <!-- <div class="aui-list-item-inner aui-row">
+          <div class="aui-list-item-input aui-col-xs-12 info-item">
+            <select v-model="shopJyfw">
+              <option v-for="item in shopJyfwData" :key="item.GOODS_ID" :value="item">
+                {{item.GOODS_NAME}}</option>
+            </select>
+          </div>
+          <div class="aui-list-item-input aui-col-xs-12 info-item">
+            <input type="text" v-model='goodsNum' placeholder="输入物流单号">
+          </div>
+        </div> -->
+        <div class="achieve-btn"><div class="aui-btn aui-btn-info" @click="achieve()">标记为已发货</div>
+      </section>
+      <section class="aui-content-padded">
+        <div class="order-list-header">商品列表</div>
+        <div class="goods-list-item" v-for='item in orderData.orderItem'>
+          <div class="aui-row">
+          <div class="item-img aui-col-xs-4"><img :src='item.imgUrl' alt=""></div>
+          <div class="aui-col-xs-8">
+            <p>{{item.itemName}}</p>
+            <p>规格信息：{{item.shopItemSpecAttr}}</p>
+            <p>数量：{{item.itemNumber}}&nbsp;&nbsp;单价：{{item.itemPrice}}&nbsp;&nbsp;金额：{{item.itemPrice}}</p>
+          </div>
+        </div>
+        </div>
+      </section>
+    <!-- </template> -->
+  </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquery213min.js"></script>
+<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>
+<script type="text/javascript" src="../../script/vue/vue.js"></script>
+<script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
+<script type="text/javascript" src="../../script/custom/tools.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+<script type="text/javascript" src="../../script/picker/pickermin.js"></script>
+<script type="text/javascript" src="../../script/packajax.js"></script>
+
+<script type="text/javascript">
+  var infoVm;
+  var backbar;
+  apiready = function () {
+    var itemData = api.pageParam;//页面提交过来的参数
+    var shopUserId = $api.getStorage("userid")
+
+    var getPageData = function () {
+      infoVm.goodsData = {}
+      infoVm.orderData = itemData.itemData.itemData
+      infoVm.cancelOrder = itemData.itemData.cancelOrder
+      console.log ('333:'+JSON.stringify(infoVm.orderData))
+      if(infoVm.orderData.createDate !=undefined ){infoVm.orderData.createDate = dataFormatting(itemData.itemData.itemData.createDate)}
+      if(infoVm.orderData.thireCallDate !=undefined ){infoVm.orderData.thireCallDate = dataFormatting(itemData.itemData.itemData.thireCallDate)}
+      if(infoVm.orderData.endTransactionDate !=undefined ){infoVm.orderData.endTransactionDate = dataFormatting(itemData.itemData.itemData.endTransactionDate)}
+    }
+
+
+    backbar = function () {
+      //关闭当前window，使用默认动画
+      api.closeWin();
+    }
+
+    infoVm = new Vue({
+      el: "#info_id",
+      data: {
+        cancelOrder:'',
+        checkoutForm:false,//表单校验
+        shopJyfwValue: '',//物流
+        elseLogistics:'',//手动其他物流
+        showElseLogistics:false,//显示隐藏手动输入物流公司
+        shopJyfwData: [],
+        shopJyfw: '', //选中项
+
+        shopJyfw: {
+                  GOODS_CODE: '',
+                  GOODS_NAME: '',
+                  GOODS_SORT: '',
+                  ROWID: ''
+              },
+
+        goodsNum: '',
+        orderData: {},
+        token: '',
+      },
+
+      watch: {
+         shopJyfw(val,oldval){
+          if(val.GOODS_NAME == '手动输入其他物流'){
+            infoVm.showElseLogistics = true
+          }else{
+            infoVm.showElseLogistics = false
+          }
+
+         }
+      },
+
+      methods: {
+
+        shopItemIndexSelect1: function () {//选择店铺分类
+          var tempList=[];
+					var actionList=infoVm.shopJyfwData;
+					for(var index in actionList){
+						tempList.push(actionList[index].GOODS_NAME);
+					}
+          api.actionSheet({
+              cancelTitle: '取消',
+              buttons: tempList
+          }, function(ret, err) {
+              var index = ret.buttonIndex-1;
+              if(index>actionList.length-1) return;
+
+              if(actionList[index].GOODS_NAME == '手动输入其他物流'){
+                infoVm.showElseLogistics = true
+              }else{
+                infoVm.showElseLogistics = false
+              }
+              
+              infoVm.shopJyfw.GOODS_NAME = actionList[index].GOODS_NAME
+              infoVm.shopJyfw.GOODS_CODE = actionList[index].GOODS_CODE
+          });
+        },
+
+          //校验表单
+          checkout: function(){
+          if(infoVm.shopJyfw.GOODS_NAME.length <= 0){api.toast({msg: '请选择快递公司'});}else
+          if(infoVm.showElseLogistics && infoVm.elseLogistics.length == 0){api.toast({msg: '请输入快递公司'});}else
+          if(infoVm.goodsNum.length <= 0 ){api.toast({msg: '请填写物流单号'});}else{
+             return true }
+          },
+
+        //标记为已发货
+        achieve: function () {
+          if(infoVm.showElseLogistics && infoVm.shopJyfw.GOODS_CODE == null){
+            var param = 'orderNo=' + infoVm.orderData.orderNo + '&goodsCode=' + infoVm.shopJyfw.GOODS_CODE +
+            '&goodsNo=' + infoVm.goodsNum + '&goodsChannel=' + infoVm.elseLogistics + '&shopId=' + infoVm.orderData.shopId
+          }else{
+            var param = 'orderNo=' + infoVm.orderData.orderNo + '&goodsCode=' + infoVm.shopJyfw.GOODS_CODE +
+            '&goodsNo=' + infoVm.goodsNum + '&goodsChannel=' + infoVm.shopJyfw.GOODS_NAME + '&shopId=' + infoVm.orderData.shopId
+          }
+
+          if(!infoVm.checkout()) return
+
+          api.confirm({
+            title: '提示',
+            msg: '是否确定提交？',
+            buttons: ['确定', '取消']
+          }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+              
+          _getHttpsData("/order/sendOrder", param,
+            function (ret) {
+              if(ret.status){
+                alert('已发货')
+                api.sendEvent({
+                    name: 'order_list_status',
+                    extra: {
+                        orderStatus: true,
+                    }
+                });
+                backbar();
+              }
+            },
+            function (err) {
+              api.hideProgress();
+            }
+          );
+            } else {    
+              }
+          })
+        },
+
+        indexSelect: function (data) {
+          this.shopJyfwValue = data
+        },
+
+        //获取物流公司
+        getInfoTpye: function () {
+          var param = 'key=zxj_repertory&AJAX_MODE=AJAX_MODE_QUERY&QUERY_MODE=list&DATASET=goods_page';
+          api.ajax({
+            url: serviceAjaxUrl + param,
+            method: 'get',
+            returnAll: false, //（可选项）是否需要返回所有 response 信息（包括响应头、消息体、状态码），为 true 时，返回的头信息获取方法(ret.headers)，消息体信息获取方法(ret.body)，状态码获取方法(ret.statusCode)
+            dataType: 'json',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8',
+              token: this.token
+            }
+          }
+            , function (ret, err) {
+              if (ret.msg.length > 0) {
+                infoVm.shopJyfwData = JSON.parse(ret.msg)
+                var endNull = {
+                  GOODS_ID: null,
+                  GOODS_CODE: null,
+                  GOODS_NAME: "手动输入其他物流",
+                  GOODS_SORT: null,
+                  ROWID: null
+                }
+                infoVm.shopJyfwData.push(endNull)
+                infoVm.shopJyfw.GOODS_NAME = ''
+              } else { }
+              api.hideProgress();
+            });
+        },
+
+      },
+      mounted: function () {
+        // this.token = $api.getStorage('token')
+      },
+
+    });
+    // infoVm.getInfoTpye() //接口获取物流公司 停用
+
+
+
+  infoVm.shopJyfwData = [
+  {GOODS_ID: 1902182132000323,GOODS_CODE: "shunfeng",GOODS_NAME: "顺丰速运",GOODS_SORT: 0,ROWID: "1911121534043268"}, {
+	GOODS_ID: 1902261517000382,GOODS_CODE: "yuantong",GOODS_NAME: "圆通速递",GOODS_SORT: 1,ROWID: "1911121534043269"}, {
+	GOODS_ID: 1902261536000423,GOODS_CODE: "shentong",GOODS_NAME: "申通快递",GOODS_SORT: 2,ROWID: "1911121534043270"}, {
+	GOODS_ID: 1902261538000425,GOODS_CODE: "zhongtong",GOODS_NAME: "中通快递",GOODS_SORT: 3,ROWID: "1911121534043271"}, {
+	GOODS_ID: 1902261515000380,GOODS_CODE: "yunda",GOODS_NAME: "韵达快递",GOODS_SORT: 5,ROWID: "1911121534043273"}, {
+  GOODS_ID: 1902261538000443,GOODS_CODE: "youzhengguonei",GOODS_NAME: "邮政快递",GOODS_SORT: 10,ROWID: "1911121534043278"},
+  {GOODS_ID: null,GOODS_CODE: null,GOODS_NAME: "手动输入其他物流",GOODS_SORT: null,ROWID: null}
+  ]
+
+    getPageData()
+  }
+</script>
+
+</html>
