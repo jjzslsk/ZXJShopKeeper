@@ -1084,10 +1084,10 @@
         //重新获取定位
         openMap: function (params) {
           if(checkLocPer()){
-            infoVm.LongAndLat = '',infoVm.shopLong = '',infoVm.shopLat = '';
-            api.showProgress()
+            // api.showProgress()
             startLocation(function (successCal) {
             if(successCal.status){
+              infoVm.LongAndLat = '',infoVm.shopLong = '',infoVm.shopLat = '';
               infoVm.shopLong = $api.getStorage("curLng");
               infoVm.shopLat = $api.getStorage("curLat");
               infoVm.LongAndLat = '经:' + infoVm.shopLong + ',纬:' + infoVm.shopLat
@@ -1098,7 +1098,8 @@
                   infoVm.shopLong = BMapAndTMap.lng
                   infoVm.shopLat = BMapAndTMap.lat
                   console.log ('定位成功')
-                  api.hideProgress()}
+                  api.hideProgress()
+                }
                 }
               }
 
@@ -1117,10 +1118,10 @@
 
         openMapSetTimeout: function (params) { //重新定位
           if(checkLocPer()){
-            infoVm.LongAndLat = '',infoVm.shopLong = '',infoVm.shopLat = '';
-            api.showProgress()
+            // api.showProgress()
             startLocation(function (successCal) {
             if(successCal.status){
+              infoVm.LongAndLat = '',infoVm.shopLong = '',infoVm.shopLat = '';
               infoVm.shopLong = $api.getStorage("curLng");
               infoVm.shopLat = $api.getStorage("curLat");
               infoVm.LongAndLat = '经:' + infoVm.shopLong + ',纬:' + infoVm.shopLat
@@ -1131,7 +1132,8 @@
                   infoVm.shopLong = BMapAndTMap.lng
                   infoVm.shopLat = BMapAndTMap.lat
                 }
-                api.hideProgress()}
+                api.hideProgress()
+              }
               }
 
 
