@@ -1,24 +1,24 @@
 //////////使用前必须先引用api.js
 //// ///////////正式环境地址///////////////////////
-// var serviceUrl = 'https://www.zxj888.cn:8443'//正式环境
-// var serviceAjaxUrl = 'http://zxj888.cn/ajax?'//开发环境
-// var serviceUrl02 = 'https://www.zxj888.cn:9443'//正式环境
-// var upFileUrl="https://www.zxj888.cn:8443/upFile";//上传文件url
-// var webSocketAgreement='wss';//webSocket协议
-// var webSocketUrl='zxj888.cn'//webSocket域名
-// var webSocketPort=9443;//webSocket端口
-// var webSocketPath='zxj/websocket';//webSocket域名后面那部分路径
+var serviceUrl = 'https://www.zxj888.cn:8443'//正式环境
+var serviceAjaxUrl = 'http://zxj888.cn/ajax?'//开发环境
+var serviceUrl02 = 'https://www.zxj888.cn:9443'//正式环境
+var upFileUrl="https://www.zxj888.cn:8443/upFile";//上传文件url
+var webSocketAgreement='wss';//webSocket协议
+var webSocketUrl='zxj888.cn'//webSocket域名
+var webSocketPort=9443;//webSocket端口
+var webSocketPath='zxj/websocket';//webSocket域名后面那部分路径
 //// ///////////////正式环境地址end///////////////
 
 ///////////////开发环境地址//////////////
-   var serviceUrl = 'https://www.zxjtest.xyz'//开发环境
-   var serviceAjaxUrl = 'https://zxjtest.xyz/ajax?'//开发环境
-   var serviceUrl02 = 'https://www.zxjtest.xyz:9443'//正式环境WSD
-   var upFileUrl="https://www.zxjtest.xyz/upFile";//上传文件url
-   var webSocketAgreement='wss';//webSocket协议
-   var webSocketUrl='zxjtest.xyz'//webSocket域名
-   var webSocketPort=9443;//webSocket端口
-   var webSocketPath='zxj/websocket';//webSocket域名后面那部分路径
+//    var serviceUrl = 'https://www.zxjtest.xyz'//开发环境
+//    var serviceAjaxUrl = 'https://zxjtest.xyz/ajax?'//开发环境
+//    var serviceUrl02 = 'https://www.zxjtest.xyz:9443'//正式环境WSD
+//    var upFileUrl="https://www.zxjtest.xyz/upFile";//上传文件url
+//    var webSocketAgreement='wss';//webSocket协议
+//    var webSocketUrl='zxjtest.xyz'//webSocket域名
+//    var webSocketPort=9443;//webSocket端口
+//    var webSocketPath='zxj/websocket';//webSocket域名后面那部分路径
 ///////////////开发环境地址end///////////////
 
 // var serviceUrlApk = 'http://www.jjzslsk.top'//开发环境

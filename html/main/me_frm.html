@@ -275,8 +275,8 @@
                                         <img class="aui-iconfont aui-icon-home" src="../../image/me/kefuzhongxin1.png" alt="">
                                         <div class="aui-grid-label">客服中心</div>
                                     </div> -->
-                        <div class="aui-col-xs-3 box-item" onclick="itemClick('生意经')">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/me/syj1.png" alt="">
+                        <div class="aui-col-xs-3 box-item" onclick="tradingKnowledge('生意经')">
+                            <img class="aui-iconfont aui-icon-home" src="../../image/me/syj.png" alt="">
                             <div class="aui-grid-label">生意经</div>
                         </div>
                     </div>
@@ -463,6 +463,28 @@
                         pageParam: {
                             state: 100,
                             title: '全部订单'
+                        },
+                        delay: 300
+                    }
+                );
+                }
+                
+            }
+
+            tradingKnowledge = function (data) {
+                if(infoVm.isShopDataStuta == 0){
+                    api.toast({
+                        msg: '未开店'
+                    });
+                }else {
+                    api.openWin(
+                    {
+                        name: 'tradingKnowledge_win',
+                        url: 'widget://html/tradingKnowledge/tradingKnowledge_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            state: 100,
+                            title: data
                         },
                         delay: 300
                     }
