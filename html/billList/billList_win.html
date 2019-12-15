@@ -39,39 +39,21 @@
 			/*0-客户拍照下单，1-客服已处理(已推送)，2-客户已付款，4-客户取消订单，5-店主取消订单*/
 			if(applyStatus==1){
 				$('#check_pro').text('已推送');
-				// $('#check_pro').addClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro2');
-				// $('#check_pro').removeClass('check-pro3');
 			}
 			else if(applyStatus==2){
 				$('#check_pro').text('待付款');
-				// $('#check_pro').addClass('check-pro2');
-				// $('#check_pro').removeClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro3');
 			}
 			else if(applyStatus==0){
 				$('#check_pro').text('未推送');
-				// $('#check_pro').addClass('check-pro2');
-				// $('#check_pro').removeClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro3');
 			}
 			else if(applyStatus==3){
 				$('#check_pro').text('已付款');
-				// $('#check_pro').addClass('check-pro2');
-				// $('#check_pro').removeClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro3');
 			}
 			else if(applyStatus==4){
 				$('#check_pro').text('客户取消订单');
-				// $('#check_pro').addClass('check-pro3');
-				// $('#check_pro').removeClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro2');
 			}
 			else if(applyStatus==5){
 				$('#check_pro').text('店主取消订单');
-				// $('#check_pro').addClass('check-pro3');
-				// $('#check_pro').removeClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro2');
 			}
 		}
 

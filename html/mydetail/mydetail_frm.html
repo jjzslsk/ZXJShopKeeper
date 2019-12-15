@@ -12,11 +12,9 @@
     	html,body{height: 100%;background-color: #f7f7f7}
     	.head-info{height: calc(32px + 2rem);position: fixed;top:0;width: 100%;z-index: 99}
     	.head-info .total-comm{padding: 5px 8%;text-align: left;background-color: #f7f7f7;height:40px;}
-		/*.team-list{padding-top: calc(32px + 2.4rem);font-size: 0.6rem;}*/
 		.team-list{padding-top: calc(32px + 0.4rem);font-size: 0.6rem;}
 		.list-item{padding: 8px 10px;border-bottom: 1px solid #DDDDDD;}
 		.list-item .item-source{width: 35%;text-align: center;}
-		/*.list-item .item-cumulative{width: 25%;text-align: center;padding: 0 8px;}*/
 		.list-item .item-time{width: 25%;text-align: center;padding: 0 8px;}
 		.list-item .in-money,.list-item .out-money{width: 20%;text-align: center;}
 		.list-item .in-money.font-color1,.list-item .out-money.font-color1{color:#f30505;}
@@ -27,12 +25,10 @@
 	<div id="detail_id">
 		<template>
 		<div class="head-info">
-			<!--<div class="total-comm" >合计：¥{{totalAmount}}</div>-->
 			<div class="list-item horizontal team-commission-head-gradient">
 				<div class="item-source">渠道</div>
 				<div class="in-money">收入</div>
 				<div class="out-money">支出</div>
-				<!--<div class="item-cumulative">累计</div>-->
 				<div class="item-time">日期</div>
 			</div>
 		</div>
@@ -41,9 +37,7 @@
 				<div class="item-source">{{teamItem.AMNT_TYPE}}</div>
 				<div class="in-money font-color1">{{teamItem.IN_AMNT}}</div>
 				<div class="out-money font-color2">{{teamItem.OUT_AMNT}}</div>
-				<!--<div class="item-cumulative">{{teamItem.AMNT}}</div>-->
 				<div class="item-time">{{teamItem.CREATE_DATE}}</div>
-				
 			</div>
 		</div>
 		</template>

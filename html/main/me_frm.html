@@ -12,170 +12,41 @@
     <link rel="stylesheet" type="text/css" href="../../css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
     <style>
-        html,
-        body {
-            height: 100%;
-            background: #eee
-        }
-
-
-        .head-box {
-            height: 20vh;
-            max-height: 20vh;
-            background: linear-gradient(to right, #11ce7c 20%, #11cfc8 100%);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #fff;
-        }
-
-        .head-box .head-info {
-            height: 8rem;
-            /* width:8rem; */
-            display: flex;
-            align-items: center;
-            margin-left: 8%;
-        }
-
-        .head-box .head-info .user-img {
-            background: teal;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-
-        .user-img-item {
-            width: 100%;
-            height: 100%;
-        }
-
-        .head-box .head-info .user-content {
-            /* background: yellow; */
-            margin-left: 8px;
-            width:8rem;
-
-        }
-
-        .head-box .head-info .user-content .user-name {
-            font-size: 16px;
-        }
-
-        .head-box .head-info .user-content .user-money {
-            font-size: 12px;
-            overflow: hidden;
-             text-overflow:ellipsis; 
-             white-space: nowrap;
-        }
-
-        .head-box .head-info .user-content .user-money input{
-            font-size: 12px;
-            margin: 0;
-            padding: 0;
-            color: #fff;
-        }
-
-        .head-box .head-state {
-            margin-right: 8%;
-            background: #fff;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-
-        .head-box .head-state .head-state-text {
-            padding: 4px 10px;
-            color: #11ce7c;
-            white-space: nowrap;
-        }
-
-        .box-item img {
-            width: 1.3rem !important;
-            height: 1.3rem !important;
-            line-height: 1.3rem !important;
-            display: inline-block;
-        }
-
-        .exit {
-            /* padding: 0 20px 10px 20px; */
-        }
-
-        .exit .aui-btn {
-            color: #fff !important;
-            background: #11ce7c !important;
-            border-radius: 6px;
-            -moz-box-shadow: 0px 2px 6px -2px #333333;
-            -webkit-box-shadow: 0px 2px 6px -2px #333333;
-            box-shadow: 0px 2px 6px -2px #333333;
-            border: 1px solid #11ce7c !important;
-        }
-
-        .num-item {
-            color: #11cfc8;
-        }
-
-        .header-title {
-            color: #000;
-            font-size: 20px !important;
-            font-weight: bold;
-            background: #fff !important;
-        }
-
-        .aui-icon-cert {
-            color: #fbff00;
-            padding: 0 6px;
-            font-size: 1.2rem;
-        }
-        .trans-wrap {
-            margin: .5rem .5rem 0 .5rem;
-        }
-
-        .trans-wrap-item {
-            border-radius: 6px;
-            -moz-box-shadow: 0px 2px 6px -2px #333333;
-            -webkit-box-shadow: 0px 2px 6px -2px #333333;
-            box-shadow: 0px 2px 6px -2px #333333;
-        }
-        .trans-wrap-item .box-item {
-            padding: .5rem 0 !important;
-        }
-        .trans-title {
-            margin: 1rem;
-            position: relative;
-        }
-        .trans-title:after {
-            height: 1px;
-            background-color: #dddddd;
-            display: block;
-            content: '';
-            position: absolute;
-            top: 1.5rem;
-            right: auto;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            z-index: 2;
-            -webkit-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
-            pointer-events: none;
-        }
+        html, body {height: 100%; background: #eee } 
+        .head-box {height: 20vh; max-height: 20vh; background: linear-gradient(to right, #11ce7c 20%, #11cfc8 100%); display: flex; justify-content: space-between; align-items: center; color: #fff; } 
+        .head-box .head-info {height: 8rem; display: flex; align-items: center; margin-left: 8%; } 
+        .head-box .head-info .user-img {background: teal; width: 60px; height: 60px; border-radius: 50%; overflow: hidden; } 
+        .user-img-item {width: 100%; height: 100%; } 
+        .head-box .head-info .user-content {margin-left: 8px; width:8rem; } 
+        .head-box .head-info .user-content .user-name {font-size: 16px; } 
+        .head-box .head-info .user-content .user-money {font-size: 12px; overflow: hidden; text-overflow:ellipsis; white-space: nowrap; } 
+        .head-box .head-info .user-content .user-money input{font-size: 12px; margin: 0; padding: 0; color: #fff; } 
+        .head-box .head-state {margin-right: 8%; background: #fff; border-radius: 12px; font-size: 12px; } 
+        .head-box .head-state .head-state-text {padding: 4px 10px; color: #11ce7c; white-space: nowrap; } 
+        .box-item img {width: 1.3rem !important; height: 1.3rem !important; line-height: 1.3rem !important; display: inline-block; } 
+        .exit .aui-btn {color: #fff !important; background: #11ce7c !important; border-radius: 6px; -moz-box-shadow: 0px 2px 6px -2px #333333; -webkit-box-shadow: 0px 2px 6px -2px #333333; box-shadow: 0px 2px 6px -2px #333333; border: 1px solid #11ce7c !important; } 
+        .num-item {color: #11cfc8; } 
+        .header-title {color: #000; font-size: 20px !important; font-weight: bold; background: #fff !important; } 
+        .aui-icon-cert {color: #fbff00; padding: 0 6px; font-size: 1.2rem; } 
+        .trans-wrap {margin: .5rem .5rem 0 .5rem; } 
+        .trans-wrap-item {border-radius: 6px; -moz-box-shadow: 0px 2px 6px -2px #333333; -webkit-box-shadow: 0px 2px 6px -2px #333333; box-shadow: 0px 2px 6px -2px #333333; } 
+        .trans-wrap-item .box-item {padding: .5rem 0 !important; } 
+        .trans-title {margin: 1rem; position: relative; } 
+        .trans-title:after {height: 1px; background-color: #dddddd; display: block; content: ''; position: absolute; top: 1.5rem; right: auto; bottom: 0; left: 0; width: 100%; z-index: 2; -webkit-transform-origin: 50% 100%; transform-origin: 50% 100%; pointer-events: none; } 
     </style>
 </head>
-
 <body>
     <div id="info_id">
-        <!-- <template> -->
             <div class="head-box">
                 <div class="head-info">
                     <div class="user-img" @click="upAvaClick">
                             <img class="user-img-item" :src="shopLogo" onerror="src='../../image/user.png'" />
-                        <!-- <image class="user-img-item" src="avatar" /> -->
                     </div>
                     <div class="user-content">
                         <div class="user-name" v-if="shopName == 'undefined' || shopName == null || shopName.length <= 0"></div>
                         <div class="user-name" v-else>{{shopName}}<i class="aui-iconfont aui-icon-cert"></i></div>
                         <div class="user-money" v-if="shopIdea == 'undefined' || shopIdea == null || shopIdea.length <= 0"></div>
                         <div class="user-money" v-else>{{shopIdea}}</div>
-                        <!-- <div class="user-money" v-else><input type="text" placeholder="Name" v-model='shopIdea'></div> -->
                     </div>
                 </div>
                 <div class="head-state">
@@ -187,46 +58,6 @@
             </div>
 
             <div class="trans-wrap">
-                    <!-- <section class="aui-content trans-wrap-box transaction">
-                            <div class="aui-card-list">
-                                <section class="aui-grid">
-                                    <div class="aui-row">
-                                        <div class="aui-col-xs-6 box-item">
-                                            <span class="trans-contents">今日交易额</span>
-                                            <div class="aui-grid-label trans-nums">0.00</div>
-                                        </div>
-                                        <div class="aui-col-xs-6 box-item">
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </section>
-                        <section class="aui-content trans-wrap-row">
-                            <div class="aui-card-list trans-wrap-row">
-                                <section class="aui-grid trans-wrap-row">
-                                    <div class="aui-row trans-wrap-row trans-shadow">
-                                        <div class="aui-col-xs-3 box-item">
-                                            <span class="trans-content">今日访客</span>
-                                            <div class="aui-grid-label trans-num">0</div>
-                                        </div>
-                                        <div class="aui-col-xs-3 box-item">
-                                            <span class="trans-content">新增客户</span>
-                                            <div class="aui-grid-label trans-num">0</div>
-                                        </div>
-                                        <div class="aui-col-xs-3 box-item" onclick="mycommission()">
-                                            <span class="trans-content">我的佣金</span>
-                                            <div class="aui-grid-label trans-num">0.00</div>
-                                        </div>
-                                        <div class="aui-col-xs-3 box-item" onclick="mywallet()">
-                                            <span class="trans-content">钱包</span>
-                                            <div class="aui-grid-label trans-num">{{financeDues}}</div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </section> -->
-
-
                 <section class="aui-grid aui-margin-b-15 trans-wrap-item">
                     <div class="trans-title">增值服务</div>
                     <div class="aui-row">
@@ -239,7 +70,6 @@
                             <div class="aui-grid-label">我的佣金</div>
                         </div>
                         <div class="aui-col-xs-3 box-item" onclick="mywallet()">
-                            <!-- <div class="aui-badge">88</div> -->
                             <img class="aui-iconfont aui-icon-home" src="../../image/me/money.png" alt="">
                             <div class="aui-grid-label">我的钱包</div>
                         </div>
@@ -286,7 +116,6 @@
                     <div class="aui-btn aui-btn-primary aui-btn-block aui-btn-outlined aui-btn-sm">退出登录</div>
                 </div>
             </div>
-        <!-- </template> -->
     </div>
 </body>
 <script type="text/javascript" src="../../script/vue/vue.js"></script>

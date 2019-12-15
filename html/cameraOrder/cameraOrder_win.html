@@ -6,30 +6,13 @@
 	<meta name="viewport"
 		content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-	<title>title</title>
+	<title>拍照订单</title>
 	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
 	<style>
-		body {}
-
-		.line-switch {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			position: absolute;
-			right: .5rem;
-			z-index: 99
-		}
-
-		.line-switch span {
-			color: #FFFFFF;
-			font-size: 0.8em;
-		}
-
-		.line-switch img {
-			height: 1.2rem;
-			margin: 0 3px;
-		}
+		.line-switch {display: flex; justify-content: center; align-items: center; position: absolute; right: .5rem; z-index: 99 } 
+		.line-switch span {color: #FFFFFF; font-size: 0.8em; } 
+		.line-switch img {height: 1.2rem; margin: 0 3px; }
 	</style>
 </head>
 <body>
@@ -39,15 +22,10 @@
 				<span class="aui-iconfont aui-icon-left"></span>
 			</a>
 			<div id="info_id">
-				<!-- <template> -->
 					<div class="aui-title" id="order_title"></div>
 					<div class="line-switch horizontal" tapmode="hover" @click="lineStateClick()">
-						<!-- <span>关</span><img v-if="photoOrderFlag" src="../../image/icon/online.png" />
-						<img v-else src="../../image/icon/offline.png"  />
-						<span>开</span> -->
 					</div>
 			</div>
-			<!-- </template> -->
 		</header>
 	</div>
 </body>
@@ -67,10 +45,7 @@
 		var header = $api.byId('header');
 		var itemData = api.pageParam;//页面提交过来的参数
 		$('#order_title').text(itemData.title)
-		
-
 		$api.fixStatusBar(header);
-		
 		backbar = function () {
 			//关闭当前window，使用默认动画
 			api.closeWin();

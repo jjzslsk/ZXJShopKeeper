@@ -13,147 +13,28 @@
   <link rel="stylesheet" type="text/css" href="../../css/main.css" />
   <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
   <style>
-    .footer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .footer .aui-btn {
-      margin: 15px 10px 0 10px;
-    }
-
-    .must-star {
-      color: #DD191B;
-      position: absolute;
-      left: 3px;
-      top: 0.6rem
-    }
-
-    .step {
-      font-size: 0.7rem;
-      padding: 1rem 2rem;
-      verflow: hidden;
-      color: #FFFFFF;
-      text-align: center;
-    }
-
-    .step-num {
-      width: 1rem;
-      height: 1rem;
-      text-align: center;
-      line-height: 1rem;
-      margin: 0 auto;
-      border-radius: 50%;
-    }
-
-    .id-img {
-      background: #EEEEEE;
-      height: 3rem;
-      line-height: 3rem;
-      text-align: center;
-      font-size: 0.6rem;
-      color: #999999;
-    }
-
-    .id-img img {
-      width: 100%;
-      height: 100%;
-    }
-
-    .id-img .del-tip {
-      width: 1.5rem;
-      height: 1.5rem;
-      line-height: 1.5rem;
-      text-align: center;
-      border-radius: 50%;
-      background-color: #d61414;
-      color: #FFFFFF;
-      position: absolute;
-      z-index: 99;
-      right: 0;
-      top: 0;
-    }
-
-    .font-size-30 {
-      font-size: 1.5rem !important
-    }
-
-    /*.commit-btn {color: #FFFFFF;border-radius: 0.5rem;position: relative;width: 80%;left: 10%;height: 2rem;line-height: 2rem;text-align: center;border: 1px #EEEEEE solid;}*/
-    .commit-btn {
-      color: #FFFFFF;
-      border-radius: 0.5rem;
-      width: 80%;
-      margin: 20px 10%;
-      height: 2rem;
-      line-height: 2rem;
-      text-align: center;
-      border: 1px #EEEEEE solid;
-    }
-
-    .aui-list .aui-list-item-label {
-      width: auto !important;
-      padding-right: 1rem;
-    }
-
-    .list-item {
-      padding: 0.75rem;
-    }
-
-    textarea {
-      border: 1px #EEEEEE solid;
-      padding: 0.5rem;
-    }
-
-    .choose-area {
-      width: calc(100% - 1rem)
-    }
-
-    .choose-area .choose-hint {
-      color: #b1babf;
-    }
-
-    .img-ratio {
-      margin-left: 10px;
-      color: #999999
-    }
-
-    .read-only {
-      color: #999999
-    }
-
-    .must-star {
-      color: #DD191B;
-      position: absolute;
-      left: 3px;
-      top: 0.6rem
-    }
-
-    .must-star1 {
-      color: #DD191B;
-      position: absolute;
-      left: 3px;
-    }
-
-    .sex-radio {
-      margin: 0 10px;
-      padding: 0 10px;
-    }
-
-    .sex-radio img {
-      width: 1rem;
-      height: 1rem;
-      margin-top: 2px
-    }
-    .list-item-radio {
-      display: flex;
-      flex-direction: row;
-      flex-wrap:wrap;
-    }
-    .list-item-radio label {
-      margin: 0 0.6rem;
-    }
-  </style>
+    .footer {display: flex; justify-content: center; align-items: center; } 
+    .footer .aui-btn {margin: 15px 10px 0 10px; } 
+    .must-star {color: #DD191B; position: absolute; left: 3px; top: 0.6rem } 
+    .step {font-size: 0.7rem; padding: 1rem 2rem; verflow: hidden; color: #FFFFFF; text-align: center; } 
+    .step-num {width: 1rem; height: 1rem; text-align: center; line-height: 1rem; margin: 0 auto; border-radius: 50%; } 
+    .id-img {background: #EEEEEE; height: 3rem; line-height: 3rem; text-align: center; font-size: 0.6rem; color: #999999; } 
+    .id-img img {width: 100%; height: 100%; } 
+    .id-img .del-tip {width: 1.5rem; height: 1.5rem; line-height: 1.5rem; text-align: center; border-radius: 50%; background-color: #d61414; color: #FFFFFF; position: absolute; z-index: 99; right: 0; top: 0; } 
+    .font-size-30 {font-size: 1.5rem !important } 
+    .commit-btn {color: #FFFFFF; border-radius: 0.5rem; width: 80%; margin: 20px 10%; height: 2rem; line-height: 2rem; text-align: center; border: 1px #EEEEEE solid; } 
+    .aui-list .aui-list-item-label {width: auto !important; padding-right: 1rem; } 
+    .list-item {padding: 0.75rem; } textarea {border: 1px #EEEEEE solid; padding: 0.5rem; } 
+    .choose-area {width: calc(100% - 1rem) } 
+    .choose-area .choose-hint {color: #b1babf; } 
+    .img-ratio {margin-left: 10px; color: #999999 } 
+    .read-only {color: #999999 } 
+    .must-star {color: #DD191B; position: absolute; left: 3px; top: 0.6rem } 
+    .must-star1 {color: #DD191B; position: absolute; left: 3px; } 
+    .sex-radio {margin: 0 10px; padding: 0 10px; } 
+    .sex-radio img {width: 1rem; height: 1rem; margin-top: 2px } 
+    .list-item-radio {display: flex; flex-direction: row; flex-wrap:wrap; } 
+    .list-item-radio label {margin: 0 0.6rem; } </style>
 </head>
 
 <body>
@@ -161,15 +42,6 @@
     <template>
       <ul class="aui-list aui-form-list">
         <li class="aui-list-header">填写商品分类信息</li>
-        <!-- <li class="aui-list-item">
-                <span class="must-star">*</span>
-                <div class="aui-list-item-inner">
-                  <div class="aui-list-item-label">分类编码：</div>
-                  <div class="aui-list-item-input">
-                    <input type="text" v-model='itemClass.itemClassId' />
-                  </div>
-                </div>
-              </li> -->
         <li class="aui-list-item">
           <span class="must-star">*</span>
           <div class="aui-list-item-inner">
@@ -188,21 +60,6 @@
             </div>
           </div>
         </li>
-        <!-- <li class="aui-list-item">
-          <span class="must-star">*</span>
-          <div class="aui-list-item-inner">
-            <div class="aui-list-item-label">推荐状态：</div>
-            <div class="aui-list-item-input list-item-radio">
-              <label>
-                <input v-model='itemClass.tzStatus' class="aui-radio" value="0" type="radio" name="radio2" checked />推荐
-              </label>
-              <label>
-                <input v-model='itemClass.tzStatus' class="aui-radio" value="1" type="radio" name="radio2" />非推荐
-              </label>
-            </div>
-          </div>
-        </li> -->
-
         <li class="list-item aui-border-b">
             <span class="must-star1">*</span>
             <div class="aui-font-size-14 aui-margin-b-10">
@@ -243,20 +100,13 @@
 <script type="text/javascript" src="../../script/custom/bmap.js"></script>
 <script type="text/javascript" src="../../script/packajax.js"></script>
 <script type="text/javascript" src="../../script/aui/aui_dialog.js"></script>
-
-<script type="text/javascript" src="../../res/data/citypicker.js"></script>
 <script type="text/javascript" src="../../script/picker/pickermin.js"></script>
-<script type="text/javascript" src="../../script/picker/addresspicker.js"></script>
-<script type="text/javascript" src="../../script/picker/datepicker.js"></script>
-<script type="text/javascript" src="../../script/packajax.js"></script>
-
 <script type="text/javascript">
   var infoVm;
   var delClass
   var backbar;
   var delImgList = [];//存放选择删除的图片对象
   apiready = function () {
-
     var pageParam = api.pageParam;//页面提交过来的参数
     var shopUserId = $api.getStorage("userid")
     var userid = $api.getStorage("userid")
@@ -281,209 +131,185 @@
       }
     }
 
-        //获取该分类商品
-      var getGoodsList = function () {
-        var param = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' +
-        '&sortType=ASC' + '&startPage=1'+ '&recordSize=10' + '&from=shopApp' + '&itemClassId=' + pageParam.itemClass.itemClass.itemClassId + '&classAllNo=' + pageParam.itemClass.itemClass.classAllNo;	
-				_getHttpsData('/shop/getShopItemList',param,
-					function(ret){
-						if(ret.status && ret.data.length > 0){
-              infoVm.isDel = false
-						}else if(ret.status && ret.data.length <= 0){
-              infoVm.isDel = true
-						}
-					},
-					function(err){
-					}
-				);
+    //获取该分类商品
+    var getGoodsList = function () {
+      var param = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' +
+        '&sortType=ASC' + '&startPage=1' + '&recordSize=10' + '&from=shopApp' + '&itemClassId=' + pageParam.itemClass.itemClass.itemClassId + '&classAllNo=' + pageParam.itemClass.itemClass.classAllNo;
+      _getHttpsData('/shop/getShopItemList', param,
+        function (ret) {
+          if (ret.status && ret.data.length > 0) {
+            infoVm.isDel = false
+          } else if (ret.status && ret.data.length <= 0) {
+            infoVm.isDel = true
+          }
+        },
+        function (err) {
+        }
+      );
     };
 
-        			//获logo
-			var getLogoImgHttps=function(){
-				var param = 'clientId='+pageParam.itemClass.itemClass.itemClassId+'&type=ITEM_CLASS_ICON';
-				_getHttpsData('/member/getPhoto',param,
-					function(ret){
-						api.hideProgress();
-						if(ret.status){
-							var picList = ret.pic;
-//							var proCaseImgList=[];
-//							for(var index in picList){
-//								proCaseImgList.push(picList[index].pic);
-//							}
-//							infoVm.proCaseImgList=proCaseImgList;
-							infoVm.logoImg=picList;
-							
-						}else{
-							showSingleAuiDialog('获取icon失败('+ret.code+')',ret.msg);
-						}
-					},
-					function(err){
-						api.hideProgress();
-					}
-				);
-			}; 
+    //获logo
+    var getLogoImgHttps = function () {
+      var param = 'clientId=' + pageParam.itemClass.itemClass.itemClassId + '&type=ITEM_CLASS_ICON';
+      _getHttpsData('/member/getPhoto', param,
+        function (ret) {
+          api.hideProgress();
+          if (ret.status) {
+            var picList = ret.pic;
+            infoVm.logoImg = picList;
+
+          } else {
+            showSingleAuiDialog('获取icon失败(' + ret.code + ')', ret.msg);
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      );
+    };
 
     delClass = function () {
-      // this.token = $api.getStorage('token')
       var param = 'itemClassId=' + infoVm.itemClass.itemClassId;
-      // api.ajax({
-      //     url : "http://192.168.1.133:8080/jaxrs/shop/deleteItemClass?" + param,
-      //     method : 'get',
-      //     returnAll : false, //（可选项）是否需要返回所有 response 信息（包括响应头、消息体、状态码），为 true 时，返回的头信息获取方法(ret.headers)，消息体信息获取方法(ret.body)，状态码获取方法(ret.statusCode)
-      //     dataType:'json',
-      //     headers: {
-      //       'Content-Type': "text/plain;charset=UTF-8",
-      //       token: this.token
-      //     }
-      //       }
-      //       , function(ret, err) {
-      //         api.hideProgress();
-      //       });
       _getHttpsData('/shop/deleteItemClass', param,
         function (res) {
           if (res.status) {
             alert(res.msg)
             backbar()
           }
-
         },
         function (err) {
-          //api.hideProgress();
         })
     }
 
-          			/***
-			 * 提交用户信息
-			 * param 用户信息
-			 * busLicImgList 行业资质图片
-			 * proCaseImgList 经营场所图片
-			 */
-			var submitUserInfoHttps = function(param, busLicImgList, proCaseImgList,idCardImgList,logoImg,clockStatus) {
-				api.showProgress({title : '提交信息'});
-				_postHttpsData('/shop/'+clockStatus,param,
-					function(ret){
-						if(ret.status){
-							uploadFileBatch(busLicImgList, proCaseImgList,idCardImgList,logoImg, function(upSuccess) {
-								delImgHtts(function(res){
-									api.hideProgress();
-									if(upSuccess){
-										showSingleAuiDialog('提交', '提交成功','确定',function(ret){
+    /***
+* 提交用户信息
+* param 用户信息
+* busLicImgList 行业资质图片
+* proCaseImgList 经营场所图片
+*/
+    var submitUserInfoHttps = function (param, busLicImgList, proCaseImgList, idCardImgList, logoImg, clockStatus) {
+      api.showProgress({ title: '提交信息' });
+      _postHttpsData('/shop/' + clockStatus, param,
+        function (ret) {
+          if (ret.status) {
+            uploadFileBatch(busLicImgList, proCaseImgList, idCardImgList, logoImg, function (upSuccess) {
+              delImgHtts(function (res) {
+                api.hideProgress();
+                if (upSuccess) {
+                  showSingleAuiDialog('提交', '提交成功', '确定', function (ret) {
                     backbar()
                     api.execScript({
                       name: 'goodsClassify_win',
                       frameName: 'goodsClassify_frm',
                       script: 'getInfoTpye()'
                     });
-										});
-									}else{
-										api.toast({msg : '上传图片异常',duration : 2000,location : 'middle'});
-									}
-								});
-							});
-						} else{
-							api.hideProgress();
-							api.toast({msg : ret.msg+'('+ret.code+')',duration : 2000,location : 'middle'});
-						}
-					},
-					function(err){
-						api.hideProgress();
-					}
-				);
-      };
-      
-      	//删除图片
-        var delImgHtts=function(funCal){
-				var totalCount=delImgList.length;
-				var countTemp=0;
-				if(totalCount>0){
-					for(var index in delImgList){
-						api.showProgress({
-							title : '删除图片'
-						});
-						var param="clientId="+infoVm.itemClass.itemClassId+'&type='+delImgList[index].attFkName+'&userType='+'&attName='+delImgList[index].attName;
-            console.log('图片删除param：'+param)
-						_getHttpsData('/member/deletPhoto',param,
-							function(ret){
-								if(ret.status){
-									countTemp++;
-									if(countTemp==totalCount){
-										funCal(true);
-									}
-								}else{
-									totalCount--;
-									api.toast({ msg: '删除图片'+delImgList[index].attName+'失败',duration: 2000, location: 'middle'});
-									if(countTemp==totalCount){
-										funCal(true);
-									}
-								}
-							},
-							function(err){
-								funCal(false);
-							}
-						);
-					}
-				}else{
-					funCal(true);
-				}
-      };
+                  });
+                } else {
+                  api.toast({ msg: '上传图片异常', duration: 2000, location: 'middle' });
+                }
+              });
+            });
+          } else {
+            api.hideProgress();
+            api.toast({ msg: ret.msg + '(' + ret.code + ')', duration: 2000, location: 'middle' });
+          }
+        },
+        function (err) {
+          api.hideProgress();
+        }
+      );
+    };
 
-            	/**
-			 *上传图片
-			 * busLicImgList 行业资质图片
-			 * proCaseImgList 经营场所图片
-			 */
-			var uploadFileBatch = function(busLicImgList, proCaseImgList,idCardImgList,logoImg,funCal) {
-				if (logoImg.length > 0) {
-					//检测压缩行业资质
-					api.showProgress({
-						title : '压缩分类'
+    //删除图片
+    var delImgHtts = function (funCal) {
+      var totalCount = delImgList.length;
+      var countTemp = 0;
+      if (totalCount > 0) {
+        for (var index in delImgList) {
+          api.showProgress({
+            title: '删除图片'
           });
-					batchCompressList('ITEM_CLASS_ICON', 'ITEM_CLASS_ICON', logoImg, function(attNameList, attFkNameList, imgArray) {
-						if(imgArray.length>0) {
-							var param = {};
-							param.attUser = shopUserId;
-							param.attFkId = infoVm.itemClass.itemClassId;
-							param.attName = attNameList;
-							param.attFkName = attFkNameList;
-							param.attNoWater = '1';
-							api.showProgress({
-								title : '上传分类'
-							});
-							uploadFileHttps(param, imgArray, function(ret) {
-								if (ret.status) {
-								api.hideProgress();
+          var param = "clientId=" + infoVm.itemClass.itemClassId + '&type=' + delImgList[index].attFkName + '&userType=' + '&attName=' + delImgList[index].attName;
+          console.log('图片删除param：' + param)
+          _getHttpsData('/member/deletPhoto', param,
+            function (ret) {
+              if (ret.status) {
+                countTemp++;
+                if (countTemp == totalCount) {
+                  funCal(true);
+                }
+              } else {
+                totalCount--;
+                api.toast({ msg: '删除图片' + delImgList[index].attName + '失败', duration: 2000, location: 'middle' });
+                if (countTemp == totalCount) {
+                  funCal(true);
+                }
+              }
+            },
+            function (err) {
+              funCal(false);
+            }
+          );
+        }
+      } else {
+        funCal(true);
+      }
+    };
+
+    /**
+*上传图片
+* busLicImgList 行业资质图片
+* proCaseImgList 经营场所图片
+*/
+    var uploadFileBatch = function (busLicImgList, proCaseImgList, idCardImgList, logoImg, funCal) {
+      if (logoImg.length > 0) {
+        //检测压缩行业资质
+        api.showProgress({
+          title: '压缩分类'
+        });
+        batchCompressList('ITEM_CLASS_ICON', 'ITEM_CLASS_ICON', logoImg, function (attNameList, attFkNameList, imgArray) {
+          if (imgArray.length > 0) {
+            var param = {};
+            param.attUser = shopUserId;
+            param.attFkId = infoVm.itemClass.itemClassId;
+            param.attName = attNameList;
+            param.attFkName = attFkNameList;
+            param.attNoWater = '1';
+            api.showProgress({
+              title: '上传分类'
+            });
+            uploadFileHttps(param, imgArray, function (ret) {
+              if (ret.status) {
+                api.hideProgress();
                 backbar()
-                    api.execScript({
-                      name: 'goodsClassify_win',
-                      frameName: 'goodsClassify_frm',
-                      script: 'getInfoTpye()'
-                    });
-								} else {
-									if (funCal != undefined && typeof funCal === "function") {
-										funCal(false);
-									}
-									showSingleAuiDialog('上传分类图失败(' + ret.code + ')', ret.msg);
-								}
-							}, function(err) {
-								api.hideProgress();
-							});
-						}else{
-						}
-					});
-				} else {
-          funCal(true);
-				}
-			};
-      
+                api.execScript({
+                  name: 'goodsClassify_win',
+                  frameName: 'goodsClassify_frm',
+                  script: 'getInfoTpye()'
+                });
+              } else {
+                if (funCal != undefined && typeof funCal === "function") {
+                  funCal(false);
+                }
+                showSingleAuiDialog('上传分类图失败(' + ret.code + ')', ret.msg);
+              }
+            }, function (err) {
+              api.hideProgress();
+            });
+          } else {
+          }
+        });
+      } else {
+        funCal(true);
+      }
+    };
+
     infoVm = new Vue({
       el: "#info_id",
       data: {
-
-        logoImg : [], //身份证
-        logoImgMax : 1, //身份证最多能添加多少张
-
-        isDel:false, //是否可以删除分类
-
+        logoImg: [], //身份证
+        logoImgMax: 1, //身份证最多能添加多少张
+        isDel: false, //是否可以删除分类
         butState: true,
         token: '',
         itemClass: {
@@ -497,201 +323,161 @@
         }
       },
       methods: {
+        imgObjPackag: function (attFkName, attName, pic) {
+          var imgObj = {};
+          imgObj.attFkName = attFkName;
+          imgObj.attName = attName;
+          imgObj.pic = pic;
+          return imgObj;
+        },
 
-        imgObjPackag:function(attFkName,attName,pic){
-						var imgObj={};
-						imgObj.attFkName=attFkName;
-						imgObj.attName=attName;
-						imgObj.pic=pic;
-						return imgObj;
-          },
+        logoImgClick: function () {
+          //添加logo图片
+          var chooseNum = Number(this.logoImgMax) - Number(this.logoImg.length);
+          chooseCameraSheet(function (retList) {
+            infoVm.appendlogoImg(retList);
+          }, chooseNum, '完成');
+        },
 
-        logoImgClick : function() {
-						//添加logo图片
-						var chooseNum = Number(this.logoImgMax) - Number(this.logoImg.length);
-						chooseCameraSheet(function(retList) {
-							infoVm.appendlogoImg(retList);
-						}, chooseNum, '完成');
-          },
-
-          appendlogoImg : function(pathList) {
-						//追加logo
-						if (this.logoImg.length < this.logoImgMax) {
-							for(var index in pathList){
-								var imgObj = this.imgObjPackag('','',pathList[index]);
-								this.logoImg.push(imgObj);
-							}
-//							this.idCardImgList = this.idCardImgList.concat(pathList);
-							// this.nextTick();
-						} else {
-							api.toast({
-								msg : '身份证图片最多只能添加' + this.logoImgMax + '张',
-								duration : 1000,
-								location : 'bottom'
-							});
-						}
-					},
-          
-          logoImgDel : function(position,data) {
-						//删除logo
-						this.logoImg.splice(position, 1);
-						if(data.attFkName!=undefined && data.attFkName!=null && data.attFkName!=''){
-              delImgList.push(data)
+        appendlogoImg: function (pathList) {
+          //追加logo
+          if (this.logoImg.length < this.logoImgMax) {
+            for (var index in pathList) {
+              var imgObj = this.imgObjPackag('', '', pathList[index]);
+              this.logoImg.push(imgObj);
             }
-          },
-          
-          previewImg : function(position, imgList) { //预览
-						var imgListTemp =[];//行业资质
-						for(var index in imgList){
-							imgListTemp.push(imgList[index].pic);
-						}
-						api.openWin({
-							name : 'previewpicture_win',
-							url : 'widget://html/previewpicture/previewpicture_win.html',
-							pageParam : {
-								position : position,
-								imgList : imgListTemp
-							},
-							slidBackEnabled : false,
-							delay : 300
-						});
-					},
+          } else {
+            api.toast({
+              msg: '身份证图片最多只能添加' + this.logoImgMax + '张',
+              duration: 1000,
+              location: 'bottom'
+            });
+          }
+        },
+
+        logoImgDel: function (position, data) {
+          //删除logo
+          this.logoImg.splice(position, 1);
+          if (data.attFkName != undefined && data.attFkName != null && data.attFkName != '') {
+            delImgList.push(data)
+          }
+        },
+
+        previewImg: function (position, imgList) { //预览
+          var imgListTemp = [];//行业资质
+          for (var index in imgList) {
+            imgListTemp.push(imgList[index].pic);
+          }
+          api.openWin({
+            name: 'previewpicture_win',
+            url: 'widget://html/previewpicture/previewpicture_win.html',
+            pageParam: {
+              position: position,
+              imgList: imgListTemp
+            },
+            slidBackEnabled: false,
+            delay: 300
+          });
+        },
 
         submitClick: function (clockStatus) {
-
-          var logoImg =[];//logo
-						for(var index in this.logoImg){
-							var attFkName=this.logoImg[index].attFkName;
-							if(attFkName==undefined || attFkName==null || attFkName==''){
-								logoImg.push(this.logoImg[index].pic);
-							}
-						}
-
-          if(this.itemClass.className==undefined || this.itemClass.className==null || this.itemClass.className==''){
-							api.toast({msg : '请填写分类名称',duration : 2000,});
-					}else if(this.itemClass.classSort==undefined || this.itemClass.classSort==null || this.itemClass.classSort==''){
-							api.toast({msg : '请填写显示排序',duration : 2000,});
-					}else {
-            api.confirm({
-            title: '提示',
-            msg: '是否新建分类?',
-            buttons: ['确定', '取消']
-          }, function (ret, err) {
-            var index = ret.buttonIndex;
-            if (index == 1) {
-          //     api.showProgress();
-          // _postHttpsData('/shop/createItemClass', infoVm.itemClass,
-          //   function (ret) {
-          //     api.hideProgress();
-          //     if (ret.status) {
-          //       alert(ret.msg)
-          //       backbar()
-          //       api.execScript({
-          //         name: 'goodsClassify_win',
-          //         frameName: 'goodsClassify_frm',
-          //         script: 'getInfoTpye()'
-          //       });
-          //     }
-          //   },
-          //   function (err) {
-          //     api.hideProgress();
-          //   }
-          // );
-          submitUserInfoHttps(infoVm.itemClass, '', '','',logoImg,clockStatus);
-            } else {
+          var logoImg = [];//logo
+          for (var index in this.logoImg) {
+            var attFkName = this.logoImg[index].attFkName;
+            if (attFkName == undefined || attFkName == null || attFkName == '') {
+              logoImg.push(this.logoImg[index].pic);
             }
-          })
+          }
+
+          if (this.itemClass.className == undefined || this.itemClass.className == null || this.itemClass.className == '') {
+            api.toast({ msg: '请填写分类名称', duration: 2000, });
+          } else if (this.itemClass.classSort == undefined || this.itemClass.classSort == null || this.itemClass.classSort == '') {
+            api.toast({ msg: '请填写显示排序', duration: 2000, });
+          } else {
+            api.confirm({
+              title: '提示',
+              msg: '是否新建分类?',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                submitUserInfoHttps(infoVm.itemClass, '', '', '', logoImg, clockStatus);
+              } else {
+              }
+            })
           }
         },
         updateClick: function (clockStatus) {
-          var logoImg =[];//logo
-						for(var index in this.logoImg){
-							var attFkName=this.logoImg[index].attFkName;
-							if(attFkName==undefined || attFkName==null || attFkName==''){
-								logoImg.push(this.logoImg[index].pic);
-							}
+          var logoImg = [];//logo
+          for (var index in this.logoImg) {
+            var attFkName = this.logoImg[index].attFkName;
+            if (attFkName == undefined || attFkName == null || attFkName == '') {
+              logoImg.push(this.logoImg[index].pic);
             }
+          }
 
-            if(this.itemClass.className==undefined || this.itemClass.className==null || this.itemClass.className==''){
-							api.toast({msg : '请填写分类名称',duration : 2000,});
-					}else if(this.itemClass.classSort==undefined || this.itemClass.classSort==null || this.itemClass.classSort==''){
-							api.toast({msg : '请填写显示排序',duration : 2000,});
-					}else {
+          if (this.itemClass.className == undefined || this.itemClass.className == null || this.itemClass.className == '') {
+            api.toast({ msg: '请填写分类名称', duration: 2000, });
+          } else if (this.itemClass.classSort == undefined || this.itemClass.classSort == null || this.itemClass.classSort == '') {
+            api.toast({ msg: '请填写显示排序', duration: 2000, });
+          } else {
             api.confirm({
-            title: '提示',
-            msg: '是否保存编辑',
-            buttons: ['确定', '取消']
-          }, function (ret, err) {
-            var index = ret.buttonIndex;
-            if (index == 1) {
-              // api.showProgress();
-              // _postHttpsData('/shop/updateItemClass', infoVm.itemClass,
-              //   function (ret) {
-              //     api.hideProgress();
-              //     if (ret.status) {
-              //       alert(ret.msg)
-              //       backbar()
-              //       api.execScript({
-              //         name: 'goodsClassify_win',
-              //         frameName: 'goodsClassify_frm',
-              //         script: 'getInfoTpye()'
-              //       });
-              //     }
-              //   },
-              //   function (err) {
-              //     api.hideProgress();
-              //   }
-              // );
-              infoVm.itemClass.classIcon = null
-          submitUserInfoHttps(infoVm.itemClass, '', '','',logoImg,clockStatus);
-            } else {
-            }
-          })
+              title: '提示',
+              msg: '是否保存编辑',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                infoVm.itemClass.classIcon = null
+                submitUserInfoHttps(infoVm.itemClass, '', '', '', logoImg, clockStatus);
+              } else {
+              }
+            })
           }
         },
         delClick: function () {
-          if(infoVm.isDel){
+          if (infoVm.isDel) {
             api.confirm({
-            title: '提示',
-            msg: '是否确定删除',
-            buttons: ['确定', '取消']
-          }, function (ret, err) {
-            var index = ret.buttonIndex;
-            if (index == 1) {
-              api.showProgress();
-          var param = 'itemClassId=' + infoVm.itemClass.itemClassId;
-          _getHttpsData('/shop/deleteItemClass', param,
-            function (ret) {
-              api.hideProgress();
-              if (ret.status) {
-                delImgList = infoVm.logoImg
-                delImgHtts(function(res){ //删除图片
-                  api.hideProgress();
-									if(res){
-										showSingleAuiDialog('提交', '提交成功','确定',function(ret){
-                    backbar()
-                    api.execScript({
-                      name: 'goodsClassify_win',
-                      frameName: 'goodsClassify_frm',
-                      script: 'getInfoTpye()'
-                    });
-										});
-									}else{
-										api.toast({msg : '操作失败',duration : 2000,location : 'middle'});
-									}
-                });
-                
+              title: '提示',
+              msg: '是否确定删除',
+              buttons: ['确定', '取消']
+            }, function (ret, err) {
+              var index = ret.buttonIndex;
+              if (index == 1) {
+                api.showProgress();
+                var param = 'itemClassId=' + infoVm.itemClass.itemClassId;
+                _getHttpsData('/shop/deleteItemClass', param,
+                  function (ret) {
+                    api.hideProgress();
+                    if (ret.status) {
+                      delImgList = infoVm.logoImg
+                      delImgHtts(function (res) { //删除图片
+                        api.hideProgress();
+                        if (res) {
+                          showSingleAuiDialog('提交', '提交成功', '确定', function (ret) {
+                            backbar()
+                            api.execScript({
+                              name: 'goodsClassify_win',
+                              frameName: 'goodsClassify_frm',
+                              script: 'getInfoTpye()'
+                            });
+                          });
+                        } else {
+                          api.toast({ msg: '操作失败', duration: 2000, location: 'middle' });
+                        }
+                      });
+
+                    }
+                  },
+                  function (err) {
+                    api.hideProgress();
+                  }
+                );
+              } else {
               }
-            },
-            function (err) {
-              api.hideProgress();
-            }
-          );
-            } else {
-            }
-          })
-          }else {
-						api.toast({msg : '删除失败，此分类含有商品',duration : 2000,location : 'middle'});
+            })
+          } else {
+            api.toast({ msg: '删除失败，此分类含有商品', duration: 2000, location: 'middle' });
           }
 
         }
@@ -701,12 +487,8 @@
 
         //有数据时编辑
         if (!pageParam.itemClass.itemClass == undefined || !pageParam.itemClass.itemClass == null || !pageParam.itemClass.itemClass == 0) {
-          this.itemClass = {} 
+          this.itemClass = {}
           this.itemClass = pageParam.itemClass.itemClass
-          // var paramData = {
-          //   pic:pageParam.itemClass.itemClass.classIcon
-          // }
-          // this.logoImg[0] = paramData;
           this.butState = true
           getLogoImgHttps();//获取Logo
           getGoodsList();//所有商品列表
@@ -726,15 +508,14 @@
           }
             , function (ret, err) {
               api.hideProgress();
-              var classAllNoNum = parseInt(ret.msg.slice(17, -2))+1
+              var classAllNoNum = parseInt(ret.msg.slice(17, -2)) + 1
               function ofNoNum(num, length) {
                 return (Array(length).join("0") + num).slice(-length);
               }
-              infoVm.itemClass.classAllNo = ofNoNum(classAllNoNum,4)
+              infoVm.itemClass.classAllNo = ofNoNum(classAllNoNum, 4)
               getClassId();
             });
         }
-        //  this.getclassifyDetail()
       },
     });
 

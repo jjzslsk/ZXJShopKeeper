@@ -13,64 +13,18 @@
     <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" />
     <style>
-        body {
-            background: #eee
-        }
-
-        .goodsStatus {
-            color: red;
-        }
-        .goodsStatus {
-            color: red;
-            white-space: nowrap;
-            padding: 2px 4px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .goods-status-null {
-            white-space: nowrap;
-            padding: 2px 4px;
-            border-radius: 10px;
-            text-align: center;
-            color: #11CF9C;
-        }
-        .but-click {
-           display: flex;
-           justify-content: flex-end;
-            align-items: center;
-        }
-        .but-click .aui-btn{
-            margin-left:.3rem;
-        }
-        .goods-list {
-            background: #eee
-        }
-        .goods-list .goods-list-item{
-            margin: .3rem 0 !important;
-            border-radius: 4px;
-            border: #eee solid .5px;
-            background: #fff
-        }
-        .mescroll {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        height: auto;
-        }
-        .item-data-null {
-        text-align: center;
-        padding: 2rem 0;
-        }
-        .date-status {
-      display: flex;
-      justify-content: flex-start;
-    }
-    .order-status {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-    </style>
+        body {background: #eee } 
+        .goodsStatus {color: red; } 
+        .goodsStatus {color: red; white-space: nowrap; padding: 2px 4px; border-radius: 10px; text-align: center; } 
+        .goods-status-null {white-space: nowrap; padding: 2px 4px; border-radius: 10px; text-align: center; color: #11CF9C; } 
+        .but-click {display: flex; justify-content: flex-end; align-items: center; } 
+        .but-click .aui-btn{margin-left:.3rem; } 
+        .goods-list {background: #eee } 
+        .goods-list .goods-list-item{margin: .3rem 0 !important; border-radius: 4px; border: #eee solid .5px; background: #fff } 
+        .mescroll {position: fixed; top: 0; bottom: 0; height: auto; } 
+        .item-data-null {text-align: center; padding: 2rem 0; } 
+        .date-status {display: flex; justify-content: flex-start; } 
+        .order-status {display: flex; justify-content: flex-end; align-items: center; } </style>
 </head>
 
 <body>
@@ -101,12 +55,10 @@
                                                 <span class="goods-status-null" v-if="item.orderStatus == 9">客户退货</span>
                                                 <span class="goods-status-null" v-if="item.orderStatus == 11">拒绝退货</span>
                                                 <span class="goods-status-null" v-if="item.orderStatus == 4">待评价</span>
-                                                <!-- <span class="goods-status-null">{{item.orderStatus}}</span> -->
                                             </span>
                                         </div>
                                     <div class="aui-list-item-text aui-row aui-font-size-12">
                                         <span class="aui-col-xs-12">姓名:{{item.clientName}}</span>
-                                        <!-- <span class="aui-col-xs-6">电话:{{item.clientPhone}}</span> -->
                                     </div>
                                     <p class="aui-font-size-12">时间:{{item.createDate}}</p>
                                     <div class="aui-list-item-text aui-font-size-12 date-status">
@@ -114,9 +66,6 @@
                                        
                                     </div>
                                     <p class="aui-font-size-12" v-if='item.photoOrderId'>拍照单号:{{item.photoOrderId}}</p>
-                                    <!-- <div class="aui-list-item-text aui-font-size-12">
-                                        地址:{{item.clientAddress}}
-                                    </div> -->
                                     </div>
                                     <div class="aui-row but-click">
                                         <span aui-col-xs-6>
@@ -131,10 +80,6 @@
                                             <div class="aui-btn aui-btn-sm aui-btn-danger" v-if="item.orderStatus == 9" @click="confirmRepeal(item)">
                                                 确认退货</div>
                                         </span>
-                                        <!-- <span aui-col-xs-6>
-                                            <div class="aui-btn aui-btn-sm aui-btn-info" v-if="item.orderStatus == 1"
-                                                @click="confirmSend(item)">确认发货</div>
-                                        </span> -->
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +151,7 @@
         );
         }
 
-
+        //统一订单状态
         var fnOrderStatus = function (_STATUS) {
             switch (_STATUS) {
                 case 1:
@@ -389,7 +334,6 @@
                             }
                         })
                     } 
-                    // else if (JSON.stringify(res.data).length > 0) { }
                 },
                 function (err) {
                     api.hideProgress();
@@ -452,14 +396,9 @@
             
             /*上拉加载的回调  */
 			function upCallback(page){
-            // checkSubmit()
             infoVm.showGoodsList = false
                 getListData(false)
             }
-            
-            
-
-
         getUserInfoHttps() //获取店铺信息
         getListData(true) //获取list
 

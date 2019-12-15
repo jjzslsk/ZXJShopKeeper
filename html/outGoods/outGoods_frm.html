@@ -13,42 +13,13 @@
   <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
   <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" />
   <style>
-    .shop-list-icom {
-      position: absolute;
-      right: 12px;
-      bottom: 4px;
-      /* width: 1rem;
-            height: 1rem;
-            background: red; */
-      z-index: 2;
-    }
-
-    .goodsStatus {
-      color: #2FC588;
-    }
-
-    .goodsStatus1 {
-      color: red;
-    }
-
-    .mescroll {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      height: auto;
-    }
-    .item-data-null {
-      text-align: center;
-      padding: 2rem 0;
-    }
-    .date-status {
-      display: flex;
-      justify-content: flex-start;
-    }
-    .text-size {
-        font-size: 0.6rem !important;
-    }
-
+    .shop-list-icom {position: absolute; right: 12px; bottom: 4px; z-index: 2; } 
+    .goodsStatus {color: #2FC588; } 
+    .goodsStatus1 {color: red; } 
+    .mescroll {position: fixed; top: 0; bottom: 0; height: auto; } 
+    .item-data-null {text-align: center; padding: 2rem 0; } 
+    .date-status {display: flex; justify-content: flex-start; } 
+    .text-size {font-size: 0.6rem !important; }
   </style>
 </head>
 
@@ -62,7 +33,6 @@
             </li>
             <li class="aui-list-item aui-list-item-middle" v-for='(item,index) in goodsList' @click='goodsDetail(item)'
             v-if="item.itemStatus == 0 || item.itemStatus == 3 || item.itemStatus == 1 && goodsList.length > 0">
-            <!-- <i @click="shadeIcon(item,index)" class="aui-iconfont aui-icon-more shop-list-icom"></i> -->
             <div class="aui-media-list-item-inner">
               <div class="aui-list-item-media" style="width: 3rem;">
                 <img :src="item.itemSpec[0][0].imgUrl" class="aui-list-img-sm">
@@ -78,12 +48,6 @@
                 </p>
                 <p class="date-status aui-font-size-12">
                   <span>时间:{{item.itemDate}}</span> 
-                  <!-- <span>
-                  <span class="goodsStatus" v-if="item.itemStatus == 2">(已上架)</span>
-                  <span class="goodsStatus1" v-if="item.itemStatus == 1">(审核中)</span>
-                  <span class="goodsStatus" v-if="item.itemStatus == 0">(未上架)</span>
-                  <span class="goodsStatus1" v-if="item.itemStatus == 3">(审核不通过)</span>
-                  </span> -->
                 </p>
               </div>
             </div>
@@ -114,38 +78,6 @@
 		var goodsStatus = api.pageParam.pageParam;//页面提交过来的参数
     var indexPage = 1;//页码
     var pageNum = 10;//每页的数量
-
-    //所有商品列表
-    // var getGoodsList = function (param) {
-    //   var goodsParam = 'shopId=' + shopUserId + '&sortName=SALES_VOLUME' +
-    //     '&sortType=DESC' + '&startPage=1' + '&recordSize=800' + '&from=shopApp';
-    //   _getHttpsData('/shop/getShopItemList', goodsParam,
-    //     function (ret) {
-    //       if (ret.status) {
-    //         infoVm.goodsList = ret.data
-    //         for (var ListItem in infoVm.goodsList) {//时间格式调整
-    //           if (infoVm.goodsList[ListItem].lastEditDate) {
-    //             infoVm.goodsList[ListItem].lastEditDate = infoVm.goodsList[ListItem].lastEditDate.substr(5, 11)
-    //           }
-    //           if (infoVm.goodsList[ListItem].upDate) {
-    //             infoVm.goodsList[ListItem].upDate = infoVm.goodsList[ListItem].upDate.substr(5, 11)
-    //           }
-    //         }
-    //         mescroll.endSuccess();
-    //         // var shopItemList = JSON.parse(JSON.stringify(infoVm.goodsData.itemSpec))
-    //         //     shopItemList.forEach(function (item,index) {
-    //         //     const element = shopItemList[index][index];
-    //         //     infoVm.itemSpecData.push(element);
-    //         //     });
-    //         // infoVm.goodsData.itemSpec = infoVm.itemSpecData
-    //         // console.log (JSON.stringify(infoVm.goodsData.itemSpec))
-    //       } else {
-    //       }
-    //     },
-    //     function (err) {
-    //     }
-    //   );
-    // };
 
     api.parseTapmode();
     var tab = new auiTab({
@@ -275,7 +207,6 @@
     }, function (ret, err) {
       if (ret) {
         if (ret.value.goodsStatus) {
-          // infoVm.goodsList=[]
           infoVm.geIfyHttpsData(true)
         }
       }

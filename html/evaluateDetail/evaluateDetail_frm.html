@@ -45,10 +45,6 @@
         <div class="star-box"><span>好评：</span><div class="star-item"></div><img class="star-img" src="../../image/star.png" v-for='indexItem in orderData.N1_STAR_LEVEL'></img></div></div>
         <div class="star-box"><span>服务：</span><div class="star-item"></div><img class="star-img" src="../../image/star.png" v-for='indexItem in orderData.N2_STAR_LEVEL'></img></div></div>
         <div class="star-box"><span>物流：</span><div class="star-item"></div><img class="star-img" src="../../image/star.png" v-for='indexItem in orderData.N3_STAR_LEVEL'></img></div></div>
-        <!-- <p class="aui-row">
-          <span class="aui-col-xs-6"> 订单金额：{{orderData.amount}}</span>
-          <span class="aui-col-xs-6"> 折扣后金额：{{orderData.amount}}</span>
-        </p> -->
       </section>
       <section class="aui-content-padded aui-list" v-if ='orderData.COMMENT_NOTES2 == null'>
         <div class="aui-list-header">评论内容：</div>
@@ -56,9 +52,6 @@
         <ul class="aui-list aui-form-list">
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
-                <!-- <div class="aui-list-item-label">
-                    回复内容
-                </div> -->
                 <div class="aui-list-item-input">
                     <textarea v-model='orderTextarea' placeholder="请输入评论回复"></textarea>
                 </div>
@@ -193,7 +186,6 @@
 
       },
       mounted: function () {
-        // this.token = $api.getStorage('token')
       },
 
     });

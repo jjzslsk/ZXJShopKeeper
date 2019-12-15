@@ -15,122 +15,26 @@
   <link rel="stylesheet" type="text/css" href="../../css/quill_snow.css" />
   <link rel="stylesheet" type="text/css" href="../../css/textEditor/textEditor.css" />
   <style>
-    .list-box .divInput{
-    /* margin: 200px; */
-  }
-  ul li{
-    list-style: none;
-  }
-  .list-box .input{
-
-  }
-  .list-box .input input{
-    border: none;
-    outline: none;
-    width: 90%;
-  }
-  .list-box .input img{
-    position: absolute;
-    right: 34px;
-    top: 48%;
-  }
-  .list-box .list{
-    top: 0;
-    position: fixed;
-    /* width: 50%; */
-    border: 1px solid #cccccc;
-    overflow: hidden;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0,.7);
-    z-index: 99;
-    display: flex;
-    justify-content: center;
-  }
-  .list-box .list ul{
-    position: absolute;
-    width: 50vw;
-    height: 70vh;
-    background: #eee;
-    top: 10%;
-    left: 25%;
-    overflow: hidden;
-  }
-  .list-box .list ul li{
-    width: 100%;
-    height: 50px;
-    cursor: pointer;
-    line-height: 50px;
-    padding-left: 10px;
-    text-align: center;
-    border: 1px solid #999;
-    overflow: scroll;
-  }
-  .list-box .list ul li:hover{
-    background-color: #cccccc;
-  }
-  .selected {
-            background-color: #00b3f1;
-        }
-
-  .info-edit-item  {
-    display: flex;
-    align-items: center;
-  }
-  .info-edit-item .title {
-    font-size: 0.7rem;
-    color: #212121;
-    width: 3rem;
-  }
-  .def-phd{color:#aab2bd;font-size: 0.6rem;margin-top: 3px;}
-  .info-edit-item .choose-res{position: relative;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 6px 6px;}
-  .res-icon{color:#aab2bd;font-weight: lighter;width: 1em;position: absolute;right: 5px;font-size: .6rem !important;}
-  .res-icon .aui-iconfont{font-size: .4rem !important;}
-  .text-weight{font-size: 0.6rem;
-    /* margin-top: 3px; */
-    color: #212121;font-style: normal;}
-  .info-input {height: 1.6rem;line-height: 1.6rem;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 0 6px;} 
-  .info-input input{
-    height: 1.6rem !important;
-    font-size: 0.6rem !important;
-    color: #212121 !important;
-  } 
-  .info-input .radio-text {margin: 0 1rem 0 .3rem; }
-  .aui-list .aui-list-item {
-  margin: 0;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  }
-
-  .list-item {
-padding: 0 0.75rem !important;
-font-size: 0.6rem !important;
-}
-.aui-list textarea {
-overflow: auto;
-margin: 0 !important;
-height: 3rem;
-line-height: 1rem;
-resize: none;
-padding: 0.5rem 0 !important; 
-}
-.case-img-label {
-  margin-top: 0.5rem !important;
-}
-#editor{
-  margin-bottom: 50px;
-  min-height: 6rem;
-}
-*{
-  -webkit-user-select:text !important;  
-}
-  </style>
+  ul li{list-style: none; } 
+  .list-box .input input{border: none; outline: none; width: 90%; } 
+  .list-box .input img{position: absolute; right: 34px; top: 48%; } 
+  .list-box .list{top: 0; position: fixed; border: 1px solid #cccccc; overflow: hidden; bottom: 0; left: 0; right: 0; background-color: rgba(0, 0, 0,.7); z-index: 99; display: flex; justify-content: center; } 
+  .list-box .list ul{position: absolute; width: 50vw; height: 70vh; background: #eee; top: 10%; left: 25%; overflow: hidden; } 
+  .list-box .list ul li{width: 100%; height: 50px; cursor: pointer; line-height: 50px; padding-left: 10px; text-align: center; border: 1px solid #999; overflow: scroll; } 
+  .list-box .list ul li:hover{background-color: #cccccc; } 
+  .selected {background-color: #00b3f1; } 
+  .info-edit-item  {display: flex; align-items: center; } 
+  .info-edit-item .title {font-size: 0.7rem; color: #212121; width: 3rem; } 
+  .def-phd{color:#aab2bd;font-size: 0.6rem;margin-top: 3px;} .info-edit-item .choose-res{position: relative;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 6px 6px;} .res-icon{color:#aab2bd;font-weight: lighter;width: 1em;position: absolute;right: 5px;font-size: .6rem !important;} .res-icon .aui-iconfont{font-size: .4rem !important;} .text-weight{font-size: 0.6rem; color: #212121;font-style: normal;} .info-input {height: 1.6rem;line-height: 1.6rem;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 0 6px;} .info-input input{height: 1.6rem !important; font-size: 0.6rem !important; color: #212121 !important; } 
+  .info-input .radio-text {margin: 0 1rem 0 .3rem; } 
+  .aui-list .aui-list-item {margin: 0; padding-left: 0.75rem; padding-right: 0.75rem; } 
+  .list-item {padding: 0 0.75rem !important; font-size: 0.6rem !important; } 
+  .aui-list textarea {overflow: auto; margin: 0 !important; height: 3rem; line-height: 1rem; resize: none; padding: 0.5rem 0 !important; } 
+  .case-img-label {margin-top: 0.5rem !important; } #editor{margin-bottom: 50px; min-height: 6rem; } *{-webkit-user-select:text !important; } 
+</style>
 </head>
 <body>
 <div id="info_id">
-  <!-- <template> -->
-
       <ul class="aui-list aui-form-list">
           <li class="aui-list-header">标题/描述</li>
           <li class="list-item aui-border-b">
@@ -185,19 +89,9 @@ padding: 0.5rem 0 !important;
           <span style="color: #757575">插入详情图时，编辑区内容将被清空</span>
         </li>
       </ul>
-
-    <!-- <div class="aui-font-size-14 aui-margin-b-10 case-img-label img-btn">
-        <span>图/文编辑：</span>
-        <span class="aui-btn aui-btn-success" onclick="addDetailUrl()">插入说明图</span>
-    </div> -->
-    <!-- <p class="aui-font-size-12 aui-margin-t-10 aui-margin-b-5 case-img-label explain">插入说明图，需先上传说明图后，方可编辑</p> -->
-    <!-- <p class="aui-font-size-12 aui-margin-t-5 aui-margin-b-10 case-img-label explain">插入图片后文字被覆盖，需重新编辑文字。</p> -->
-    
-  <!-- </template> -->
 </div>
 <div id="editor"></div>
 <div class="footer aui-row" id="editBut">
-  <!-- <div class="but-green aui-col-xs-4" onclick="saveClick()">保存编辑</div> -->
   <div class="but-green aui-col-xs-4" onclick="delData()">删除</div>
   <div class="but-blue aui-col-xs-4" onclick="globalSubmitClick(0)">保存编辑</div>
   <div class="but-red aui-col-xs-4" onclick="backbar()">返回</div>
@@ -218,7 +112,6 @@ padding: 0.5rem 0 !important;
 <script type="text/javascript" src="../../script/packajax.js"></script>
 <script type="text/javascript" src="../../res/data/citypicker.js"></script>
 <script type="text/javascript" src="../../script/picker/pickermin.js"></script>
-<!-- <script type="text/javascript" src="../../script/picker/addresspicker.js"></script> -->
 <script type="text/javascript" src="../../script/picker/jyfwpicker.js"></script>
 <script type="text/javascript" src="../../script/picker/datepicker.js"></script>
 <script type="text/javascript" src="../../script/quill.js"></script>
@@ -237,7 +130,6 @@ padding: 0.5rem 0 !important;
   var corpImgResPro_status; //监听详情截图是否完毕
   var shopId = $api.getStorage("shopId");//用户id
   var delData
-
 
   var toolbarOptions = [
   ['bold','underline', 'strike'],        // toggled buttons
@@ -262,24 +154,13 @@ padding: 0.5rem 0 !important;
     //获取articleId
     var articleId 
     getTokenRes(function (id) {articleId = id})
-    
-
-
-    
-    // alert (infoVm.goodsData.itemSpec)
-    //   for(let index=0;index<data.length;index++){
-    //   const element = data[index][index];
-    //   infoVm.itemSpec.push(element);
-    // }
 
     var getGoodsId = function () {
       _getHttpsData('/utils/getPK', '',
         function (res) {
           if (res.status) {
             infoVm.goodsData.shopItemId = res.data
-            // alert(JSON.stringify(infoVm.goodsData.shopItemId))
           } else {
-            // alert(res.msg)
           }
         },
         function (err) {
@@ -295,7 +176,6 @@ padding: 0.5rem 0 !important;
           console.log('平台分类'+JSON.stringify(infoVm.itemClassIds))
         },
         function (err) {
-          //api.hideProgress();
         })
 
       //获取店铺分类
@@ -392,19 +272,6 @@ padding: 0.5rem 0 !important;
 								delImgHtts(function(res){ //删图
 									api.hideProgress();
 									if(upSuccess){
-
-										// showSingleAuiDialog('提交', '提交成功','确定',function(ret){
-										// 	api.closeWin({
-										// 	    name: 'auth_step_win'
-										// 	})
-										// 	api.sendEvent({
-										// 	    name: 'authstepsend_event',
-										// 	    extra: {
-										// 	        isSuccess: true,
-										// 	    }
-										// 	});
-										// 	// api.closeWin();
-										// });
 									}else{
 										api.toast({msg : '上传图片异常',duration : 2000,location : 'middle'});
 									}
@@ -427,61 +294,39 @@ padding: 0.5rem 0 !important;
     infoVm = new Vue({
       el: "#info_id",
       data: {
-
         shopData:false,//按钮状态
-
         articleId:'',
         editArticleId:'',//删除的ID
-
         articleTitle:'',
         articleDescribe:'',
-
         specIndex: '',// 操作规格图的下标index
         ImgCutUrl: '',// 裁剪后得到的图片路径
-
-
         flag: -1,
-
         show:false,
         value:'',
-
         prohibit:true,//禁止操作详情图
-
         NotesImgText:{
           text:'',
           img:[]
         },
-
         quillData:false, //富文本是否有数据
-
         goodsDetailImg:[],//获取商品详情图
-
         proCaseImgList : [], //商品详情
         proCaseImgMax : 1, //商品详情图片最多能添加多少张
         picImgList : [], //轮播图
 				picImgMax : 9, //轮播图图片最多能添加多少张
-
         areaChooseId: '', //区域Id
         areaChoose: '', //区域选择
-
         shopItemClassIds: '',//店铺分类
         itemClassIds: '',//平台商品分类
-
         shopItemClassIdsSublevel: '',//店铺分类
         itemClassIdsSublevel: '',//平台商品分类
-
         itemClassIdInfo: '',//选中平台类属性
         shopItemClassIdInfo: '',//选中店铺类属性
-
-        
         itemClassIdInfoSublevel: '',//选中平台子类属性
         shopItemClassIdInfoSublevel: '',//选中店铺子类属性
-
-
         itemSpecData: [
-
         ],
-
         itemSpecObj: {
           spec: '1',
           price: '2',
@@ -503,14 +348,9 @@ padding: 0.5rem 0 !important;
           upNumber: "999",//数量
           itemSort: "0",//排序
           deliveryMode: "快递",//配送方式
-          // tzStatus: "0",//推荐
           postageType: "包邮",//包邮
           postageAmnt: "0",//邮费
-          // itemSpec: this.itemSpecData//多商品规格
           itemSpec: [] //多商品规格
-
-
-
         },
         token: '',
         pitchItem: '',
@@ -521,7 +361,6 @@ padding: 0.5rem 0 !important;
       },
 
       methods: {
-
         proCaseImgDel: function (position, data) {
           //删除详情图片
           this.proCaseImgList.splice(position, 1);
@@ -619,12 +458,8 @@ padding: 0.5rem 0 !important;
         appendProCaseImgImg : function(pathList) {
 						//追加详情图片
 						if (this.proCaseImgList.length < this.proCaseImgMax) {
-							// for(var index in pathList){
 								var imgObj = this.imgObjPackag('','',pathList);
 								this.proCaseImgList.push(imgObj);
-							// }
-//							this.proCaseImgList = this.proCaseImgList.concat(pathList);
-							// this.nextTick();
 						} else {
 							api.toast({
 								msg : '详情图片最多只能添加' + this.proCaseImgMax + '张',
@@ -701,7 +536,6 @@ padding: 0.5rem 0 !important;
           checkout: function(){
             if(infoVm.goodsData.shopId.length <= 0 || infoVm.goodsData.shopId.length== undefined ){api.toast({msg: 'shopId不能为空'});}else
             if(infoVm.articleTitle.length <= 0 || infoVm.articleTitle.length== undefined ){api.toast({msg: '标题不能为空'});}else
-            // if(infoVm.articleDescribe.length <= 0 || infoVm.articleDescribe.length== undefined ){api.toast({msg: '内容不能为空'});}else
             if(quill.container.firstChild.innerHTML.length <= 0 || quill.container.firstChild.innerHTML.length== undefined ){api.toast({msg: '编辑区内容不能为空'});}else{
             if(infoVm.articleId.length <= 0 || infoVm.articleId.length== undefined ){api.toast({msg: '图片未上传'});}else
           infoVm.checkoutForm = true 
@@ -732,7 +566,6 @@ padding: 0.5rem 0 !important;
           }, function (ret, err) {
             var index = ret.buttonIndex;
             if (index == 1) {
-              // submitUserInfoHttps(picImgList,proCaseImgList,'');//详情，轮播 传图
               api.showProgress({ title: "提交信息" });
               infoVm.goodsData.itemNotes = quill.container.firstChild.innerHTML //富文本内容
               if(pageParam.pageParam.title == '配送说明') {
@@ -781,31 +614,11 @@ padding: 0.5rem 0 !important;
           }
         }
 
-        
-
-
-
-                // var proCaseImgList =[];//商品详情图
-                // for(var index in this.proCaseImgList){
-                //   var attFkName=this.proCaseImgList[index].attFkName;
-                //   if(attFkName==undefined || attFkName==null || attFkName==''){
-                //     proCaseImgList.push(this.proCaseImgList[index].pic);
-                //   }
-                // }
-
-                // var DetailNum = ''
-                // proCaseImgList.forEach(function (element,index){
-                //   DetailNum = index + 1
-                //   uploadGoodsDetailHttps(element,DetailNum)
-                // });
-
-          
         },
 
-                //上架待审核 表单和规格通过才可提交
+          //上架待审核 表单和规格通过才可提交
           updateClick: function (status) {
           this.checkout()//校验表表单
-          
           // 表单规格通过后，传详情，轮播 图
           if(infoVm.checkoutForm){
             if(!infoVm.quillData){//富文本是否有数据
@@ -820,7 +633,6 @@ padding: 0.5rem 0 !important;
           }, function (ret, err) {
             var index = ret.buttonIndex;
             if (index == 1) {
-              // submitUserInfoHttps(picImgList,proCaseImgList,'');//详情，轮播 传图
               api.showProgress({ title: "提交信息" });
               infoVm.goodsData.itemNotes = quill.container.firstChild.innerHTML //富文本内容
               if(pageParam.pageParam.title == '配送说明') {
@@ -910,7 +722,6 @@ padding: 0.5rem 0 !important;
         }
       });
       }
-      // uploadUserAvatarHttps(ret.destPath);
     }
 
 
@@ -924,14 +735,12 @@ padding: 0.5rem 0 !important;
         }
       }
 
-
         if(proCaseImgList.length == 0 || proCaseImgList.length == null){
           api.toast({msg: '请添加图片'});
         }else {
           submitUserInfoHttps(picImgList,proCaseImgList,'isPro');//传图
         }
       }
-
 
         //插入图片
         addDetailUrl = function (){
@@ -948,24 +757,12 @@ padding: 0.5rem 0 !important;
 
         //上架待审核
         globalSubmitClick = function (status) {
-          // if(proCaseImgList.length == 0 || proCaseImgList.length == null){
-          //       alert ("2请添加详情图")
-          //     }else if(infoVm.goodsDetailImg.length == 0 || infoVm.goodsDetailImg.length == null){
-          //       alert ("详情图未上传")
-          //     }else {
                 infoVm.submitClick(status)
-              // }
           }
 
           //保存
           saveClick = function () {
-          // if(proCaseImgList.length == 0 || proCaseImgList.length == null){
-          //       alert ("3请添加详情图")
-          //     }else if(infoVm.goodsDetailImg.length == 0 || infoVm.goodsDetailImg.length == null){
-          //       alert ("详情图未上传")
-          //     }else {
                 infoVm.submitClick(0)
-              // }
           }
 
 
@@ -1061,7 +858,6 @@ padding: 0.5rem 0 !important;
 
     getUserInfoHttps()
     infoVm.getItem()
-    // getSelectGoodsType()
   }
 </script>
 

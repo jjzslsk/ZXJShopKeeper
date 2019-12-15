@@ -10,7 +10,6 @@
 	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
 	<style>
-		body {}
 	</style>
 </head>
 
@@ -20,9 +19,6 @@
 			<span class="aui-iconfont aui-icon-left"></span>
 		</a>
 		<div class="aui-title" id="order_title">分类信息</div>
-		<!-- <a class="aui-pull-right aui-btn">
-			<span id="check_pro" onclick="delClass()">删除</span>
-		</a> -->
 	</header>
 
 </body>
@@ -31,8 +27,6 @@
 <script type="text/javascript" src="../../script/packajax.js"></script>
 <script type="text/javascript">
 	var backbar;
-	// var refreshCheckPro;
-	// var delClass
 	apiready = function () {
 		var pageParam = api.pageParam;//页面提交过来的参数
 
@@ -42,40 +36,7 @@
 			//关闭当前window，使用默认动画
 			api.closeWin();
 		}
-
-
-
-		// refreshCheckPro = function (applyStatus) {
-		// 	/*0未申请，1申请中，2审核通过，3审核不通过*/
-		// 	if (applyStatus == 1) {
-		// 		$('#check_pro').text('申请中');
-		// 		$('#check_pro').addClass('check-pro1');
-		// 		$('#check_pro').removeClass('check-pro2');
-		// 		$('#check_pro').removeClass('check-pro3');
-		// 	}
-		// 	else if (applyStatus == 2) {
-		// 		$('#check_pro').text('审核通过');
-		// 		$('#check_pro').addClass('check-pro2');
-		// 		$('#check_pro').removeClass('check-pro1');
-		// 		$('#check_pro').removeClass('check-pro3');
-		// 	}
-		// 	else if (applyStatus == 3) {
-		// 		$('#check_pro').text('审核不通过');
-		// 		$('#check_pro').addClass('check-pro3');
-		// 		$('#check_pro').removeClass('check-pro1');
-		// 		$('#check_pro').removeClass('check-pro2');
-		// 	}
-		// }
-
-
 		var headerBar = $api.dom('header').offsetHeight;
-
-
-
-		// alert('2'+JSON.stringify (pageParam))
-
-
-
 		api.openFrame({
 			name: 'classifyDetail_frm',
 			url: 'classifyDetail_frm.html',
@@ -90,14 +51,6 @@
 				w: 'auto' // main页面的宽度 自适应屏幕宽度
 			},
 		});
-
-		// delClass = function () {
-		// 	api.execScript({
-		// 		// name: 'classifyDetail_win',
-		// 		frameName: 'classifyDetail_frm',
-		// 		script: 'delClass()'
-		// 	});
-		// }
 	};
 </script>
 

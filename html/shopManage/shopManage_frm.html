@@ -14,79 +14,20 @@
   <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
   <link rel="stylesheet" type="text/css" href="../../css/shopManage.css" />
   <style>
-	      .footer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction:row;
-      flex-wrap:wrap;
-      background: #DCDCDC;
-      position: fixed;
-      left: 0;
-      bottom: 0px;
-      width: 100%;
-      z-index: 99;
-      height: 50px;
-	}
-	.but-green{
-              background: #11CE7C;
-              color: #fff;
-              height: 50px;
-              line-height: 50px;
-              text-align: center;
-            }
-            .but-blue{
-              background: #00A0E9;
-              color: #fff;
-              height: 50px;
-              line-height: 50px;
-              text-align: center;
-              width: 50%;
-            }
-            .but-red{
-              background: #F24A4A;
-              color: #fff;
-              height: 50px;
-              text-align: center;
-              line-height: 50px;
-              width: 50%;
-            }
-            .but-gray {
-              background: #DCDCDC;
-              height: 50px;
-              text-align: center;
-              line-height: 50px;
-              color: #757575;
-              font-weight: normal;
-              font-size: .7rem;
-            }
-            .content-box {
-              margin-bottom: 50px;
-            }
-
-
-            .info-edit-item  {
-            display: flex;
-            align-items: center;
-          }
-          .info-edit-item .title {
-            font-size: 0.6rem;
-            color: #212121;
-            width: 3rem;
-          }
-          .def-phd{color:#aab2bd;font-size: 0.6rem;margin-top: 3px;}
-          .info-edit-item .choose-res{position: relative;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 6px 6px;}
-          .res-icon{color:#aab2bd;font-weight: lighter;width: 1em;position: absolute;right: 5px;font-size: .6rem !important;}
-          .res-icon .aui-iconfont{font-size: .4rem !important;}
-          .text-weight{font-size: 0.6rem;
-            /* margin-top: 3px; */
-            color: #212121;font-style: normal;}
-  </style>
+	      .footer {display: flex; justify-content: center; align-items: center; flex-direction:row; flex-wrap:wrap; background: #DCDCDC; position: fixed; left: 0; bottom: 0px; width: 100%; z-index: 99; height: 50px; } 
+        .but-green{background: #11CE7C; color: #fff; height: 50px; line-height: 50px; text-align: center; } 
+        .but-blue{background: #00A0E9; color: #fff; height: 50px; line-height: 50px; text-align: center; width: 50%; } 
+        .but-red{background: #F24A4A; color: #fff; height: 50px; text-align: center; line-height: 50px; width: 50%; } 
+        .but-gray {background: #DCDCDC; height: 50px; text-align: center; line-height: 50px; color: #757575; font-weight: normal; font-size: .7rem; } 
+        .content-box {margin-bottom: 50px; } 
+        .info-edit-item  {display: flex; align-items: center; } 
+        .info-edit-item .title {font-size: 0.6rem; color: #212121; width: 3rem; } 
+      .def-phd{color:#aab2bd;font-size: 0.6rem;margin-top: 3px;} .info-edit-item .choose-res{position: relative;width: calc(100% - 3rem);background-color: rgb(247, 247, 247);border-radius: 4px;padding: 6px 6px;} .res-icon{color:#aab2bd;font-weight: lighter;width: 1em;position: absolute;right: 5px;font-size: .6rem !important;} .res-icon .aui-iconfont{font-size: .4rem !important;} .text-weight{font-size: 0.6rem; color: #212121;font-style: normal;} 
+    </style>
 </head>
 
 <body>
   <div id="info_id">
-    <!-- <template> -->
       <div class="aui-content aui-margin-b-15">
         <ul class="aui-list aui-form-list content-box">
           <li class="aui-list-header" v-if='applyStatus == 3'>审核不通过原因：{{shopCheckRes}}</li>
@@ -151,27 +92,6 @@
               </div>
             </div>
           </li>
-
-          <!-- <li class="list-item aui-border-b">
-            <span class="must-star1">*</span>
-            <div class="aui-font-size-14 aui-margin-b-10">
-              <span class="aui-font-size-12">logo</span><span class="img-ratio">{{logoImg.length}}/{{logoImgMax}}</span>
-            </div>
-            <div class="aui-flex-col aui-flex-middle">
-              <div class="aui-flex-item-3 aui-padded-5" v-for="(logoItem,logoIndex) in logoImg">
-                <div class="id-img">
-                  <span v-if="applyStatus==0 || applyStatus==2 || applyStatus==3" class="del-tip" tapmode="hover" @click="logoImgDel(logoIndex,logoItem)">—</span>
-                  <img :src="logoItem.pic" tapmode="hover" @click="previewImg(logoIndex,logoImg)"/>
-                </div>
-              </div>
-              <div class="aui-flex-item-3 aui-padded-5" v-if="logoImg.length<logoImgMax && (applyStatus==0 || applyStatus==2 || applyStatus==3)">
-                <div class="id-img" tapmode="hover" @click="logoImgClick">
-                  <i class="aui-iconfont aui-icon-plus"></i>
-                </div>
-              </div>
-            </div>
-          </li> -->
-
           <li class="aui-list-item">
             <span class="must-star">*</span>
             <div class="aui-list-item-inner">
@@ -212,21 +132,6 @@
               </div>
             </div>
           </li>
-          <!-- <li class="aui-list-item">
-            <span class="must-star">*</span>
-            <div class="aui-list-item-inner">
-              <div class="aui-list-item-label">店铺类型:</div>
-              <div class="aui-list-item-input">
-                <select class="aui-font-size-12" v-bind:disabled="affect" v-model="shopType">
-                  <option value="1">工厂店</option>
-                  <option value="2">代理店</option>
-                  <option value="3">专卖店</option>
-                  <option value="4">精品店</option>
-                  <option value="5">建材店</option>
-                </select>
-              </div>
-            </div>
-          </li> -->
 
           <li class="aui-list-item aui-row">
               <span class="must-star">*</span>
@@ -240,18 +145,6 @@
               </div>
           </li>
 
-          <!-- <li class="aui-list-item">
-            <span class="must-star">*</span>
-            <div class="aui-list-item-inner">
-              <div class="aui-list-item-label">经营范围:</div>
-              <div class="aui-list-item-input">
-                <select class="aui-font-size-12" v-bind:disabled="affect" v-model="shopJyfw" v-on:change="indexSelect(shopJyfw)">
-                  <option v-for="item in shopJyfwData" :key="item.classAllNo" :value="item.itemClassId">
-                    {{item.className}}</option>
-                </select>
-              </div>
-            </div>
-          </li> -->
 
           <li class="aui-list-item aui-row">
             <span class="must-star">*</span>
@@ -297,7 +190,6 @@
           </li>
 
           <li class="list-item aui-border-b">
-            <!--<span class="must-star1">*</span>-->
             <div class="aui-font-size-14 aui-margin-b-10">
               <span class="aui-font-size-12">营业执照</span><span class="img-ratio">{{busLicImgList.length}}/{{busLicImgMax}}</span>
             </div>
@@ -376,9 +268,7 @@
 		</ul>
 		
 		<div class="footer" v-if="applyStatus != 1">
-				<!-- <div v-if='shopData' class="but-blue" @click="editClick(0)">保存编辑</div> -->
 				<div v-if='shopData' class="but-blue" @click="editClick('updateShop')">重新提交审核</div>
-				<!-- <div v-else class="but-blue" @click="submitClick(0)">保存新建</div> -->
 				<div v-else class="but-blue" @click="submitClick('createShop')">提交审核</div>
 				<div class="but-red" onclick="backbar()">取消</div>
 			</div>
@@ -873,19 +763,7 @@
 								        shopInfoSuccess: true,
 								    }
 								});
-//							uploadFileBatch(busLicImgList, proCaseImgList, function(upSuccess) {
-//								api.hideProgress();
-//								if(upSuccess){
-//									showSingleAuiDialog('提交', '提交成功','确定',function(ret){
-//										api.closeWin({
-//										    name: 'auth_step_win'
-//										})
-//										api.closeWin();
-//									});
-//								}else{
-//									api.toast({msg : '上传图片异常',duration : 2000,location : 'middle'});
-//								}
-//							});
+
 							uploadFileBatch(busLicImgList, proCaseImgList,idCardImgList,logoImg,qualiImgList, function(upSuccess) {
 								delImgHtts(function(res){
 									api.hideProgress();
@@ -966,12 +844,9 @@
 
           }
           else {
-            // JSON.stringify(res.data.length)
-            // showSingleAuiDialog('获取信息失败(' + res.code + ')', res.msg);
           }
         },
         function (err) {
-          //api.hideProgress();
         }
       )
 
@@ -984,27 +859,16 @@
 
 
     function BMapTransqqMap(lng, lat) {
-
       var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
-
       var x = lng - 0.0065;
-
       var y = lat - 0.006;
-
       var z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
-
       var theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
-
       var lngs = z * Math.cos(theta);
-
       var lats = z * Math.sin(theta);
-
       return {
-
         lng: lngs,
-
         lat: lats
-
       };
 
     }
@@ -1023,9 +887,7 @@
         {value:'5',className:'建材店'},
         ],
         shopJyfwName:'',
-
         ImgCutUrl: '',// 裁剪后得到的图片路径
-
         checkoutForm:'', //表单校验
         shopJyfwValue: '',
         applyStatus: '',//审核状态
@@ -1042,14 +904,9 @@
         qualiImgMax : 9, //行业资质最多能添加多少张
         proCaseImgList : [], //经营场所
         proCaseImgMax : 9, //经营场所图片最多能添加多少张
-      
-
-
         shopData: false,//店铺是否有数据
-
         areaChooseId: '', //区域Id
         areaChoose: '', //区域选择
-
         shopJyfwData: [],
         paramData: "",
         shopName: "", //商铺名称
@@ -1077,14 +934,12 @@
         userid: "",
         shopCheckRes:'',//审核不通过文字
         LongAndLat:null,
-
       },
       methods: {
 
         //重新获取定位
         openMap: function (params) {
           if(checkLocPer()){
-            // api.showProgress()
             startLocation(function (successCal) {
             if(successCal.status){
               infoVm.LongAndLat = '',infoVm.shopLong = '',infoVm.shopLat = '';
@@ -1118,7 +973,6 @@
 
         openMapSetTimeout: function (params) { //重新定位
           if(checkLocPer()){
-            // api.showProgress()
             startLocation(function (successCal) {
             if(successCal.status){
               infoVm.LongAndLat = '',infoVm.shopLong = '',infoVm.shopLat = '';
@@ -1157,12 +1011,8 @@
           appendlogoImg : function(pathList) {
 						//追加logo
 						if (this.logoImg.length < this.logoImgMax) {
-							// for(var index in pathList){
 								var imgObj = this.imgObjPackag('','',pathList);
 								this.logoImg.push(imgObj);
-							// }
-//							this.idCardImgList = this.idCardImgList.concat(pathList);
-							// this.nextTick();
 						} else {
 							api.toast({
 								msg : '身份证图片最多只能添加' + this.logoImgMax + '张',
@@ -1179,8 +1029,6 @@
 								var imgObj = this.imgObjPackag('','',pathList[index]);
 								this.idCardImgList.push(imgObj);
 							}
-//							this.idCardImgList = this.idCardImgList.concat(pathList);
-							// this.nextTick();
 						} else {
 							api.toast({
 								msg : '身份证图片最多只能添加' + this.idCardImgMax + '张',
@@ -1197,8 +1045,6 @@
 								var imgObj = this.imgObjPackag('','',pathList[index]);
 								this.busLicImgList.push(imgObj);
 							}
-//							this.busLicImgList = this.busLicImgList.concat(pathList);
-							// this.nextTick();
 						} else {
 							api.toast({
 								msg : '营业执照图片最多只能添加' + this.busLicImgMax + '张',
@@ -1247,7 +1093,6 @@
 						var chooseNum = Number(this.logoImgMax) - Number(this.logoImg.length);
 						chooseCameraSheet(function(retList) {
             imgCutUp(retList[0]); //跳转去裁剪  , 裁剪后得到图片路径 infoVm.retDestPath
-
             corpImgResLogo_status = true
               api.addEventListener({//监听轮播截图是否完毕
                 name: 'corpImgResLogo_status'
@@ -1259,8 +1104,6 @@
                 }
               }
             });
-
-							// infoVm.appendlogoImg(retList);
 						}, chooseNum, '完成');
 					},
 
@@ -1426,13 +1269,11 @@
           this.shopAddress = data.shopAddress;
           this.shopType = data.shopType;
           this.shopTypeName = data.shopTypeName;
-          // this.shopJyfw = data.shopJyfw.toString();
           this.shopJyfw = data.shopJyfw;
           this.shopYyzzZzjgdm = data.shopYyzzZzjgdm;
           this.shopYyzzClass = data.shopYyzzClass;
           this.shopIdea = data.shopIdea;
           this.shopAbstract = data.shopAbstract;
-          // this.shopStatus = data.shopStatus;//状态
           this.shopIdea = data.shopIdea;
 
           //获取所有经营范围
@@ -1451,7 +1292,6 @@
                 infoVm.areaChoose = fullAddress;
               });
             } else {
-
             }
           }
         },
@@ -1494,7 +1334,6 @@
           }
         },
 
-
         //提交审核
         submitClick: function (clockStatus) {
           this.paramData = {}
@@ -1512,12 +1351,8 @@
             shopJyfw: this.shopJyfw, //经营范围 产品类型
             shopYyzzZzjgdm: this.shopYyzzZzjgdm, //机构代码 信用代码
             shopYyzzClass: this.shopYyzzClass, //营业执照类型
-            // shopYyzzName: this.shopYyzzName, //营业执照名称
-            // shopYyzzYxq: this.shopYyzzYxq, //有效期
-
             shopIdea: this.shopIdea, //店铺理念
             shopAbstract: this.shopAbstract, //简介 店铺介绍
-            // shopScale: this.shopScale, //商铺规模
             shopStatus: this.shopStatus, //状态 0-保存  1-提交
             clientId: this.userid, //
             orgId: this.areaChooseId, //区域Id
@@ -1574,7 +1409,6 @@
 								busLicImgList.push(this.busLicImgList[index].pic);
 							}
 						}
-//						var proCaseImgList = this.proCaseImgList;//经营场所
 						var proCaseImgList =[];//经营场所
 						for(var index in this.proCaseImgList){
 							var attFkName=this.proCaseImgList[index].attFkName;
@@ -1685,7 +1519,6 @@
 								busLicImgList.push(this.busLicImgList[index].pic);
 							}
 						}
-//						var proCaseImgList = this.proCaseImgList;//经营场所
 						var proCaseImgList =[];//经营场所
 						for(var index in this.proCaseImgList){
 							var attFkName=this.proCaseImgList[index].attFkName;
@@ -1719,39 +1552,7 @@
         }
       },
       mounted: function () {
-        //定位成功
-        // this.shopLong = $api.getStorage("curLng");
-        // this.shopLat = $api.getStorage("curLat");
-        // this.shopAddress = $api.getStorage("curAddress"); //当前地址
         this.userid = $api.getStorage("userid");
-
-
-        //店铺信息
-        // $api.setStorage("shopArea")//店铺所在区域
-        // $api.setStorage("favStatus")//
-        // $api.setStorage("submitDate")//
-        // $api.setStorage("shopName")//
-        // $api.setStorage("shopYyzzZzjgdm")//
-        // $api.setStorage("shopApplyIdcard")//
-        // $api.setStorage("shopAddress")//
-        // $api.setStorage("orgId")//
-        // $api.setStorage("shopJyfw")//
-        // $api.setStorage("shopLongTx")//
-        // $api.setStorage("shopStatus")//
-        // $api.setStorage("shopAbstract")//
-        // $api.setStorage("shopPhone")//
-        // $api.setStorage("shopId")//
-        // $api.setStorage("createDate")//
-        // // $api.setStorage("clientId")//
-        // $api.setStorage("commentTotal")//
-        // $api.setStorage("shopLatTx")//
-        // $api.setStorage("shopIdea")//
-        // $api.setStorage("shopLong")//
-        // $api.setStorage("shopYyzzClass")//
-        // $api.setStorage("shopType")//
-        // $api.setStorage("shopFzr")//
-        // $api.setStorage("shopLat")//
-        // $api.setStorage("shopTypeName")//
       },
 
     });
@@ -1786,25 +1587,6 @@
         }
       });
       }
-
-      // if (corpImgResPic_status) {
-      //   api.sendEvent({ //监听轮播截图是否完毕
-      //   name: 'corpImgResPic_status',
-      //   extra: {
-      //     Pic_status: true,
-      //   }
-      // });
-      // }
-
-      // if (corpImgResPro_status) {
-      //   api.sendEvent({ //监听轮播截图是否完毕
-      //   name: 'corpImgResPro_status',
-      //   extra: {
-      //     Pro_status: true,
-      //   }
-      // });
-      // }
-      // uploadUserAvatarHttps(ret.destPath);
     }
 
     //获取店铺信息

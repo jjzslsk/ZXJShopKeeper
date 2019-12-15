@@ -39,23 +39,19 @@
 								</div>
 								<div class="aui-chat-inner">
 									<div class="aui-chat-name">
-										{{chatItem.personName}} <!--<span class="aui-label aui-label-warning">2.0</span>-->
+										{{chatItem.personName}}
 									</div>
 									<div class="aui-chat-content">
 										<div class="aui-chat-arrow"></div>
 										<div class="chat-text-emo" v-html="checkTextIsEmotion(chatItem.textContent)"></div>
 										<img class="chat-img" v-for="imgItem in chatItem.imgListContent" :src="imgItem" />
 									</div>
-									<!--<div class="aui-chat-status aui-chat-status-refresh">
-									<i class="aui-iconfont aui-icon-correct aui-text-success"></i>
-									</div>-->
 								</div>
 							</div>
 						</div>
 					</template>
 				</div>
 			</div>
-			<!--<div id="loading" class="loading"><img src="../../image/gif/loading.gif" />正在加载...-->
 			<div id="loading" class="loading"><img src="../../image/gif/loading.gif" class="loading-hide" />加载完毕
 			</div>
 			<!--对方信息-->
@@ -71,16 +67,13 @@
 							</div>
 							<div class="aui-chat-inner">
 								<div class="aui-chat-name">
-									{{chatItem.personName}} <!--<span class="aui-label aui-label-warning">2.0</span>-->
+									{{chatItem.personName}}
 								</div>
 								<div class="aui-chat-content">
 									<div class="aui-chat-arrow"></div>
 									<div class="chat-text-emo" v-html="checkTextIsEmotion(chatItem.textContent)"></div>
 									<img class="chat-img" v-for="imgItem in chatItem.imgListContent" :src="imgItem" />
 								</div>
-								<!--<div class="aui-chat-status aui-chat-status-refresh">
-								<i class="aui-iconfont aui-icon-correct aui-text-success"></i>
-								</div>-->
 							</div>
 						</div>
 					</div>
@@ -91,7 +84,7 @@
 	<script type="text/javascript" src="../../script/api.js"></script>
 	<script type="text/javascript" src="../../script/aui/aui_lazyload.js" ></script>
 	<script type="text/javascript" src="../../script/jquery/jquery320min.js"></script>
-	<!--<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>-->
+	<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>
 	<script type="text/javascript" src="../../script/vue/vue.js"></script>
 	<script type="text/javascript" src="../../script/md5/base64.js"></script>
 	<script type="text/javascript" src="../../script/custom/tools.js"></script>

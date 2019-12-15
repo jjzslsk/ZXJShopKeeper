@@ -13,64 +13,18 @@
     <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" />
     <style>
-        body {
-            background: #eee
-        }
-
-        .goodsStatus {
-            color: red;
-        }
-        .goodsStatus {
-            color: red;
-            white-space: nowrap;
-            padding: 2px 4px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .goods-status-null {
-            white-space: nowrap;
-            padding: 2px 4px;
-            border-radius: 10px;
-            text-align: center;
-            color: #11CF9C;
-        }
-        .but-click {
-           display: flex;
-           justify-content: flex-end;
-            align-items: center;
-        }
-        .but-click .aui-btn{
-            margin-left:.3rem;
-        }
-        .goods-list {
-            background: #eee
-        }
-        .goods-list .goods-list-item{
-            margin: .3rem 0 !important;
-            border-radius: 4px;
-            border: #eee solid .5px;
-            background: #fff
-        }
-        .mescroll {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        height: auto;
-        }
-        .item-data-null {
-        text-align: center;
-        padding: 2rem 0;
-        }
-        .date-status {
-      display: flex;
-      justify-content: flex-start;
-    }
-    .order-status {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-    </style>
+        body {background: #eee } 
+        .goodsStatus {color: red; } 
+        .goodsStatus {color: red; white-space: nowrap; padding: 2px 4px; border-radius: 10px; text-align: center; } 
+        .goods-status-null {white-space: nowrap; padding: 2px 4px; border-radius: 10px; text-align: center; color: #11CF9C; } 
+        .but-click {display: flex; justify-content: flex-end; align-items: center; } 
+        .but-click .aui-btn{margin-left:.3rem; } 
+        .goods-list {background: #eee } 
+        .goods-list .goods-list-item{margin: .3rem 0 !important; border-radius: 4px; border: #eee solid .5px; background: #fff } 
+        .mescroll {position: fixed; top: 0; bottom: 0; height: auto; } 
+        .item-data-null {text-align: center; padding: 2rem 0; } 
+        .date-status {display: flex; justify-content: flex-start; } 
+        .order-status {display: flex; justify-content: flex-end; align-items: center; } </style>
 </head>
 
 <body>
@@ -101,12 +55,10 @@
                                                 <span class="goods-status-null" v-if="item.orderStatus == 9">客户退货</span>
                                                 <span class="goods-status-null" v-if="item.orderStatus == 11">拒绝退货</span>
                                                 <span class="goods-status-null" v-if="item.orderStatus == 4">待评价</span>
-                                                <!-- <span class="goods-status-null">{{item.orderStatus}}</span> -->
                                          </span>
                                         </div>
                                     <div class="aui-list-item-text aui-row aui-font-size-12">
                                         <span class="aui-col-xs-12">客户姓名:{{item.clientName}}</span>
-                                        <!-- <span class="aui-col-xs-6">电话:{{item.clientPhone}}</span> -->
                                     </div>
                                     <p class="aui-font-size-12">创建时间:{{item.createDate}}</p>
                                     <div class="aui-list-item-text date-status aui-font-size-12">
@@ -114,9 +66,6 @@
                                         
                                     </div>
                                     <p class="aui-font-size-12" v-if='item.photoOrderId'>拍照单号:{{item.photoOrderId}}</p>
-                                    <!-- <div class="aui-list-item-text aui-font-size-12">
-                                        地址:{{item.clientAddress}}
-                                    </div> -->
                                     </div>
                                     <div class="aui-row  but-click">
                                         <span aui-col-xs-6>
@@ -131,10 +80,6 @@
                                             <div class="aui-btn aui-btn-sm aui-btn-danger" v-if="item.orderStatus == 9" @click="confirmRepeal(item)">
                                                 确认退货</div>
                                         </span>
-                                        <!-- <span aui-col-xs-6>
-                                            <div class="aui-btn aui-btn-sm aui-btn-info" v-if="item.orderStatus == 1"
-                                                @click="confirmSend(item)">确认发货</div>
-                                        </span> -->
                                     </div>
                                 </div>
                             </div>
@@ -144,126 +89,6 @@
                         </li>
                     </ul>
                 </div>
-                <!-- </div> -->
-                <!-- <div class="aui-hide" id="tab1-con2">
-                <div class="aui-content aui-margin-b-15">
-                    <ul class="aui-list aui-media-list">
-                        <li class="aui-list-item aui-list-item-middle">
-                            <div class="aui-media-list-item-inner">
-                                <div class="aui-list-item-media" style="width: 3rem;">
-                                    <img src="../../image/deal.jpg" class="aui-list-img-sm">
-                                </div>
-                                <div class="aui-list-item-inner aui-list-item-arrow">
-                                    <div class="aui-list-item-text">
-                                        <div class="aui-list-item-title aui-font-size-14">大板金拉丝五孔</div>
-                                        <div class="aui-list-item-right">08:00</div>
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        名字：李老板
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        订单编号：45879534517
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        联系电话：155554845798
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        地址：广西南宁明秀路0001号
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="aui-hide" id="tab1-con3">
-                <div class="aui-content aui-margin-b-15">
-                    <ul class="aui-list aui-media-list">
-                        <li class="aui-list-item aui-list-item-middle">
-                            <div class="aui-media-list-item-inner">
-                                <div class="aui-list-item-media" style="width: 3rem;">
-                                    <img src="../../image/deal.jpg" class="aui-list-img-sm">
-                                </div>
-                                <div class="aui-list-item-inner aui-list-item-arrow">
-                                    <div class="aui-list-item-text">
-                                        <div class="aui-list-item-title aui-font-size-14">大板金拉丝五孔</div>
-                                        <div class="aui-list-item-right">08:00</div>
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        名字：李老板
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        订单编号：45879534517
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        联系电话：155554845798
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        地址：广西南宁明秀路0001号
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="aui-list-item aui-list-item-middle">
-                            <div class="aui-media-list-item-inner">
-                                <div class="aui-list-item-media" style="width: 3rem;">
-                                    <img src="../../image/money.jpg" class="aui-list-img-sm">
-                                </div>
-                                <div class="aui-list-item-inner aui-list-item-arrow">
-                                    <div class="aui-list-item-text">
-                                        <div class="aui-list-item-title aui-font-size-14">大板金拉丝五孔</div>
-                                        <div class="aui-list-item-right">08:00</div>
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        名字：王老板
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        订单编号：45879534517
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        联系电话：155554845798
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        地址：广西南宁明秀路0001号
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="aui-hide" id="tab1-con4">
-                <div class="aui-content aui-margin-b-15">
-                    <ul class="aui-list aui-media-list">
-                        <li class="aui-list-item aui-list-item-middle">
-                            <div class="aui-media-list-item-inner">
-                                <div class="aui-list-item-media" style="width: 3rem;">
-                                    <img src="../../image/deal.jpg" class="aui-list-img-sm">
-                                </div>
-                                <div class="aui-list-item-inner aui-list-item-arrow">
-                                    <div class="aui-list-item-text">
-                                        <div class="aui-list-item-title aui-font-size-14">大板金拉丝五孔</div>
-                                        <div class="aui-list-item-right">08:00</div>
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        名字：李老板
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        订单编号：45879534517
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        联系电话：155554845798
-                                    </div>
-                                    <div class="aui-list-item-text">
-                                        地址：广西南宁明秀路0001号
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div> -->
-                <!-- </div> -->
             </template>
     </div>
 </body>

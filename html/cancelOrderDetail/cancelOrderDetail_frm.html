@@ -13,14 +13,8 @@
   <link rel="stylesheet" type="text/css" href="../../css/main.css" />
   <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
   <style>
-            .but-click {
-           display: flex;
-           justify-content: flex-end;
-            align-items: center;
-        }
-        .but-click .aui-btn{
-            margin-left:.3rem;
-        }
+    .but-click {display: flex; justify-content: flex-end; align-items: center; } 
+    .but-click .aui-btn{margin-left:.3rem; } 
   </style>
 </head>
 
@@ -76,7 +70,6 @@
         <li class="aui-list-item">
           <div class="aui-list-item-inner">
             <div class="aui-list-item-title">相关图片</div>
-            <!-- <p>图片列表</p> -->
             <div class="aui-row aui-row-padded">
               <div class="aui-col-xs-4" v-for='(item,index) in DetailImg'>
                 <img @click="previewImg(index,DetailImg)" :src="item" />
@@ -97,7 +90,6 @@
 <script type="text/javascript" src="../../script/packajax.js"></script>
 <script type="text/javascript" src="../../script/picker/pickermin.js"></script>
 <script type="text/javascript" src="../../script/packajax.js"></script>
-
 <script type="text/javascript">
   var infoVm;
   var backbar;
@@ -105,14 +97,10 @@
   apiready = function () {
     var itemData = api.pageParam;//页面提交过来的参数
     var shopUserId = $api.getStorage("userid")
-
     auiDialog_ = new auiDialog();
-
-
     var getPageData = function () {
       infoVm.goodsData = {}
       infoVm.orderData = itemData.itemData.itemData
-      console.log (JSON.stringify(infoVm.orderData))
     }
 
     backbar = function () {
@@ -127,116 +115,113 @@
         DetailImg: []
       },
 
-
-
       methods: {
-
-                    //拒绝退货
-                    cancelOrder: function (data) {
-                    auiDialog_.prompt({
-                        title: "提示",
-                        text: '请输入拒绝原因',
-                        buttons: ['取消', '确定']
-                    }, function (ret) {
-                        if (ret.buttonIndex == 2) {
-                            if (data.refuseToReturn) {
-                                var param = 'MODE=2' + '&SHOP_CART_ID=' + data.SHOP_CART_ID +
-                                    '&BACK_REASON_REFUSE=' + ret.text;
-                                _getHttpsData('/order/confirmBackGoods', param,
-                                    function (ret) {
-                                        if (ret.code == 0) {
-                                            api.sendEvent({
-                                                name: 'cancelOrder_list_status',
-                                                extra: {
-                                                    orderStatus: true,
-                                                }
-                                            });
-                                            api.toast({msg: ret.msg,duration : 2000,location : 'middle'});
-                                            setTimeout(function(){
-                                              backbar();
-                                            }, 2000);
-                                            orderStatus = ''
-                                        }
-                                    },
-                                    function (err) { }
-                                );
-                            }
+        //拒绝退货
+        cancelOrder: function (data) {
+          auiDialog_.prompt({
+            title: "提示",
+            text: '请输入拒绝原因',
+            buttons: ['取消', '确定']
+          }, function (ret) {
+            if (ret.buttonIndex == 2) {
+              if (data.refuseToReturn) {
+                var param = 'MODE=2' + '&SHOP_CART_ID=' + data.SHOP_CART_ID +
+                  '&BACK_REASON_REFUSE=' + ret.text;
+                _getHttpsData('/order/confirmBackGoods', param,
+                  function (ret) {
+                    if (ret.code == 0) {
+                      api.sendEvent({
+                        name: 'cancelOrder_list_status',
+                        extra: {
+                          orderStatus: true,
                         }
-                    })
-                },
+                      });
+                      api.toast({ msg: ret.msg, duration: 2000, location: 'middle' });
+                      setTimeout(function () {
+                        backbar();
+                      }, 2000);
+                      orderStatus = ''
+                    }
+                  },
+                  function (err) { }
+                );
+              }
+            }
+          })
+        },
 
-                //同意退货
-                confirmSend: function (data) {
-                    api.confirm({
-                        title: '提示',
-                        msg: '是否确定同意退货？',
-                        buttons: ['确定', '取消']
-                    }, function (ret, err) {
-                        var index = ret.buttonIndex;
-                        if (index == 1) {
-                            if (data.agreeToReturn) {
-                                var param = 'MODE=0' + '&SHOP_CART_ID=' + data.SHOP_CART_ID;
-                                _getHttpsData('/order/confirmBackGoods', param,
-                                    function (ret) {
-                                        if (ret.code == 0) {
-                                            api.sendEvent({
-                                                name: 'cancelOrder_list_status',
-                                                extra: {
-                                                    orderStatus: true,
-                                                }
-                                            });
-                                            api.toast({msg: ret.msg,duration : 2000,location : 'middle'});
-                                            setTimeout(function(){
-                                              backbar();
-                                            }, 2000);
-                                            orderStatus = ''
-                                        }
-                                    },
-                                    function (err) { }
-                                );
-                            }
-                        } else { }
-                    })
-                },
-                //确认退货
-                achieve: function (data) {
-                    api.confirm({
-                        title: '提示',
-                        msg: '是否确认退货？',
-                        buttons: ['确定', '取消']
-                    }, function (ret, err) {
-                        var index = ret.buttonIndex;
-                        if (index == 1) {
-                            if (data.confirmToReturn) {
-                                    var param = 'MODE=1' + '&SHOP_CART_ID=' + data.SHOP_CART_ID;
-                                    _getHttpsData('/order/confirmBackGoods', param,
-                                        function (ret) {
-                                            if (ret.code == 0) {
-                                                api.sendEvent({
-                                                    name: 'cancelOrder_list_status',
-                                                    extra: {
-                                                        orderStatus: true,
-                                                    }
-                                                });
-                                                api.toast({msg: ret.msg,duration : 2000,location : 'middle'});
-                                                setTimeout(function(){
-                                                  backbar();
-                                                }, 2000);
-                                                orderStatus = ''
-                                            }
-                                        },
-                                        function (err) { }
-                                    );
-                            }
+        //同意退货
+        confirmSend: function (data) {
+          api.confirm({
+            title: '提示',
+            msg: '是否确定同意退货？',
+            buttons: ['确定', '取消']
+          }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+              if (data.agreeToReturn) {
+                var param = 'MODE=0' + '&SHOP_CART_ID=' + data.SHOP_CART_ID;
+                _getHttpsData('/order/confirmBackGoods', param,
+                  function (ret) {
+                    if (ret.code == 0) {
+                      api.sendEvent({
+                        name: 'cancelOrder_list_status',
+                        extra: {
+                          orderStatus: true,
                         }
-                    })
-                },
+                      });
+                      api.toast({ msg: ret.msg, duration: 2000, location: 'middle' });
+                      setTimeout(function () {
+                        backbar();
+                      }, 2000);
+                      orderStatus = ''
+                    }
+                  },
+                  function (err) { }
+                );
+              }
+            } else { }
+          })
+        },
+        //确认退货
+        achieve: function (data) {
+          api.confirm({
+            title: '提示',
+            msg: '是否确认退货？',
+            buttons: ['确定', '取消']
+          }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index == 1) {
+              if (data.confirmToReturn) {
+                var param = 'MODE=1' + '&SHOP_CART_ID=' + data.SHOP_CART_ID;
+                _getHttpsData('/order/confirmBackGoods', param,
+                  function (ret) {
+                    if (ret.code == 0) {
+                      api.sendEvent({
+                        name: 'cancelOrder_list_status',
+                        extra: {
+                          orderStatus: true,
+                        }
+                      });
+                      api.toast({ msg: ret.msg, duration: 2000, location: 'middle' });
+                      setTimeout(function () {
+                        backbar();
+                      }, 2000);
+                      orderStatus = ''
+                    }
+                  },
+                  function (err) { }
+                );
+              }
+            }
+          })
+        },
 
-        getDetailImg : function() { //获取退货截图
+        getDetailImg: function () { //获取退货截图
           var param = 'clientId=' + this.orderData.SHOP_CART_ID + '&userType=6&type=shop_after_sale&queryType=order';
           _getHttpsData("/member/getPhoto", param,
             function (ret) {
-              this.DetailImg = ret.pic.forEach( function(element,index) {
+              this.DetailImg = ret.pic.forEach(function (element, index) {
                 infoVm.DetailImg.push(element.pic)
               });
             },
@@ -247,24 +232,22 @@
         },
 
 
-        previewImg : function(position, imgList) {//图片预览
-						var imgListTemp =[];//详情图
-						for(var index in imgList){
-							imgListTemp.push(imgList[index]);
-						}
-						api.openWin({
-							name : 'previewpicture_win',
-							url : 'widget://html/previewpicture/previewpicture_win.html',
-							pageParam : {
-								position : position,
-								imgList : imgListTemp
-							},
-							slidBackEnabled : false,
-							delay : 300
-						});
-          },
-
-
+        previewImg: function (position, imgList) {//图片预览
+          var imgListTemp = [];//详情图
+          for (var index in imgList) {
+            imgListTemp.push(imgList[index]);
+          }
+          api.openWin({
+            name: 'previewpicture_win',
+            url: 'widget://html/previewpicture/previewpicture_win.html',
+            pageParam: {
+              position: position,
+              imgList: imgListTemp
+            },
+            slidBackEnabled: false,
+            delay: 300
+          });
+        },
       },
       mounted: function () {
       },
@@ -274,5 +257,4 @@
     infoVm.getDetailImg()
   }
 </script>
-
 </html>

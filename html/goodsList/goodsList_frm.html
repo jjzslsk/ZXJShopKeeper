@@ -13,202 +13,35 @@
     <link rel="stylesheet" type="text/css" href="../../css/goodsList/goodsList.css" />
     <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" />
     <style>
-        .shop-list-icom {
-            position: absolute;
-            right: 12px;
-            bottom: 4px;
-            /* width: 1rem;
-            height: 1rem;
-            background: red; */
-            z-index: 2;
-            }
-            .goodsStatus {
-                color: #2FC588;
-            }
-            .goodsStatus1 {
-                color: red;
-            }
-            .mescroll{
-                position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                height: auto;
-                width: 70%;
-            }
-            .item-data-null {
-            text-align: center;
-            padding: .4rem 0;
-            font-size: 0.6rem;
-            }
-
+        .shop-list-icom {position: absolute; right: 12px; bottom: 4px; z-index: 2; } 
+        .goodsStatus {color: #2FC588; } 
+        .goodsStatus1 {color: red; } 
+        .mescroll{position: fixed; top: 0; right: 0; bottom: 0; height: auto; width: 70%; } 
+        .item-data-null {text-align: center; padding: .4rem 0; font-size: 0.6rem; }
             /* -------- */
-            body {
-    /* background-color: rgb(255, 32, 32); */
-    box-sizing: border-box;
-    overflow: hidden;
-    height: 100vh;
-}
-
-.box-wrap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    /* background: #259B24; */
-}
-ul,li{ padding:0;margin:0;list-style:none}
-.main {
-    border: 0px solid black;
-    position: relative;
-    box-sizing: border-box;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    flex-direction: row;
-    align-content: flex-start;
-    flex: 1 1 0%;
-    -webkit-box-flex: 1;
-    background-color: rgb(242, 242, 242);
-    overflow: hidden;
-}
-.classify-list {
-    text-align: center;
-    border: 0px solid black;
-    position: relative;
-    box-sizing: border-box;
-    width: 25%;
-    overflow: auto;
-    height: 100vh;
-}
-.goods-list {
-    border: 0px solid black;
-    position: relative;
-    box-sizing: border-box;
-    overflow: auto;
-    width: 75%;
-    height: 100vh;
-}
-.classify-list-li {
-    line-height: 2rem;
-    height: 2rem;
-}
-.goods-list-li {
-    height: 2rem;
-    border:1px solid red;
-}
-
-.classify-item-act {
-    color: #259B24;
-    position: relative;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: .6rem;
-    font-weight: normal;
-}
-.classify-item-act .sel-line {
-    top: 25%;
-    width: 5px;
-    height: 20px;
-    background-color: #259b24;
-    position: absolute;
-    margin-top: 0;
-    left: 0;
-}
-.classify-item {
-    line-height: 2rem;
-    height: 2rem;
-    box-sizing: border-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: .6rem;
-    font-weight: normal;
-}
-.goods-title {
-    font-size: 10px;
-
-}
-.goods-name {
-    text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;
-    width: 100%;
-    font-size: .6rem;
-    font-weight: normal;
-}
-.goods-title-box {
-}
-.goods-date {
-    font-size: .6rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-    padding-right: 4px;
-}
-/* --------- */
-.goods-list .aui-list-item {
-    padding-left: 0;
-}
-.goods-list .aui-list-item-media {
-    padding-right: 0;
-    width: 3rem;
-    justify-content: center;
-}
-.goods-list .aui-list-item-media img{
-    width:60px; 
-}
-.goods-list-content {
-    font-size: 0.6rem;
-}
-.goods-list .aui-list-item-inner {
-    padding: 0 2px 0 2px;
-}
-.goods-list ul {
-    font-size: 0.6rem;
-}
-.data-status {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.aui-list .aui-list-item-title {
-width: 100%;
-}
-
+        body {box-sizing: border-box; overflow: hidden; height: 100vh; } 
+        .box-wrap {position: fixed; top: 0; left: 0; width: 100%; } ul,li{ padding:0;margin:0;list-style:none} .main {border: 0px solid black; position: relative; box-sizing: border-box; display: flex; -webkit-box-orient: horizontal; flex-direction: row; align-content: flex-start; flex: 1 1 0%; -webkit-box-flex: 1; background-color: rgb(242, 242, 242); overflow: hidden; } 
+        .classify-list {text-align: center; border: 0px solid black; position: relative; box-sizing: border-box; width: 25%; overflow: auto; height: 100vh; } 
+        .goods-list {border: 0px solid black; position: relative; box-sizing: border-box; overflow: auto; width: 75%; height: 100vh; } 
+        .classify-list-li {line-height: 2rem; height: 2rem; } 
+        .goods-list-li {height: 2rem; border:1px solid red; } 
+        .classify-item-act {color: #259B24; position: relative; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .6rem; font-weight: normal; } 
+        .classify-item-act .sel-line {top: 25%; width: 5px; height: 20px; background-color: #259b24; position: absolute; margin-top: 0; left: 0; } 
+        .classify-item {line-height: 2rem; height: 2rem; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .6rem; font-weight: normal; } 
+        .goods-title {font-size: 10px; } 
+        .goods-name {text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical; width: 100%; font-size: .6rem; font-weight: normal; } 
+        .goods-date {font-size: .6rem; display: flex; justify-content: center; align-items: center; z-index: 10; padding-right: 4px; } /* --------- */ .goods-list .aui-list-item {padding-left: 0; } 
+        .goods-list .aui-list-item-media {padding-right: 0; width: 3rem; justify-content: center; } 
+        .goods-list .aui-list-item-media img{width:60px; } 
+        .goods-list-content {font-size: 0.6rem; } 
+        .goods-list .aui-list-item-inner {padding: 0 2px 0 2px; } 
+        .goods-list ul {font-size: 0.6rem; } 
+        .data-status {display: flex; justify-content: space-between; align-items: center; } 
+        .aui-list .aui-list-item-title {width: 100%; }
     </style>
 </head>
 <body>
     <div id="info_id" class="main" id="tab1-con">
-    <!-- <template>
-            <div class="aui-content aui-margin-b-15">
-                <ul class="aui-list aui-media-list">
-                    <li class="aui-list-item aui-list-item-middle" v-for='(item,index) in goodsList' @click='goodsDetail(item)'>
-                        <i @click="shadeIcon(item,index)" class="aui-iconfont aui-icon-more shop-list-icom"></i>
-                        <div class="aui-media-list-item-inner">
-                            <div class="aui-list-item-media" style="width: 3rem;">
-                                <img :src="item.itemSpec[0][0].imgUrl" class="aui-list-img-sm">
-                            </div>
-                            <div class="aui-list-item-inner aui-list-item-arrow">
-                                <div class="aui-list-item-text">
-                                    <div class="aui-list-item-title aui-font-size-12">
-                                        <span class="goodsStatus" v-if="item.itemStatus == 2">(已上架)</span>
-                                        <span class="goodsStatus1" v-if="item.itemStatus == 1">(审核中)</span>
-                                        <span class=""  v-if="item.itemStatus == 0">(未上架)</span>
-                                        <span class="goodsStatus1"  v-if="item.itemStatus == 3">(审核不通过)</span>
-                                        {{item.itemName}}
-                                        </div>
-                                    <div class="aui-list-item-right">{{item.lastEditDate}}</div>
-                                </div>
-                                <div class="aui-list-item-text">
-                                    <span class="goodsInfo">价格：{{item.itemPrice}}</span><span class="goodsInfo">库存：{{item.upNumber}}</span><span class="goodsInfo">单位：{{item.itemUnit}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-    </template> -->
     <ul class="classify-list mescroll-touch">
             <li class="classify-list-li" v-for='(classIfy,index) in ClassIfyList' @click='clickIfy(classIfy)'>
                 <div class="classify-item-choose" v-if='classIfy.itemClassId==curFirstClass.itemClassId'>
@@ -222,21 +55,13 @@ width: 100%;
                 </div>
             </li>
         </ul>
-        <!-- <ul class="goods-list">
-            <li class="goods-list-li" v-for='(item,index) in goodsList' @click='goodsDetail(item)'>
-                商品1
-            </li>
-
-        </ul> -->
         <div id="mescroll" class="mescroll goods-list">
             <p v-if ='showGoodsList' class="downwarp-tip">加载中..</p>
             <ul v-else class="aui-list aui-media-list">
                 <li class="aui-list-item aui-list-item-middle" v-for='(item,index) in goodsList' @click='goodsDetail(item)'>
-                    <!-- <i @click="shadeIcon(item,index)" class="aui-iconfont aui-icon-more shop-list-icom"></i> -->
                     <div class="aui-media-list-item-inner">
                         <div class="aui-list-item-media">
                             <img :src="item.itemSpec[0][0].imgUrl" class="aui-list-img-sm">
-                            <!-- <img src="../../image/data.jpg" class="aui-list-img-sm"> -->
                         </div>
                         <div class="aui-list-item-inner">
                             <div class="aui-list-item-text goods-title-box">
@@ -316,13 +141,6 @@ width: 100%;
                                 }
                             }
                             mescroll.endSuccess();
-                            // var shopItemList = JSON.parse(JSON.stringify(infoVm.goodsData.itemSpec))
-                            //     shopItemList.forEach(function (item,index) {
-                            //     const element = shopItemList[index][index];
-                            //     infoVm.itemSpecData.push(element);
-                            //     });
-                            // infoVm.goodsData.itemSpec = infoVm.itemSpecData
-                            // console.log (JSON.stringify(infoVm.goodsData.itemSpec))
 						}else{
 						}
 					},
@@ -371,14 +189,14 @@ width: 100%;
 
       },
       watch: {
-                goodsList(val,oldval){
-                    if(val){
-                        infoVm.showGoodsList = false
-                    }else{
-                        infoVm.showGoodsList = true
-                    }
-                    }
-            },
+        goodsList(val,oldval){
+            if(val){
+                infoVm.showGoodsList = false
+            }else{
+                infoVm.showGoodsList = true
+            }
+            }
+        },
       methods: {
         goodsDetail: function (e){
         var goodsInfo = JSON.stringify(e)
@@ -396,17 +214,11 @@ width: 100%;
     },
         shadeClick : function(item,index){
         this.currentIndex=null
-        // alert ('shadeClick'+JSON.stringify (item))
-        // alert ('shadeClick'+JSON.stringify (index))
     },
     shadeIcon: function(item,index) {
         this.currentIndex = index
-        // alert (this.currentIndex)
-        // alert (this.isShade)
     },
     butClick: function(item,index) {
-        // alert ('butClick'+JSON.stringify (item))
-        // alert ('butClick'+JSON.stringify (index))
         this.currentIndex=null
       },
 
@@ -442,13 +254,6 @@ width: 100%;
                                 }
                             }
                             mescroll.endSuccess();
-                            // var shopItemList = JSON.parse(JSON.stringify(infoVm.goodsData.itemSpec))
-                            //     shopItemList.forEach(function (item,index) {
-                            //     const element = shopItemList[index][index];
-                            //     infoVm.itemSpecData.push(element);
-                            //     });
-                                // infoVm.goodsData.itemSpec = infoVm.itemSpecData
-                                // console.log (JSON.stringify(infoVm.goodsData.itemSpec))
                         }else{
                         }
                     },

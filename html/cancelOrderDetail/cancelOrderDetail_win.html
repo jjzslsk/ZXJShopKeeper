@@ -10,7 +10,6 @@
 	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
 	<style>
-		body {}
 	</style>
 </head>
 
@@ -39,27 +38,15 @@
 			/*0未申请，1申请中，2审核通过，3审核不通过*/
 			if(applyStatus==1){
 				$('#check_pro').text('审核中');
-				// $('#check_pro').addClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro2');
-				// $('#check_pro').removeClass('check-pro3');
 			}
 			else if(applyStatus==2){
 				$('#check_pro').text('已上架');
-				// $('#check_pro').addClass('check-pro2');
-				// $('#check_pro').removeClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro3');
 			}
 			else if(applyStatus==0){
 				$('#check_pro').text('已下架');
-				// $('#check_pro').addClass('check-pro3');
-				// $('#check_pro').removeClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro2');
 			}
 			else if(applyStatus==3){
 				$('#check_pro').text('审核不通过');
-				// $('#check_pro').addClass('check-pro3');
-				// $('#check_pro').removeClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro2');
 			}
 		}
 

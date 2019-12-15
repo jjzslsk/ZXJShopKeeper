@@ -13,523 +13,287 @@
     <link rel="stylesheet" type="text/css" href="../../css/aui/aui.css" />
 </head>
 <style>
-    body{
-        background: #f7f7f7;
-    }
-    .main {
-        color: black;
-        padding: 0 12px;
-    }
-    
-    .main .aui-card-list {
-        margin-bottom: .1rem !important;
-        margin-top: .1rem !important;
-     }
-
-     .main .aui-grid .aui-grid-label {
-        margin-top: 0rem !important;
-     }
-
-     .main .aui-card-list-header main-title, .aui-card-list-footer {
-        min-height: 0rem !important;
-        padding: .2rem 0.75rem !important;
-     }
-     .transaction .aui-grid [class*=aui-col-]{
-        padding: .3rem 0 !important;
-    }
-    .main .aui-grid .box-item{
-        padding: .1rem 0 !important;
-    }
-    
-
-    #picture {
-        height: 6rem;
-        width: 100%;
-    }
-
-    .bottom-wrap {
-        overflow: hidden;
-        text-align: center;
-        width: 100%;
-        padding: 6px 0;
-        margin-bottom: 12px;
-    }
-
-    .bottom-wrap .text {
-        padding: 2px 0;
-        color: #888;
-    }
-
-    .box-item img {
-        width: 1.5rem !important;
-        height: 1.5rem !important;
-        line-height: 1.5rem !important;
-        display: inline-block;
-    }
-
-    .activity {
-        display: inline-block;
-        font-size: 0.7rem;
-    }
-
-    .box-item-activity {
-        display: flex !important;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .item-label-text {
-        font-size: 0.6rem !important;
-        color: #757575;
-    }
-    .order-msg {
-        position: absolute;
-        right: .5rem;
-        top: .5rem;
-        color: #2fc588;
-        padding: 2px 12px;
-        border-radius: 12px;
-        border: 1px solid #2fc588;
-        font-size: 0.6rem;
-    }
-    .msg-badge {
-        display: inline-block;
-        width: auto;
-        text-align: center;
-        min-width: 0.8rem;
-        height: 0.8rem;
-        line-height: 0.8rem;
-        padding: 0 0.2rem;
-        font-size: 0.6rem;
-        color: #ffffff;
-        background-color: #ff2600;
-        border-radius: 0.4rem;
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        z-index: 99;
-    }
-    .paizhao-badge {
-        display: inline-block;
-        width: auto;
-        text-align: center;
-        min-width: 0.8rem;
-        height: 0.8rem;
-        line-height: 0.8rem;
-        padding: 0 0.2rem;
-        font-size: 0.6rem;
-        color: #ffffff;
-        background-color: #ff2600;
-        border-radius: 0.4rem;
-        position: absolute;
-        top: -.1rem;
-        right: calc(50% - 1.2rem);
-        z-index: 99;
-    }
-            .trans-wrap-item {
-            border-radius: 10px;
-            -moz-box-shadow: 0px 2px 6px -2px #333333;
-            -webkit-box-shadow: 0px 2px 6px -2px #333333;
-            box-shadow: 0px 2px 6px -2px #333333;
-        }
-
-        .transaction {
-            margin-top: .5rem;
-        }
-
-        .transaction .aui-card-list {
-            margin: 0 !important;
-        }
-
-        .trans-wrap {
-            position: absolute;
-            top: 17vh;
-            margin: 0 .6rem;
-        }
-
-        .trans-wrap-box {
-            border-radius: 10px 10px 0 0;
-        }
-
-        .trans-wrap-row {
-            border-radius: 10px;
-            /* margin-top: .3rem; */
-        }
-
-        .trans-shadow {
-            -moz-box-shadow: 0px 2px 6px -2px #333333;
-            -webkit-box-shadow: 0px 2px 6px -2px #333333;
-            box-shadow: 0px 2px 6px -2px #333333;
-        }
-
-        .trans-contents {
-            color: #252525;
-            font-size: 18px;
-        }
-        .label-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .label-content .refresh {
-            width: .8rem;
-            margin-left: 5px;
-        }
-        .trans-nums {
-            color: #F96969;
-            font-size: 18px !important;
-        }
-
-        .trans-content {
-            color: #666666;
-        }
-
-        .box-item .trans-num {
-            color: #F96969;
-        }
-        .tip-hide{display:none;}
-        .paizhao-hide{display: none;}
-
-        .line-switch {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			position: absolute;
-			right: 0;
-			z-index: 99
-		}
-
-		.line-switch span {
-			color: #757575;
-			font-size: 0.8em;
-		}
-
-		.line-switch img {
-			height: 1rem;
-			margin: 0 3px;
-		}
-        .photo-box {
-            position: relative;
-        }
-        .photo-box .line-switch {
-            padding-right: 0.75rem !important;
-        }
-        .main-title {
-            color: #666;
-            font-size: 0.7rem; 
-            padding: .3rem 0.75rem;
-            min-height: 0rem;
-        }
-        /* .main-title :after {
-            width: 100%;
-            height: 1px;
-            background-color: #dddddd;
-            display: block;
-            content: '';
-            position: absolute;
-            top: auto;
-            right: auto;
-            bottom: 0;
-            left: 0;
-            -webkit-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
-        } */
-
-        .aui-content .item-label-text {
-            height: .7rem;
-            line-height: .7rem;
-        }
-        [v-cloak] {
-        display: none;
-        }
-        section .aui-row {
-            overflow: visible;
-        }
-</style>
+    body {background: #f7f7f7; } 
+    .main {color: black; padding: 0 12px; } 
+    .main .aui-card-list {margin-bottom: .1rem !important; margin-top: .1rem !important; } 
+    .main .aui-grid .aui-grid-label {margin-top: 0rem !important; } 
+    .main .aui-card-list-header main-title, .aui-card-list-footer {min-height: 0rem !important; padding: .2rem 0.75rem !important; } 
+    .transaction .aui-grid [class*=aui-col-] {padding: .3rem 0 !important; } 
+    .main .aui-grid .box-item {padding: .1rem 0 !important; } #picture {height: 6rem; width: 100%; } 
+    .bottom-wrap {overflow: hidden; text-align: center; width: 100%; padding: 6px 0; margin-bottom: 12px; } 
+    .bottom-wrap .text {padding: 2px 0; color: #888; } 
+    .box-item img {width: 1.5rem !important; height: 1.5rem !important; line-height: 1.5rem !important; display: inline-block; } 
+    .activity {display: inline-block; font-size: 0.7rem; } 
+    .box-item-activity {display: flex !important; justify-content: center; align-items: center; } 
+    .item-label-text {font-size: 0.6rem !important; color: #757575; } 
+    .order-msg {position: absolute; right: .5rem; top: .5rem; color: #2fc588; padding: 2px 12px; border-radius: 12px; border: 1px solid #2fc588; font-size: 0.6rem; } 
+    .msg-badge {display: inline-block; width: auto; text-align: center; min-width: 0.8rem; height: 0.8rem; line-height: 0.8rem; padding: 0 0.2rem; font-size: 0.6rem; color: #ffffff; background-color: #ff2600; border-radius: 0.4rem; position: absolute; top: 0.5rem; right: 0.5rem; z-index: 99; } 
+    .paizhao-badge {display: inline-block; width: auto; text-align: center; min-width: 0.8rem; height: 0.8rem; line-height: 0.8rem; padding: 0 0.2rem; font-size: 0.6rem; color: #ffffff; background-color: #ff2600; border-radius: 0.4rem; position: absolute; top: -.1rem; right: calc(50% - 1.2rem); z-index: 99; } 
+    .trans-wrap-item {border-radius: 10px; -moz-box-shadow: 0px 2px 6px -2px #333333; -webkit-box-shadow: 0px 2px 6px -2px #333333; box-shadow: 0px 2px 6px -2px #333333; } 
+    .transaction {margin-top: .5rem; } 
+    .transaction .aui-card-list {margin: 0 !important; } 
+    .trans-wrap {position: absolute; top: 17vh; margin: 0 .6rem; } 
+    .trans-wrap-box {border-radius: 10px 10px 0 0; } 
+    .trans-wrap-row {border-radius: 10px; } 
+    .trans-shadow {-moz-box-shadow: 0px 2px 6px -2px #333333; -webkit-box-shadow: 0px 2px 6px -2px #333333; box-shadow: 0px 2px 6px -2px #333333; } 
+    .trans-contents {color: #252525; font-size: 18px; } 
+    .label-content {display: flex; justify-content: center; align-items: center; } 
+    .label-content .refresh {width: .8rem; margin-left: 5px; } 
+    .trans-nums {color: #F96969; font-size: 18px !important; } 
+    .trans-content {color: #666666; } 
+    .box-item .trans-num {color: #F96969; } 
+    .tip-hide {display: none; } 
+    .paizhao-hide {display: none; } 
+    .line-switch {display: flex; justify-content: center; align-items: center; position: absolute; right: 0; z-index: 99 } 
+    .line-switch span {color: #757575; font-size: 0.8em; } 
+    .line-switch img {height: 1rem; margin: 0 3px; } 
+    .photo-box {position: relative; } 
+    .photo-box .line-switch {padding-right: 0.75rem !important; } 
+    .main-title {color: #666; font-size: 0.7rem; padding: .3rem 0.75rem; min-height: 0rem; } 
+.aui-content .item-label-text {height: .7rem; line-height: .7rem; } [v-cloak] {display: none; } section .aui-row {overflow: visible; } </style>
 </head>
 
 <body>
     <div id="picture"></div>
     <div id="info_id" v-cloak>
         <template>
-    <div class="main">
-        <!-- <button onclick="resToken()"></button> -->
-            <!-- <section class="aui-content trans-wrap-box transaction">
-                    <div class="aui-card-list">
-                        <section class="aui-grid">
-                            <div class="aui-row">
-                                <div class="aui-col-xs-4">
-                                    <div  class="label-content"><span class="trans-contents">月交易额</span>
-                                        <img v-if='refresh' @click='refreshData' class="refresh" src="../../image/gif/refresh.png">
-                                        <img v-else @click='refreshData' class="refresh" src="../../image/gif/loading.gif">
-                                    </div>
-                                    <div v-if="tipStutas.totalAmount == 'undefined' || tipStutas.totalAmount == null || tipStutas.totalAmount.length <= 0" class="aui-grid-label trans-nums">0</div>
-                                    <div v-else class="aui-grid-label trans-nums">{{tipStutas.totalAmount}}</div>
-                                </div>
-                                <div class="aui-col-xs-4 box-item">
-                                        
-                                </div>
-                                <div class="aui-col-xs-4 box-item" onclick="msgClick()">
-                                        <span id="msg_tip" class="msg-badge tip-hide">1</span>
-                                        <span class="order-msg">消息</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </section> -->
+            <div class="main">
                 <section class="aui-content trans-wrap-row">
                     <div class="aui-card-list trans-wrap-row">
                         <section class="aui-grid trans-wrap-row">
                             <div class="aui-row trans-wrap-row trans-shadow">
                                 <div class="aui-col-xs-3 box-item">
                                     <span class="trans-content">月交易额</span>
-                                    <div v-if="tipStutas.totalAmount == 'undefined' || tipStutas.totalAmount == null || tipStutas.totalAmount.length <= 0" class="aui-grid-label trans-num">0.00</div>
+                                    <div v-if="tipStutas.totalAmount == 'undefined' || tipStutas.totalAmount == null || tipStutas.totalAmount.length <= 0"
+                                        class="aui-grid-label trans-num">0.00</div>
                                     <div v-else class="aui-grid-label trans-num">{{tipStutas.totalAmount}}</div>
                                 </div>
                                 <div class="aui-col-xs-3 box-item">
                                     <span class="trans-content">月访客</span>
-                                    <div v-if="tipStutas.visitNum == 'undefined' || tipStutas.visitNum == null || tipStutas.visitNum.length <= 0" class="aui-grid-label trans-num">0</div>
+                                    <div v-if="tipStutas.visitNum == 'undefined' || tipStutas.visitNum == null || tipStutas.visitNum.length <= 0"
+                                        class="aui-grid-label trans-num">0</div>
                                     <div v-else class="aui-grid-label trans-num">{{tipStutas.visitNum}}</div>
                                 </div>
                                 <div class="aui-col-xs-3 box-item">
                                     <span class="trans-content">月成交笔数</span>
-                                    <div v-if="tipStutas.totalNum == 'undefined' || tipStutas.totalNum == null || tipStutas.totalNum.length <= 0" class="aui-grid-label trans-num">0</div>
+                                    <div v-if="tipStutas.totalNum == 'undefined' || tipStutas.totalNum == null || tipStutas.totalNum.length <= 0"
+                                        class="aui-grid-label trans-num">0</div>
                                     <div v-else class="aui-grid-label trans-num">{{tipStutas.totalNum}}</div>
                                 </div>
-                                <!-- <div class="aui-col-xs-3 box-item">
-                                    <span class="trans-content">月成交金额</span>
-                                    <div v-if="tipStutas.totalAmount == 'undefined' || tipStutas.totalAmount == null || tipStutas.totalAmount.length <= 0" class="aui-grid-label trans-num">0.00</div>
-                                </div> -->
                                 <div class="aui-col-xs-3 box-item" onclick="">
                                     <span class="trans-content">我的余额</span>
-                                    <div v-if="tipStutas.financeDues == 'undefined' || tipStutas.financeDues == null || tipStutas.financeDues.length <= 0" class="aui-grid-label trans-num">0</div>
+                                    <div v-if="tipStutas.financeDues == 'undefined' || tipStutas.financeDues == null || tipStutas.financeDues.length <= 0"
+                                        class="aui-grid-label trans-num">0</div>
                                     <div v-else class="aui-grid-label trans-num">{{tipStutas.financeDues}}</div>
                                 </div>
                             </div>
                         </section>
                     </div>
                 </section>
-        <section class="aui-content">
-            <div class="aui-card-list">
-                <div class="aui-card-list-header main-title">
-                    商品
-                </div>
-                <section class="aui-grid">
-                    <div class="aui-row">
-                        <div class="aui-col-5 box-item" onclick="goodsClassify()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/goodsClass.png" alt=""><div class="aui-grid-label item-label-text">商品分类</div>
+                <section class="aui-content">
+                    <div class="aui-card-list">
+                        <div class="aui-card-list-header main-title">
+                            商品
                         </div>
-                        <div class="aui-col-5 box-item" onclick="goodsList()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/goods.png" alt="">
-                            <div class="aui-grid-label item-label-text">商品管理</div>
-                        </div>
-                        <div class="aui-col-5 box-item" onclick="addGoods()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/addGoods.png" alt="">
-                            <div class="aui-grid-label item-label-text">商品添加</div>
-                        </div>
-                        <div class="aui-col-5 box-item" onclick="outGoods(0,'下架管理')">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/goods1.png" alt="">
-                            <div class="aui-grid-label item-label-text">下架管理</div>
-                        </div>
-                        <div class="aui-col-5 box-item" onclick="outGoods(1,'审核中')">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/audit.png" alt="">
-                            <div class="aui-grid-label item-label-text">审核中</div>
-                        </div>
-                    </div>
-                    <div class="aui-row">
-                        <div class="aui-col-5 box-item" onclick="outGoods(3,'审核不通过')">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/auditNo.png" alt="">
-                            <div class="aui-grid-label item-label-text">审核不通过</div>
-                        </div>
-                        <div class="aui-col-5 box-item" onclick="delivery()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/peisong.png" alt="">
-                            <div class="aaui-grid-label item-label-text">配送说明</div>
-                        </div>
-                        <div class="aui-col-5 box-item" onclick="after()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/shouhou.png" alt="">
-                            <div class="aaui-grid-label item-label-text">售后说明</div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </section>
-        <section class="aui-content">
-            <div class="aui-card-list">
-                <div class="aui-card-list-header main-title">
-                    <span>普通订单</span>
-                    <!-- <span class="msg-badge">2</span>
-                    <span class="order-msg" onclick="msgClick()">消息</span> -->
-                </div>
-                <section class="aui-grid">
-                    <div class="aui-row">
-                        <div class="aui-col-5 box-item" onclick="myOrder()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/noPay.png" alt="">
-                            <!-- <div class="aui-grid-label item-label-text">未支付订单</div> -->
-                            <div class="aui-grid-label item-label-text">订单列表</div>
-                        </div>
-                        <div class="aui-col-5 box-item" onclick="cancelOrderList()">
-                            <span class="paizhao-badge" v-if='tipStutas.TUIHUANHUO && tipStutas.TUIHUANHUO != 0'>{{tipStutas.TUIHUANHUO}}</span>
-                            <span v-else></span>
-                            <img class="aui-iconfont aui-icon-home" src="../../image/Returngoods.png" alt="">
-                            <div class="aui-grid-label item-label-text">退货处理</div>
-                        </div>
-                        <div class="aui-col-5 box-item" onclick="payOrder()">
-                            <span class="paizhao-badge" v-if='tipStutas.YIZHIFU && tipStutas.YIZHIFU != 0'>{{tipStutas.YIZHIFU}}</span>
-                            <span v-else></span>
-                            <img class="aui-iconfont aui-icon-home" src="../../image/pay.png" alt="">
-                            <div class="aui-grid-label item-label-text">已付款</div>
-                        </div>
-                        <div class="aui-col-5 box-item" onclick="shipmentsOrder()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/order.png" alt="">
-                            <div class="aui-grid-label item-label-text">已发货</div>
-                        </div>
-                        <div class="aui-col-5 box-item" onclick="receivingOrder()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/receivingOrder.png" alt="">
-                            <div class="aui-grid-label item-label-text">已收货</div>
-                        </div>
-                        <div class="aui-col-5 box-item" onclick="toEvaluate()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/evaluate.png" alt="">
-                            <div class="aui-grid-label item-label-text">评价管理</div>
-                        </div>
-                        <!-- <div class="aui-col-5 box-item" onclick="itemClick()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/payment.png" alt="">
-                            <div class="aui-grid-label item-label-text">售后订单</div>
-                        </div> -->
-                    </div>
-                    <!-- <div class="aui-row">
-                            <div class="aui-col-5 box-item" onclick="cameraOrder()">
-                                <span id="paizhao_tip" class="paizhao-badge paizhao-hide">1</span>
-                                <img class="aui-iconfont aui-icon-home" src="../../image/camera.png" alt="">
-                                </img>
-                                <div class="aui-grid-label item-label-text">拍照订单</div>
-                            </div>
-                        </div> -->
-                </section>
-            </div>
-        </section>
-        <section class="aui-content">
-                        <div class="aui-card-list">
-                            <div class="aui-card-list-header main-title photo-box">
-                                <span>拍照订单</span>
-                                <div class="line-switch horizontal" tapmode="hover" @click="lineStateClick()">
-                                    <span>关</span>
-                                    <img v-if="photoOrderFlag" src="../../image/icon/online.png" />
-                                    <img v-else src="../../image/icon/offline.png"  />
-                                    <span>开</span>
+                        <section class="aui-grid">
+                            <div class="aui-row">
+                                <div class="aui-col-5 box-item" onclick="goodsClassify()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/goodsClass.png" alt="">
+                                    <div class="aui-grid-label item-label-text">商品分类</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="goodsList()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/goods.png" alt="">
+                                    <div class="aui-grid-label item-label-text">商品管理</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="addGoods()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/addGoods.png" alt="">
+                                    <div class="aui-grid-label item-label-text">商品添加</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="outGoods(0,'下架管理')">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/goods1.png" alt="">
+                                    <div class="aui-grid-label item-label-text">下架管理</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="outGoods(1,'审核中')">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/audit.png" alt="">
+                                    <div class="aui-grid-label item-label-text">审核中</div>
                                 </div>
                             </div>
-                            <section class="aui-grid">
-                                <div class="aui-row">
-                                    <div class="aui-col-5 box-item" onclick="cameraOrder('','拍照订单列表')">
-                                        <!-- <span class="paizhao-badge">..</span> -->
-                                        <img class="aui-iconfont aui-icon-home" src="../../image/camera.png" alt="">
-                                        </img>
-                                        <div class="aui-grid-label item-label-text">所有订单</div>
-                                    </div>
-                                    <div class="aui-col-5 box-item" onclick="cameraOrder('0','未接单')">
-                                        <span class="paizhao-badge" v-if='tipStutas.PAIZHAO_0 && tipStutas.PAIZHAO_0 != 0'>{{tipStutas.PAIZHAO_0}}</span>
-                                        <span v-else></span>
-                                        <img class="aui-iconfont aui-icon-home" src="../../image/pzwjd.png" alt="">
-                                        </img>
-                                        <div class="aui-grid-label item-label-text">未接单</div>
-                                    </div>
-                                    <div class="aui-col-5 box-item" onclick="cameraOrder('1','已推送')">
-                                        <!-- <span class="paizhao-badge">..</span> -->
-                                        <img class="aui-iconfont aui-icon-home" src="../../image/pzyts.png" alt="">
-                                        </img>
-                                        <div class="aui-grid-label item-label-text">已推送</div>
-                                    </div>
-                                    <div class="aui-col-5 box-item" onclick="cameraOrder('2','待付款')">
-                                        <span class="paizhao-badge" v-if='tipStutas.PAIZHAO_2 && tipStutas.PAIZHAO_2 !=0'>{{tipStutas.PAIZHAO_2}}</span>
-                                        <span v-else></span>
-                                        <img class="aui-iconfont aui-icon-home" src="../../image/pzdfk.png" alt="">
-                                        </img>
-                                        <div class="aui-grid-label item-label-text">待付款</div>
-                                    </div>
-                                    <!-- <div class="aui-col-5 box-item" onclick="cameraOrder('3')">
-                                        <span class="paizhao-badge" v-if='tipStutas.PAIZHAO_3'>{{tipStutas.PAIZHAO_3}}</span>
-                                        <img class="aui-iconfont aui-icon-home" src="../../image/pzyfk.png" alt="">
-                                        </img>
-                                        <div class="aui-grid-label item-label-text">已付款</div>
-                                    </div> -->
-                                    <div class="aui-col-5 box-item" onclick="cameraOrder('4','客户取消')">
-                                        <span class="paizhao-badge" v-if='tipStutas.PAIZHAO_4 && tipStutas.PAIZHAO_4 !=0'>{{tipStutas.PAIZHAO_4}}</span>
-                                        <span v-else></span>
-                                        <img class="aui-iconfont aui-icon-home" src="../../image/pzkhqx.png" alt="">
-                                        </img>
-                                        <div class="aui-grid-label item-label-text">客户取消</div>
-                                    </div>
-                                    <div class="aui-col-5 box-item" onclick="cameraOrder('5','店主取消')">
-                                        <!-- <span class="paizhao-badge">..</span> -->
-                                        <img class="aui-iconfont aui-icon-home" src="../../image/pzdzqx.png" alt="">
-                                        </img>
-                                        <div class="aui-grid-label item-label-text">店主取消</div>
-                                    </div>
+                            <div class="aui-row">
+                                <div class="aui-col-5 box-item" onclick="outGoods(3,'审核不通过')">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/auditNo.png" alt="">
+                                    <div class="aui-grid-label item-label-text">审核不通过</div>
                                 </div>
-                            </section>
-                </div>
-            </section>
-        <section class="aui-content">
-            <div class="aui-card-list">
-                <div class="aui-card-list-header main-title">
-                    增值服务
-                </div>
-                <section class="aui-grid">
-                    <div class="aui-row">
-                        <div class="aui-col-5 box-item" onclick="mypromote()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/mypromote.png" alt="">
-                            <div class="aui-grid-label item-label-text">我要推广</div>
+                                <div class="aui-col-5 box-item" onclick="delivery()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/peisong.png" alt="">
+                                    <div class="aaui-grid-label item-label-text">配送说明</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="after()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/shouhou.png" alt="">
+                                    <div class="aaui-grid-label item-label-text">售后说明</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="aui-content">
+                    <div class="aui-card-list">
+                        <div class="aui-card-list-header main-title">
+                            <span>普通订单</span>
                         </div>
-                        <div class="aui-col-5 box-item" onclick="itemClick()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/Ranking1.png" alt="">
-                            <div class="aui-grid-label item-label-text">行业排行</div>
+                        <section class="aui-grid">
+                            <div class="aui-row">
+                                <div class="aui-col-5 box-item" onclick="myOrder()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/noPay.png" alt="">
+                                    <div class="aui-grid-label item-label-text">订单列表</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="cancelOrderList()">
+                                    <span class="paizhao-badge"
+                                        v-if='tipStutas.TUIHUANHUO && tipStutas.TUIHUANHUO != 0'>{{tipStutas.TUIHUANHUO}}</span>
+                                    <span v-else></span>
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/Returngoods.png" alt="">
+                                    <div class="aui-grid-label item-label-text">退货处理</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="payOrder()">
+                                    <span class="paizhao-badge"
+                                        v-if='tipStutas.YIZHIFU && tipStutas.YIZHIFU != 0'>{{tipStutas.YIZHIFU}}</span>
+                                    <span v-else></span>
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/pay.png" alt="">
+                                    <div class="aui-grid-label item-label-text">已付款</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="shipmentsOrder()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/order.png" alt="">
+                                    <div class="aui-grid-label item-label-text">已发货</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="receivingOrder()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/receivingOrder.png" alt="">
+                                    <div class="aui-grid-label item-label-text">已收货</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="toEvaluate()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/evaluate.png" alt="">
+                                    <div class="aui-grid-label item-label-text">评价管理</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="aui-content">
+                    <div class="aui-card-list">
+                        <div class="aui-card-list-header main-title photo-box">
+                            <span>拍照订单</span>
+                            <div class="line-switch horizontal" tapmode="hover" @click="lineStateClick()">
+                                <span>关</span>
+                                <img v-if="photoOrderFlag" src="../../image/icon/online.png" />
+                                <img v-else src="../../image/icon/offline.png" />
+                                <span>开</span>
+                            </div>
                         </div>
-                        <div class="aui-col-5 box-item" onclick="itemClick()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/data1.png" alt="">
-                            <div class="aui-grid-label item-label-text">运营数据</div>
+                        <section class="aui-grid">
+                            <div class="aui-row">
+                                <div class="aui-col-5 box-item" onclick="cameraOrder('','拍照订单列表')">
+                                    <!-- <span class="paizhao-badge">..</span> -->
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/camera.png" alt="">
+                                    </img>
+                                    <div class="aui-grid-label item-label-text">所有订单</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="cameraOrder('0','未接单')">
+                                    <span class="paizhao-badge"
+                                        v-if='tipStutas.PAIZHAO_0 && tipStutas.PAIZHAO_0 != 0'>{{tipStutas.PAIZHAO_0}}</span>
+                                    <span v-else></span>
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/pzwjd.png" alt="">
+                                    </img>
+                                    <div class="aui-grid-label item-label-text">未接单</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="cameraOrder('1','已推送')">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/pzyts.png" alt="">
+                                    </img>
+                                    <div class="aui-grid-label item-label-text">已推送</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="cameraOrder('2','待付款')">
+                                    <span class="paizhao-badge"
+                                        v-if='tipStutas.PAIZHAO_2 && tipStutas.PAIZHAO_2 !=0'>{{tipStutas.PAIZHAO_2}}</span>
+                                    <span v-else></span>
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/pzdfk.png" alt="">
+                                    </img>
+                                    <div class="aui-grid-label item-label-text">待付款</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="cameraOrder('4','客户取消')">
+                                    <span class="paizhao-badge"
+                                        v-if='tipStutas.PAIZHAO_4 && tipStutas.PAIZHAO_4 !=0'>{{tipStutas.PAIZHAO_4}}</span>
+                                    <span v-else></span>
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/pzkhqx.png" alt="">
+                                    </img>
+                                    <div class="aui-grid-label item-label-text">客户取消</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="cameraOrder('5','店主取消')">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/pzdzqx.png" alt="">
+                                    </img>
+                                    <div class="aui-grid-label item-label-text">店主取消</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="aui-content">
+                    <div class="aui-card-list">
+                        <div class="aui-card-list-header main-title">
+                            增值服务
                         </div>
-                        <div class="aui-col-5 box-item" onclick="itemClick()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/income1.png" alt="">
-                            <div class="aui-grid-label item-label-text">店铺营收</div>
+                        <section class="aui-grid">
+                            <div class="aui-row">
+                                <div class="aui-col-5 box-item" onclick="mypromote()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/mypromote.png" alt="">
+                                    <div class="aui-grid-label item-label-text">我要推广</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="itemClick()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/Ranking1.png" alt="">
+                                    <div class="aui-grid-label item-label-text">行业排行</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="itemClick()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/data1.png" alt="">
+                                    <div class="aui-grid-label item-label-text">运营数据</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="itemClick()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/income1.png" alt="">
+                                    <div class="aui-grid-label item-label-text">店铺营收</div>
+                                </div>
+                                <div class="aui-col-5 box-item" onclick="itemClick()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/Promotion1.png" alt="">
+                                    <div class="aui-grid-label item-label-text">促销管理</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="aui-content">
+                    <div class="aui-card-list">
+                        <div class="aui-card-list-header main-title">
+                            消息
                         </div>
-                        <div class="aui-col-5 box-item" onclick="itemClick()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/Promotion1.png" alt="">
-                            <div class="aui-grid-label item-label-text">促销管理</div>
-                        </div>
+                        <section class="aui-grid">
+                            <div class="aui-row">
+                                <div class="aui-col-xs-3 box-item" onclick="itemClick()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/msgs1.png" alt="">
+                                    <div class="aui-grid-label item-label-text">客户消息</div>
+                                </div>
+                                <div class="aui-col-xs-3 box-item" onclick="itemClick()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/transaction1.png" alt="">
+                                    <div class="aui-grid-label item-label-text">交易消息</div>
+                                </div>
+                                <div class="aui-col-xs-3 box-item" onclick="itemClick()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/refund1.png" alt="">
+                                    <div class="aui-grid-label item-label-text">退款消息</div>
+                                </div>
+                                <div class="aui-col-xs-3 box-item" onclick="itemClick()">
+                                    <img class="aui-iconfont aui-icon-home" src="../../image/sysMsg1.png" alt="">
+                                    <div class="aui-grid-label item-label-text">系统消息</div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </section>
             </div>
-        </section>
-        <section class="aui-content">
-            <div class="aui-card-list">
-                <div class="aui-card-list-header main-title">
-                    消息
-                </div>
-                <section class="aui-grid">
-                    <div class="aui-row">
-                        <div class="aui-col-xs-3 box-item" onclick="itemClick()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/msgs1.png" alt="">
-                            <div class="aui-grid-label item-label-text">客户消息</div>
-                        </div>
-                        <div class="aui-col-xs-3 box-item" onclick="itemClick()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/transaction1.png" alt="">
-                            <div class="aui-grid-label item-label-text">交易消息</div>
-                        </div>
-                        <div class="aui-col-xs-3 box-item" onclick="itemClick()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/refund1.png" alt="">
-                            <div class="aui-grid-label item-label-text">退款消息</div>
-                        </div>
-                        <div class="aui-col-xs-3 box-item" onclick="itemClick()">
-                            <img class="aui-iconfont aui-icon-home" src="../../image/sysMsg1.png" alt="">
-                            <div class="aui-grid-label item-label-text">系统消息</div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </section>
+        </template>
     </div>
-</template>
-</div>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/aui/aui_tab.js"></script>
@@ -543,16 +307,16 @@
     var UIScrollPicture;
     var msgClick;
     var resToken;
-	var msgShowTip;//右上角消息提示
+    var msgShowTip;//右上角消息提示
     var itemClick;
-    var create_ws,getWebSocketState,sendChat,openLocation,sendLocation,closeWebSocket;
-    var countTimeValCreatWs,countTimeValLocation;
+    var create_ws, getWebSocketState, sendChat, openLocation, sendLocation, closeWebSocket;
+    var countTimeValCreatWs, countTimeValLocation;
     var startPlayNotice;//播放收到信息通知声音
     var infoVm
     var shopUserId = $api.getStorage("userid")
     var shopOpenId = $api.getStorage("openId")
     var userId = $api.getStorage("userid");//用户id
-	var shopName = $api.getStorage("shopName");//用户id
+    var shopName = $api.getStorage("shopName");//用户id
     var shopId = $api.getStorage("shopId"); //
     var token = $api.getStorage("token");
     var getUserInfoHttps
@@ -566,8 +330,8 @@
         UIScrollPicture = api.require('UIScrollPicture');
         fnOpen()
         myOrder = function () {
-            _getUserInfoHttps(function(params) {
-                if(params){
+            _getUserInfoHttps(function (params) {
+                if (params) {
                     api.openWin(
                         {
                             name: 'myOrder_win',
@@ -582,11 +346,11 @@
                     );
                 }
             })
-            
+
         }
         cancelOrderList = function () {
-            _getUserInfoHttps(function(params) {
-                if(params){
+            _getUserInfoHttps(function (params) {
+                if (params) {
                     api.openWin(
                         {
                             name: 'cancelOrderList_win',
@@ -601,11 +365,11 @@
                     );
                 }
             })
-            
+
         }
         payOrder = function () {
-            _getUserInfoHttps(function(params) {
-                if(params){
+            _getUserInfoHttps(function (params) {
+                if (params) {
                     api.openWin(
                         {
                             name: 'payOrder_win',
@@ -620,11 +384,11 @@
                     );
                 }
             })
-            
+
         }
         shipmentsOrder = function () {
-            _getUserInfoHttps(function(params) {
-                if(params){
+            _getUserInfoHttps(function (params) {
+                if (params) {
                     api.openWin(
                         {
                             name: 'shipmentsOrder_win',
@@ -639,11 +403,11 @@
                     );
                 }
             })
-            
+
         }
         receivingOrder = function () {
-            _getUserInfoHttps(function(params) {
-                if(params){
+            _getUserInfoHttps(function (params) {
+                if (params) {
                     api.openWin(
                         {
                             name: 'receivingOrder_win',
@@ -658,11 +422,11 @@
                     );
                 }
             })
-            
+
         }
-        outGoods = function (itemStatus,title) {
-            _getUserInfoHttps(function(params) {
-                if(params){
+        outGoods = function (itemStatus, title) {
+            _getUserInfoHttps(function (params) {
+                if (params) {
                     api.openWin(
                         {
                             name: 'outGoods_win',
@@ -671,49 +435,49 @@
                             pageParam: {
                                 // state: 100,
                                 title: title,
-                                itemStatus:itemStatus
+                                itemStatus: itemStatus
                             },
                             delay: 300
                         }
                     );
                 }
             })
-            
+
         }
 
         delivery = function () {
-                api.openWin(
-                    {
-                        name: 'textEditor_win',
-                        url: 'widget://html/textEditor/textEditor_win.html',
-                        slidBackEnabled: true,
-                        allowEdit:true,
-                        pageParam: {
-                            title: '配送说明'
-                        },
-                        delay: 300
-                    }
-                );
-            }
+            api.openWin(
+                {
+                    name: 'textEditor_win',
+                    url: 'widget://html/textEditor/textEditor_win.html',
+                    slidBackEnabled: true,
+                    allowEdit: true,
+                    pageParam: {
+                        title: '配送说明'
+                    },
+                    delay: 300
+                }
+            );
+        }
 
         after = function () {
-                api.openWin(
-                    {
-                        name: 'textEditor_win',
-                        url: 'widget://html/textEditor/textEditor_win.html',
-                        slidBackEnabled: true,
-                        allowEdit:true,
-                        pageParam: {
-                            title: '售后说明'
-                        },
-                        delay: 300
-                    }
-                );
-            }
+            api.openWin(
+                {
+                    name: 'textEditor_win',
+                    url: 'widget://html/textEditor/textEditor_win.html',
+                    slidBackEnabled: true,
+                    allowEdit: true,
+                    pageParam: {
+                        title: '售后说明'
+                    },
+                    delay: 300
+                }
+            );
+        }
 
-            mypromote = function () {
-            _getUserInfoHttps(function(params) {
-                if(params){
+        mypromote = function () {
+            _getUserInfoHttps(function (params) {
+                if (params) {
                     api.openWin(
                         {
                             name: 'mypromote_win',
@@ -728,9 +492,9 @@
                     );
                 }
             })
-                    
 
-            }
+
+        }
 
         addGoods = function () {
             api.openWin(
@@ -775,94 +539,94 @@
             );
         }
         toEvaluate = function () {
-        _getUserInfoHttps(function(params) {
-            if(params){
-                api.openWin(
-                    {
-                        name: 'evaluate_win',
-                        url: 'widget://html/evaluate/evaluate_win.html',
-                        slidBackEnabled: true,
-                        pageParam: {
-                            state: 100,
-                            title: '商品分类'
-                        },
-                        delay: 300
-                    }
-                );
-            }
-        })
-            
-        }
-        cameraOrder = function (status,title) {
-        _getUserInfoHttps(function(params) {
-            if(params){
-                api.openWin(
-                    {
-                        name: 'cameraOrder_win',
-                        url: 'widget://html/cameraOrder/cameraOrder_win.html',
-                        slidBackEnabled: true,
-                        pageParam: {
-                            state: 100,
-                            title: title,
-                            status:status
-                        },
-                        delay: 300
-                    }
-                )
-            }
-        })
-                
+            _getUserInfoHttps(function (params) {
+                if (params) {
+                    api.openWin(
+                        {
+                            name: 'evaluate_win',
+                            url: 'widget://html/evaluate/evaluate_win.html',
+                            slidBackEnabled: true,
+                            pageParam: {
+                                state: 100,
+                                title: '商品分类'
+                            },
+                            delay: 300
+                        }
+                    );
+                }
+            })
 
-            
         }
-        msgClick=function(){
-        _getUserInfoHttps(function(params) {
-            if(params){
-                //点击消息
-				if(true) {
-					msgShowTip(false)
-					api.openWin({
-						name : 'chatmsg_win',
-						url : 'widget://html/chat/chatmsg_win.html',
-						slidBackEnabled:true,
-				        delay:300
-					});
-				}
-            }
-        })
-				
-            };
-            
-        resToken = function (){
-	        $api.setStorage("token", '1');//
+        cameraOrder = function (status, title) {
+            _getUserInfoHttps(function (params) {
+                if (params) {
+                    api.openWin(
+                        {
+                            name: 'cameraOrder_win',
+                            url: 'widget://html/cameraOrder/cameraOrder_win.html',
+                            slidBackEnabled: true,
+                            pageParam: {
+                                state: 100,
+                                title: title,
+                                status: status
+                            },
+                            delay: 300
+                        }
+                    )
+                }
+            })
+
+
+
         }
-            
-			//是否显示消息提醒红点
-			msgShowTip = function(count){
-				if(count>0){
-					$('#msg_tip').removeClass('tip-hide');
-					var contentTemp = count>99 ? '99..':count;
-					$('#msg_tip').text(contentTemp);
-				} else{
-					$('#msg_tip').text('');
-					$('#msg_tip').addClass('tip-hide');
-				}
-		
+        msgClick = function () {
+            _getUserInfoHttps(function (params) {
+                if (params) {
+                    //点击消息
+                    if (true) {
+                        msgShowTip(false)
+                        api.openWin({
+                            name: 'chatmsg_win',
+                            url: 'widget://html/chat/chatmsg_win.html',
+                            slidBackEnabled: true,
+                            delay: 300
+                        });
+                    }
+                }
+            })
+
+        };
+
+        resToken = function () {
+            $api.setStorage("token", '1');//
+        }
+
+        //是否显示消息提醒红点
+        msgShowTip = function (count) {
+            if (count > 0) {
+                $('#msg_tip').removeClass('tip-hide');
+                var contentTemp = count > 99 ? '99..' : count;
+                $('#msg_tip').text(contentTemp);
+            } else {
+                $('#msg_tip').text('');
+                $('#msg_tip').addClass('tip-hide');
             }
-            
-            //是否显示消息提醒红点
-			paiZhaoShowTip = function(count){
-				if(infoVm.numbers>0){
-					$('#paizhao_tip').removeClass('paizhao-hide');
-					var contentTemp = infoVm.numbers>99 ? '99..':infoVm.numbers;
-					$('#paizhao_tip').text(contentTemp);
-				} else{
-					$('#paizhao_tip').text('');
-					$('#paizhao_tip').addClass('paizhao-hide');
-				}
-		
-			}
-            
+
+        }
+
+        //是否显示消息提醒红点
+        paiZhaoShowTip = function (count) {
+            if (infoVm.numbers > 0) {
+                $('#paizhao_tip').removeClass('paizhao-hide');
+                var contentTemp = infoVm.numbers > 99 ? '99..' : infoVm.numbers;
+                $('#paizhao_tip').text(contentTemp);
+            } else {
+                $('#paizhao_tip').text('');
+                $('#paizhao_tip').addClass('paizhao-hide');
+            }
+
+        }
+
 
 
 
@@ -884,7 +648,6 @@
                     'widget://image/shopPlayImg2.png',
                     'widget://image/shopPlayImg3.png',
                 ],
-                // captions: ['apicloud', 'apicloud', 'apicloud', 'apicloud']
             },
             styles: {
                 caption: {
@@ -896,10 +659,10 @@
                 },
                 indicator: {
                     dot: {
-                        w:6,  //（必选项）数字类型；小圆点宽度
-                        h:2, //（必选项）数字类型；小圆点高度
-                        r:3,  //（必选项）数字类型；corner 页面控制器指示标记（矩形）的圆角大小
-                        margin:5  //（必选项）数字类型；小圆点间距
+                        w: 6,  //（必选项）数字类型；小圆点宽度
+                        h: 2, //（必选项）数字类型；小圆点高度
+                        r: 3,  //（必选项）数字类型；corner 页面控制器指示标记（矩形）的圆角大小
+                        margin: 5  //（必选项）数字类型；小圆点间距
                     },
                     align: 'center',
                     color: '#708090',
@@ -914,9 +677,7 @@
             fixed: false
         }, function (ret, err) {
             if (ret) {
-                // alert(JSON.stringify(ret));
             } else {
-                // alert(JSON.stringify(err));
             }
         });
 
@@ -936,64 +697,58 @@
                 }
             );
         }
-
-        // infoVm.financeDues = $api.getStorage("financeDues");////余额
-        // infoVm.visitNum = $api.getStorage("visitNum"); //月访客数量
-        // infoVm.totalAmount = $api.getStorage("totalAmount"); //月交易额
-        // infoVm.totalNum  = $api.getStorage("totalNum"); //月成交笔数
-
         infoVm = new Vue({
-            el:'#info_id',
-            data:{
-				photoOrderFlag: false,//是否上线
+            el: '#info_id',
+            data: {
+                photoOrderFlag: false,//是否上线
 
-                tipStutas:{},
+                tipStutas: {},
 
-                PAIZHAO_0:'',
-                PAIZHAO_2:'',
-                PAIZHAO_3:'',
-                PAIZHAO_4:'',
-                TUIHUANHUO:'',
+                PAIZHAO_0: '',
+                PAIZHAO_2: '',
+                PAIZHAO_3: '',
+                PAIZHAO_4: '',
+                TUIHUANHUO: '',
 
-                refresh:true,//刷新
-                financeDues:'',//余额
-                visitNum:'', //月访客数量
-                totalAmount:'', //月交易额
-                totalNum:'', //月成交笔数
-                numbers:'',//未接单数
+                refresh: true,//刷新
+                financeDues: '',//余额
+                visitNum: '', //月访客数量
+                totalAmount: '', //月交易额
+                totalNum: '', //月成交笔数
+                numbers: '',//未接单数
             },
             methods: {
 
                 lineStateClick: function () {
                     _getUserInfoHttps(function (params) {
-                        if(params){
+                        if (params) {
                             // 上线下线
                             if (!infoVm.photoOrderFlag) {
                                 api.confirm({
-                                title: '提示',
-                                msg: '确定开启拍照订单功能',
-                                buttons: ['确定', '取消']
+                                    title: '提示',
+                                    msg: '确定开启拍照订单功能',
+                                    buttons: ['确定', '取消']
                                 }, function (ret, err) {
                                     var index = ret.buttonIndex;
                                     if (index == 1) {
                                         var param = {
-                                            shopId:userId,
-                                            shopName:shopName,
-                                            photoOrderFlag:1
+                                            shopId: userId,
+                                            shopName: shopName,
+                                            photoOrderFlag: 1
                                         }
                                         _postHttpsData('/shop/updateShop', param,
                                             function (ret) {
                                                 getShopDataHttps(
-                                                function (res) {
-                                                    if (res.status && res.code == 0005) {
+                                                    function (res) {
+                                                        if (res.status && res.code == 0005) {
 
-                                                    } else if (res.status && JSON.stringify(res.data).length > 0) {
-                                                        if (res.data.photoOrderFlag == 1) {
-                                                            infoVm.photoOrderFlag = true
-                                                            api.toast({ msg: '已开启',duration: 2000, location: 'bottom'});
+                                                        } else if (res.status && JSON.stringify(res.data).length > 0) {
+                                                            if (res.data.photoOrderFlag == 1) {
+                                                                infoVm.photoOrderFlag = true
+                                                                api.toast({ msg: '已开启', duration: 2000, location: 'bottom' });
+                                                            }
                                                         }
-                                                    }
-                                                })
+                                                    })
 
                                             })
                                     } else {
@@ -1002,30 +757,30 @@
                                 })
                             } else {
                                 api.confirm({
-                                title: '提示',
-                                msg: '确定关闭拍照订单功能',
-                                buttons: ['确定', '取消']
+                                    title: '提示',
+                                    msg: '确定关闭拍照订单功能',
+                                    buttons: ['确定', '取消']
                                 }, function (ret, err) {
                                     var index = ret.buttonIndex;
                                     if (index == 1) {
                                         var param = {
-                                            shopId:userId,
-                                            shopName:shopName,
-                                            photoOrderFlag:0
+                                            shopId: userId,
+                                            shopName: shopName,
+                                            photoOrderFlag: 0
                                         }
                                         _postHttpsData('/shop/updateShop', param,
                                             function (ret) {
                                                 getShopDataHttps(
-                                                function (res) {
-                                                    if (res.status && res.code == 0005) {
+                                                    function (res) {
+                                                        if (res.status && res.code == 0005) {
 
-                                                    } else if (res.status && JSON.stringify(res.data).length > 0) {
-                                                        if (res.data.photoOrderFlag == 0) {
-                                                            infoVm.photoOrderFlag = false
-                                                            api.toast({ msg: '已关闭',duration: 2000, location: 'bottom'});
+                                                        } else if (res.status && JSON.stringify(res.data).length > 0) {
+                                                            if (res.data.photoOrderFlag == 0) {
+                                                                infoVm.photoOrderFlag = false
+                                                                api.toast({ msg: '已关闭', duration: 2000, location: 'bottom' });
+                                                            }
                                                         }
-                                                    }
-                                                })
+                                                    })
 
                                             })
                                     } else {
@@ -1033,23 +788,23 @@
                                     }
                                 })
                             }
-                                }
-                            })
-				},
+                        }
+                    })
+                },
 
-                refreshData: function (){
+                refreshData: function () {
                     infoVm.refresh = false
                     getShopDataHttps(function (res) {
-                        if(res.code == 0001 && res.status){
-                        api.refreshHeaderLoadDone()//关闭下拉刷新效果
-                        }else if(res.code == 0005 || res.code == 0003){
-                        api.refreshHeaderLoadDone()//关闭下拉刷新效果
-							// api.toast({msg : '您未开店，尚未店铺信息',duration : 2000,location : 'bottom'});
+                        if (res.code == 0001 && res.status) {
+                            api.refreshHeaderLoadDone()//关闭下拉刷新效果
+                        } else if (res.code == 0005 || res.code == 0003) {
+                            api.refreshHeaderLoadDone()//关闭下拉刷新效果
+                            // api.toast({msg : '您未开店，尚未店铺信息',duration : 2000,location : 'bottom'});
 
-                        }else{
-							api.toast({msg : '加载失败',duration : 2000,location : 'bottom'});
+                        } else {
+                            api.toast({ msg: '加载失败', duration: 2000, location: 'bottom' });
                         }
-                    })                    
+                    })
                 }
             },
         })
@@ -1062,9 +817,9 @@
             _getHttpsData('/shop/getShopInfo', param,
                 function (res) {
                     api.hideProgress();
-                    if(res.status){
-                        setTimeout(function(){
-                        infoVm.refresh = true
+                    if (res.status) {
+                        setTimeout(function () {
+                            infoVm.refresh = true
                         }, 1000);
 
                         if (res.code == 0005) {
@@ -1090,21 +845,21 @@
                                     });
                                 }
                             })
-                            funCll (false)
-                        }else {
-                            funCll (true)
+                            funCll(false)
+                        } else {
+                            funCll(true)
 
-                            }
+                        }
 
-                    }else {
+                    } else {
                         infoVm.financeDues = $api.getStorage("financeDues"); // 旧拍照数
                         infoVm.visitNum = $api.getStorage("visitNum"); // 旧拍照数
                         infoVm.totalAmount = $api.getStorage("totalAmount"); // 旧拍照数
                         infoVm.totalNum = $api.getStorage("totalNum"); // 旧拍照数
-                        setTimeout(function(){
-                        infoVm.refresh = true
+                        setTimeout(function () {
+                            infoVm.refresh = true
                         }, 5000);
-                        funCll (true)
+                        funCll(true)
                     }
                 },
                 function (err) {
@@ -1113,80 +868,43 @@
             )
         };
 
-        // infoVm.financeDues = $api.getStorage("financeDues");////余额
-        // infoVm.visitNum = $api.getStorage("visitNum"); //月访客数量
-        // infoVm.totalAmount = $api.getStorage("totalAmount"); //月交易额
-        // infoVm.totalNum  = $api.getStorage("totalNum"); //月成交笔数
-
-        // getShopDataHttps(function (res) {
-                // $api.setStorage("PAIZHAO_0", res.data.PAIZHAO_0);//
-                // $api.setStorage("PAIZHAO_0", res.data.PAIZHAO_2);//
-                // $api.setStorage("PAIZHAO_0", res.data.PAIZHAO_3);//
-                // $api.setStorage("PAIZHAO_0", res.data.PAIZHAO_4);//
-                // $api.setStorage("TUIHUANHUO", res.data.TUIHUANHUO);//
-                // NumPaiZhaoNew = $api.getStorage("PAIZHAO_0"); 
-                    // api.sendEvent({
-                    //     name: 'intervalNewData_Event',
-                    //     extra: {
-                    //         PAIZHAO_0: PAIZHAO_0,
-                    //         PAIZHAO_2: PAIZHAO_2,
-                    //         PAIZHAO_3: PAIZHAO_3,
-                    //         PAIZHAO_4: PAIZHAO_4,
-                    //         TUIHUANHUO: TUIHUANHUO,
-                    //         Success:true
-                    //     }
-                    // });
-                    // api.startPlay({
-					//     path: 'widget://res/audio/msg_notice.mp3'
-					// }, function(ret, err) {
-					//     if (ret) {
-	                //         //alert('播放完成');
-					//     } else {
-	                //         //alert(JSON.stringify(err));
-					//     }
-                    // });
-            // })
-
         //监听刷新数据
-		api.addEventListener({  //监听执行getShopDataHttps 方法
-		    name: 'refreshData_Event'
-		}, function(ret, err) {
-			if(ret){
-				if(ret.value.resObj.status){
-                    if(ret.value.resObj.code == 0001 && ret.value.resObj.code != 0005){
-                        setTimeout(function(){
+        api.addEventListener({  //监听执行getShopDataHttps 方法
+            name: 'refreshData_Event'
+        }, function (ret, err) {
+            if (ret) {
+                if (ret.value.resObj.status) {
+                    if (ret.value.resObj.code == 0001 && ret.value.resObj.code != 0005) {
+                        setTimeout(function () {
                             infoVm.refresh = true
-                            }, 1000);
-                            infoVm.tipStutas = {}
-                            infoVm.tipStutas = ret.value.resObj.data
-                            infoVm.tipStutas.photoOrderFlag == 1 ? infoVm.photoOrderFlag = true:infoVm.photoOrderFlag = false;
-                            api.refreshHeaderLoadDone()//关闭下拉刷新效果
-                            console.log ('ddddd...')
-                    }else {
+                        }, 1000);
+                        infoVm.tipStutas = {}
+                        infoVm.tipStutas = ret.value.resObj.data
+                        infoVm.tipStutas.photoOrderFlag == 1 ? infoVm.photoOrderFlag = true : infoVm.photoOrderFlag = false;
                         api.refreshHeaderLoadDone()//关闭下拉刷新效果
-						api.toast({msg : '加载失败',duration : 2000,location : 'bottom'});
+                        console.log('ddddd...')
+                    } else {
+                        api.refreshHeaderLoadDone()//关闭下拉刷新效果
+                        api.toast({ msg: '加载失败', duration: 2000, location: 'bottom' });
                     }
-                        // paiZhaoShowTip(true)
-                    }else {
-                        if(ret.value.resObj.code == 0005 || ret.value.resObj.code == 0003){
-                            api.refreshHeaderLoadDone()//关闭下拉刷新效果
-                            // api.toast({msg : '您未开店，尚未店铺信息',duration : 2000,location : 'bottom'});
+                    // paiZhaoShowTip(true)
+                } else {
+                    if (ret.value.resObj.code == 0005 || ret.value.resObj.code == 0003) {
+                        api.refreshHeaderLoadDone()//关闭下拉刷新效果
+                        // api.toast({msg : '您未开店，尚未店铺信息',duration : 2000,location : 'bottom'});
                     }
 
                     infoVm.financeDues = $api.getStorage("financeDues"); // 旧数据
                     infoVm.visitNum = $api.getStorage("visitNum"); // 旧数据
                     infoVm.totalAmount = $api.getStorage("totalAmount"); // 旧数据
                     infoVm.totalNum = $api.getStorage("totalNum"); // 旧数据
-                    setTimeout(function(){
-                    infoVm.refresh = true
+                    setTimeout(function () {
+                        infoVm.refresh = true
                     }, 1000);
                     api.hideProgress();
                 }
-			}
+            }
         });
-
-        
-
 
         //下拉刷新
         api.setRefreshHeaderInfo({
@@ -1195,9 +913,9 @@
             textColor: '#2fc588',
             textDown: '下拉刷新...',
             textUp: '松开刷新...'
-        }, function(ret, err) {
+        }, function (ret, err) {
             //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-                infoVm.refreshData()
+            infoVm.refreshData()
         });
 
         infoVm.refreshData()

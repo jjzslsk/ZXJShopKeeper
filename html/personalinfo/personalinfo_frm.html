@@ -159,26 +159,7 @@
 	var userId='';
 	apiready = function(){
 		userId = $api.getStorage("userid");//用户id
-//		httpsDataInfo=function(){
-//			api.showProgress();
-//			var param='clientId='+userId;
-//			_getHttpsData('/worker/getWorkerDetail',param,
-//				function(res){
-//					api.hideProgress();
-//					console.log(JSON.stringify(res))
-//					if(res.status){
-//						infoVm.refreshData(res.data);
-//					} else{
-//						api.toast({ msg: res.msg+'('+res.code+')',duration: 2000, location: 'bottom'});
-//					}
-//				},
-//				function(err){
-//					api.hideProgress();
-//				}
-//			);
-//		};
-		
-		
+
 		//获取工人信息
 		var getWorkerInfoHttps=function(){
 			api.showProgress();
@@ -214,14 +195,11 @@
 					console.log (JSON.stringify(res))
 					if(res.status){
 						infoVm.shopRefreshData(res.data);
-						//saveUserInfoCache(pwd,res.data,function(){});
-
 					}else{
 						showSingleAuiDialog('获取信息失败('+res.code+')',res.msg);
 					}
 				},
 				function(err){
-					//api.hideProgress();
 				}
 			)
 		}
@@ -358,19 +336,6 @@
 
 				shopRefreshData:function(data){
 					this.infoData=data;
-					console.log ('iiiiiiii11:' + JSON.stringify (this.infoData))
-// 					this.avatar=$api.getStorage("avatar");//用户头像
-// 					//隐藏手机号中间几位号
-// 					this.infoData.applyPhonePri=phoneMiddleHide(data.applyPhone);//注册手机号
-// 					// this.infoData.emergTelPri=phoneMiddleHide(data.emergTel);//紧急联系人号码
-// 					//隐藏身份证中间几位号
-// 					this.infoData.applyCardNoPri=idCardMiddleHide(data.applyCardNo);//身份证号
-// //					//隐藏银行卡中间几位号
-// //					this.infoData.bankCardPri=bankCardHide(data.bankCard);//银行卡
-// 					//隐藏姓名一些文字
-// 					this.infoData.applyNamePri=personNameHide(data.applyName);//姓名
-// 					//隐藏姓名一些文字
-// 					this.infoData.emergContactPri=personNameHide(data.emergContact);//联系人
 					this.nextTick();
 				},
 
@@ -390,7 +355,6 @@
 				upAvaClick:function(){
 					//更新头像
 					chooseCameraSheet(function(retList){
-//						infoVm.infoData.AVATAR=retList[0];
 						imgCutUp(retList[0]);
 					},1,'完成');
 				},
@@ -429,7 +393,6 @@
 			}
 		});
 		
-//		httpsDataInfo();
 		getWorkerInfoHttps();
 		getShopInfoHttps();
 		

@@ -13,92 +13,24 @@
     <link rel="stylesheet" type="text/css" href="../../css/main.css" />
     <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
     <style>
-        body {
-            background: #eee
-        }
-
-        .goodsStatus {
-            color: red;
-        }
-        .goodsStatus {
-            color: red;
-            white-space: nowrap;
-            padding: 2px 4px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .goods-status-null {
-            white-space: nowrap;
-            /* padding: 2px 4px; */
-            border-radius: 10px;
-            text-align: center;
-            color: #11CF9C;
-        }
-        .but-click {
-           display: flex;
-           justify-content: flex-end;
-            align-items: center;
-        }
-        .but-click .aui-btn{
-            margin-left:.3rem;
-        }
-        .goods-list {
-            background: #eee
-        }
-        .goods-list .goods-list-item{
-            margin: .3rem .2rem !important;
-            border-radius: 4px;
-            border: #eee solid .5px;
-            background: #fff
-        }
-        .mescroll {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        height: auto;
-        }
-        .item-list-box {
-        -webkit-box-align: center;
-        box-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        }
-        .order-info {
-            padding: .4rem;
-        }
-        .order-img {
-            padding-left: .4rem;
-        }
-        .item-data-null {
-        text-align: center;
-        padding: 2rem 0;
-        }
-
-        .order-status {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-        [v-cloak]{
-            display: none;
-        }
-    </style>
+        body {background: #eee } 
+        .goodsStatus {color: red; } 
+        .goodsStatus {color: red; white-space: nowrap; padding: 2px 4px; border-radius: 10px; text-align: center; } 
+        .goods-status-null {white-space: nowrap; border-radius: 10px; text-align: center; color: #11CF9C; } 
+        .but-click {display: flex; justify-content: flex-end; align-items: center; } 
+        .but-click .aui-btn{margin-left:.3rem; } 
+        .goods-list {background: #eee } 
+        .goods-list .goods-list-item{margin: .3rem .2rem !important; border-radius: 4px; border: #eee solid .5px; background: #fff } 
+        .mescroll {position: fixed; top: 0; bottom: 0; height: auto; } 
+        .item-list-box {-webkit-box-align: center; box-align: center; -webkit-align-items: center; align-items: center; -webkit-box-sizing: border-box; box-sizing: border-box; display: -webkit-box; display: -webkit-flex; display: flex; } 
+        .order-info {padding: .4rem; } 
+        .order-img {padding-left: .4rem; } 
+        .item-data-null {text-align: center; padding: 2rem 0; } 
+        .order-status {display: flex; justify-content: flex-end; align-items: center; } [v-cloak]{display: none; } </style>
 </head>
-
 <body>
-
-
-
     <div id="mescroll" class="mescroll">
-     
     <div id="info_id" class="" id="tab1-con" v-cloak>
-
-        <!-- <template> -->
                 <ul class="aui-list aui-media-list goods-list">
                     <li class="item-data-null" v-if ='showGoodsList'>
                       <p class="downwarp-progress"></p><p class="downwarp-tip">加载中..</p>
@@ -125,50 +57,17 @@
                                             <span class="goods-status-null" v-if="item.orderStatus == 4">待评价</span>
                                             <span class="goods-status-null" v-if="item.orderStatus == 5">已评价</span>
                                             <span class="goods-status-null" v-if="item.orderStatus == 10">同意退货</span>
-                                            <!-- <span class="goods-status-null">{{item.orderStatus}}</span> -->
                                         </span>
                                     </div>
-                                    
-
                                 <div class="aui-list-item-text aui-row aui-font-size-12">
                                     <span class="aui-col-xs-6">客户姓名:{{item.clientName}}</span>
-                                    <!-- <span class="">电话:{{item.clientPhone}}</span> -->
                                 </div>
-                                
                                 <div class="aui-list-item-text aui-row aui-font-size-12">普通单号:{{item.orderNo}}</div>
                                 <div class="aui-list-item-text aui-row aui-font-size-12" v-if='item.photoOrderId'>拍照单号:{{item.photoOrderId}}</div>
                                 <div class="aui-list-item-text aui-row aui-font-size-12">
                                     <div>创建时间:{{item.createDate}}</div>
-                                    
                                 </div>
-                               
-
-                                <!-- <div class="aui-list-item-text">
-                                    地址:{{item.clientAddress}}
-                                </div> -->
                                 </div>
-                                <!-- <div class="aui-row but-click">
-                                    <span aui-col-xs-4>
-                                        <div class="aui-btn aui-btn-sm aui-btn-success" v-if="item.orderStatus == 0"
-                                            @click="cancelclock(item)">取消订单</div>
-                                    </span>
-                                    <span aui-col-xs-4>
-                                            <div class="aui-btn aui-btn-sm aui-btn-success" v-if="item.orderStatus == 1"
-                                            @click='toDetail(item)'>去发货</div>
-                                    </span>
-                                    <span aui-col-xs-4>
-                                        <div class="aui-btn aui-btn-sm aui-btn-success" v-if="item.orderStatus == 9" @click="achieve(item)">
-                                            确认退货</div>
-                                    </span>
-                                    <span aui-col-xs-4>
-                                        <div class="aui-btn aui-btn-sm aui-btn-success" v-if="item.orderStatus == 8"
-                                            @click="confirmSend(item)">同意退货</div>
-                                    </span>
-                                    <span aui-col-xs-4>
-                                        <div class="aui-btn aui-btn-sm aui-btn-danger" v-if="item.orderStatus == 8"
-                                            @click="cancelOrder(item)">拒绝退货</div>
-                                    </span>
-                                </div> -->
                             </div>
                         </div>
                     </li>
@@ -176,7 +75,6 @@
                         <p class="downwarp-progress"></p><p class="downwarp-tip">加载完毕</p>
                     </li>
                 </ul>
-                <!-- </template> -->
             </div>
     </div>
 </body>
@@ -200,15 +98,9 @@
         var orderStatus = ''
         var indexPage=1;//页码
 	    var pageNum=10;//每页的数量
-
-
-        
-
-
         api.parseTapmode();
         var tab = new auiTab({
             element: document.getElementById("tab"),
-
         }, function (ret) {
             if (ret) {
                 //定义获取对象的所有兄弟节点的函数，
@@ -236,7 +128,6 @@
                 resNoData:false,//获取到空数据时
                 showGoodsList:true,
             },
-
             mounted: function() {
                     //下拉刷新
                     //创建MeScroll对象
@@ -315,7 +206,6 @@
                             if(indexPage>0){
 								indexPage--;
 							}
-                            // api.toast({ msg: ret.msg+'('+ret.code+')',duration: 2000, location: 'bottom'});
                     infoVm.showGoodsList = false
                             
                 }
@@ -462,35 +352,6 @@
                     })
                 },
 
-                //确认发货
-                // confirmSend: function (data) {
-                //     api.confirm({
-                //         title: '提示',
-                //         msg: '是否确定提交？',
-                //         buttons: ['确定', '取消']
-                //     }, function (ret, err) {
-                //         var index = ret.buttonIndex;
-                //         if (index == 1) {
-                //             if (data.orderStatus == 1) {
-                //                     var param = 'shopId=' + data.shopId + '&orderNo=' + data.orderNo;
-                //                     _getHttpsData('/order/sendOrder', param,
-                //                         function (ret) {
-                //                             if (ret.status) {
-                //                                 alert(ret.msg)
-                //                             } else {
-
-                //                             }
-                //                         },
-                //                         function (err) {
-                //                         }
-                //                     );
-                //                 }
-
-                //         } else {
-                //         }
-                //     })
-                // },
-
                 toDetail: function (data) {
                     api.openWin(
                         {
@@ -547,10 +408,6 @@
                 }
             )
         };
-
-
-
-
         getUserInfoHttps()
         infoVm.geIfyHttpsData(true)
     }

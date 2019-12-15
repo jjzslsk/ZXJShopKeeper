@@ -12,44 +12,11 @@
 	<link rel="stylesheet" type="text/css" href="../../css/main.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
 	<style>
-		html,
-		body {
-			height: 100%;
-		}
-
-		.aui-bar-tab .aui-active .icon-vicinity_iconnot:before,
-		.aui-bar-tab .aui-active .icon-Mall:before,
-		.aui-bar-tab .aui-active .icon-school_iconnot:before,
-		.aui-bar-tab .aui-active .icon-Management_iconnot:before,
-		.aui-bar-tab .aui-active .icon-Mine_iconnot:before {
-			color: #FFFFFF;
-		}
-
-		.aui-bar-tab .aui-active i {
-			background-color: #2fc588;
-			border-radius: 50%;
-			color: #FFFFFF;
-			padding: 0.2rem
-		}
-
-		/*.msg-tip{width:10px;height: 10px;border-radius: 50%;background-color: #d61414;position: absolute;top: 10px;right: calc(50% - 15px);z-index: 99}*/
-		.msg-tip {
-			width: 1rem;
-			height: 1rem;
-			line-height: 1rem;
-			text-align: center;
-			font-size: 0.5rem;
-			border-radius: 50%;
-			background-color: #d61414;
-			position: absolute;
-			top: 3px;
-			right: 5px;
-			z-index: 99;
-		}
-
-		.tip-hide {
-			display: none;
-		}
+		html, body {height: 100%; } 
+		.aui-bar-tab .aui-active .icon-vicinity_iconnot:before, .aui-bar-tab .aui-active .icon-Mall:before, .aui-bar-tab .aui-active .icon-school_iconnot:before, .aui-bar-tab .aui-active .icon-Management_iconnot:before, .aui-bar-tab .aui-active .icon-Mine_iconnot:before {color: #FFFFFF; } 
+		.aui-bar-tab .aui-active i {background-color: #2fc588; border-radius: 50%; color: #FFFFFF; padding: 0.2rem } 
+		.msg-tip {width: 1rem; height: 1rem; line-height: 1rem; text-align: center; font-size: 0.5rem; border-radius: 50%; background-color: #d61414; position: absolute; top: 3px; right: 5px; z-index: 99; } 
+		.tip-hide {display: none; } 
 	</style>
 </head>
 
@@ -64,16 +31,7 @@
 				<i class="aui-iconfont aui-icon-comment" style="font-size: 1.2rem;margin-right: 5px"></i>
 				<span id="msg_tip" class="msg-tip tip-hide"></span>
 			</a>
-			<!-- <a class="aui-pull-right aui-btn">
-				<i id="set_up" class="aui-iconfont aui-icon-gear" tapmode="hover" onclick="setUpClick()" style="font-size: 1.2rem;margin-left: 5px"></i>
-		   </a> -->
 		</header>
-		<!--<header class="aui-bar aui-bar-nav this-bg-theme" id="header">    
-		    	<a class="aui-pull-left aui-btn" tapmode onclick="closeWin()">    		
-			        <i class="aui-iconfont aui-icon-left"></i>
-				</a>  
-		        <div class="aui-title" id="headerTitle">实名认证</div>  
-		    </header>	-->
 		<div id="main" class="flex-con"></div>
 		<footer class="aui-bar aui-bar-tab bar-btm-footer" id="footer">
 			<div class="aui-bar-tab-item aui-active" tapmode>
@@ -82,12 +40,6 @@
 					首页
 				</div>
 			</div>
-			<!-- <div id="shop_tab" class="aui-bar-tab-item" tapmode>
-				<i class="aui-iconfont icon-Mall"></i>
-				<div class="aui-bar-tab-label">
-					订单
-				</div>
-			</div> -->
 			<div id="shop_tab1" class="aui-bar-tab-item" tapmode>
 					<i class="aui-iconfont icon-school_iconnot"></i>
 					<div class="aui-bar-tab-label">
@@ -109,16 +61,6 @@
 		</footer>
 	</div>
 </body>
-<script type="text/javascript" src="../../script/api.js"></script>
-<script type="text/javascript" src="../../script/aui/aui_tab.js" ></script>
-<script type="text/javascript" src="../../script/jquery/jquery213min.js"></script>
-<script type="text/javascript" src="../../script/jquery/jquerymobilecustommin.js"></script>
-<script type="text/javascript" src="../../script/md5/base64.js"></script>
-<script type="text/javascript" src="../../script/custom/tools.js"></script>
-<script type="text/javascript" src="../../script/custom/bmap.js"></script>
-<script type="text/javascript" src="../../script/packajax.js"></script>
-<!-- <script type="text/javascript" src="../../script/myWebSocket.js"></script> -->
-
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/aui/aui_tab.js" ></script>
 <script type="text/javascript" src="../../script/jquery/jquery213min.js"></script>
@@ -156,18 +98,14 @@
 				}
             };
 
-			// startLocation(function(ret){
-			//    			// api.execScript({
-			// 			// 	name : 'main_win',
-			// 			// 	frameName : 'nearorder_frm',
-			// 			// 	script : 'refreshDataList()'
-			// 			// });
-			// 			console.log ('4411....'+JSON.stringify(ret))
-			//    		},function(action,err){
-			// 			console.log ('4411....'+JSON.stringify(err))
-			//    		});
-
-
+			startLocation(function(ret){
+				// api.execScript({
+				// 	name : 'main_win',
+				// 	frameName : 'nearorder_frm',
+				// 	script : 'refreshDataList()'
+				// });
+			},function(action,err){
+			});
 
 
 		var header = $api.byId('header');
@@ -177,8 +115,6 @@
 			if (position == 0 && isShowShop == true) {
 				$('#title_text').text('我的店铺');
 				showSetUpIcon(false);
-				//zxjShopIsShow=false;
-				//closeShopDialog();
 				getShopDataHttps(function (res) {})
 			}
 			else if (position == 1 && isShowShop == true) {
@@ -190,7 +126,6 @@
 						clickKey: 'shop'
 					}
 				});
-				// getShopDataHttps(function (res) {})
 			}
 			else if (position == 2 && isShowShop == true) {
 				$('#title_text').text('找工人');
@@ -208,9 +143,6 @@
 			else if (position == 3 && isShowShop == true) {
 				$('#title_text').text('我的');
 				showSetUpIcon(true);
-				//zxjShopIsShow=false;
-				//closeShopDialog();
-				// getShopDataHttps(function (res) {})
 			}
 
 			//未安装微信时 isShowShop == false
@@ -218,27 +150,18 @@
 				$('#title_text').text('我的店铺');
 				showSetUpIcon(false);
 				getShopDataHttps(function (res) {})
-				//zxjShopIsShow=false;
-				//closeShopDialog();
 			}
 			else if (position == 1 && isShowShop == false) {
 				$('#title_text').text('我的');
 				showSetUpIcon(true);
 				getShopDataHttps(function (res) {})
-				//zxjShopIsShow=false;
-				//closeShopDialog();
 			}
 			else {
 				$('#title_text').text('装小匠(商铺端)');
 				getShopDataHttps(function (res) {})
-				// showSetUpIcon(false);
-				//zxjShopIsShow=false;
-				//closeShopDialog();
 			}
 			nearOrderIsShow = true;
 		}
-
-
 
 			//是否显示设置图标
 			function showSetUpIcon(isShow){
@@ -403,31 +326,6 @@
 				return frames;
 			};
 
-		var frames1 = [{
-			name: 'index_frm',
-			url: 'index_frm.html',
-			bounces: true,
-			pageParam: {
-				fromAction: 0,
-				searchKey: ''
-			}
-		},
-		{
-			name: 'zxjShop_frm',
-			url: 'zxjShop_frm.html',
-			bounces: true,
-		},
-		 {
-			name: 'zxjShop_frm',
-			url: 'zxjShop_frm.html',
-			bounces: true,
-		},
-		 {
-			name: 'me_frm',
-			url: 'me_frm.html',
-			// bgColor: '#2fc588',
-			bounces: true
-		}];
 		//切换页面
 		tab = new auiTab({
 			element: document.getElementById("footer"), //element:,容器
@@ -493,53 +391,7 @@
 				//应用从后台到前台
 				console.log ('应用从后台到前台')
 				againLoginByUserId();
-				// var userLevel = $api.getStorage("starLevel");//
-				// if(userLevel == 9){}else {
-				// 	api.openWin({
-				// 			name: 'login_win',
-				// 			url: 'widget://html/login/login_win.html',
-				// 			slidBackEnabled: true,
-				// 			delay: 300
-				// 		});
-				// }
-
-
-		   		checkUpAppVersion();
-		   		// if(checkLocPer()){
-			   	// 	startLocation(function(ret){
-			   	// 		api.execScript({
-				// 			name : 'main_win',
-				// 			frameName : 'nearorder_frm',
-				// 			script : 'refreshDataList()'
-				// 		});
-			   	// 	},function(action,err){
-			   		
-			   	// 	});
-		   		// }
-			    // if(_ws){
-				// 	if(_ws.status==0){
-				// 		//如果断开了重新连接
-				// 		create_ws();
-				// 	}
-				// } else{
-				// 	create_ws();
-				// }
-				// ajpushIsPushStopped();
-				// ajpushOnResume();
-				// ajpushClearBadge();
 			});
-
-			// var userLevel = $api.getStorage("starLevel");//
-			// 	if(userLevel == 9){}else {
-			// 		api.openWin({
-			// 				name: 'login_win',
-			// 				url: 'widget://html/login/login_win.html',
-			// 				slidBackEnabled: true,
-			// 				delay: 300,
-			// 				reload:true,
-			// 			});
-			// 	}
-			
 
 	/////////////////////////webSocket start/////////////////////////
 			var _ws=false;
@@ -663,10 +515,10 @@
 					_ws.call = function(result) {
 						var data = JSON.parse(result);
 						var messageType = data.messageType;//1代表上线 2代表下线 3代表在线名单(获取离线未接收信息unreceivedMessage) 4代表普通消息5定位
-//						var onlineUsers = obj.onlineUsers;//在线用户id列表
+						//var onlineUsers = obj.onlineUsers;//在线用户id列表
 						if(messageType==3){
 							if(data.unreceivedMessage!=undefined && data.unreceivedMessage.length>0){
-//								有为接收的消息
+								//有为接收的消息
 								var unreceivedMessage = data.unreceivedMessage;
 								
 								for(var index in unreceivedMessage){
@@ -688,7 +540,7 @@
 					}
 				}
 			};
-			create_ws();  //服务连接
+			// create_ws();  //服务连接
 
 				//发送消息
 				sendChat = function(param) {
@@ -734,7 +586,6 @@
 					    if (ret) {
 							//alert('播放完成');
 					    } else {
-							//alert(JSON.stringify(err));
 					    }
 					});
 				}

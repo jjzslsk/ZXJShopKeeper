@@ -46,25 +46,14 @@
 			/*0未申请，1申请中，2审核通过，3审核不通过*/
 			if(applyStatus==1){
 				$('#check_pro').text('审核中');
-				// $('#check_pro').addClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro2');
-				// $('#check_pro').removeClass('check-pro3');
 			}
 			else if(applyStatus==2){
 				$('#check_pro').text('审核通过');
-				// $('#check_pro').addClass('check-pro2');
-				// $('#check_pro').removeClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro3');
 			}
 			else if(applyStatus==3){
 				$('#check_pro').text('审核不通过');
-				// $('#check_pro').addClass('check-pro3');
-				// $('#check_pro').removeClass('check-pro1');
-				// $('#check_pro').removeClass('check-pro2');
 			}
 		}
-
-
 		var headerBar = $api.dom('header').offsetHeight;
 
 		api.openFrame({

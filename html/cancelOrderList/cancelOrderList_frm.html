@@ -13,64 +13,21 @@
     <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="../../css/mescroll/mescrollmin.css" />
     <style>
-        body {
-            background: #eee
-        }
-
-        .goodsStatus {
-            color: red;
-        }
-        .goodsStatus {
-            color: red;
-            white-space: nowrap;
-            padding: 2px 4px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .goods-status-null {
-            white-space: nowrap;
-            border-radius: 10px;
-            text-align: center;
-            color: #11CF9C;
-        }
-        .but-click {
-           display: flex;
-           justify-content: flex-end;
-            align-items: center;
-        }
-        .but-click .aui-btn{
-            margin-left:.3rem;
-        }
-        .goods-list {
-            background: #eee
-        }
-        .goods-list .goods-list-item{
-            margin: .3rem 0 !important;
-            border-radius: 4px;
-            border: #eee solid .5px;
-            background: #fff
-        }
-        .mescroll {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        height: auto;
-        }
-        .item-data-null {
-        text-align: center;
-        padding: 2rem 0;
-        }
-        .order-status {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-        }
-    </style>
+        body {background: #eee } 
+        .goodsStatus {color: red; } 
+        .goodsStatus {color: red; white-space: nowrap; padding: 2px 4px; border-radius: 10px; text-align: center; } 
+        .goods-status-null {white-space: nowrap; border-radius: 10px; text-align: center; color: #11CF9C; } 
+        .but-click {display: flex; justify-content: flex-end; align-items: center; } 
+        .but-click .aui-btn{margin-left:.3rem; } 
+        .goods-list {background: #eee } 
+        .goods-list .goods-list-item{margin: .3rem 0 !important; border-radius: 4px; border: #eee solid .5px; background: #fff } 
+        .mescroll {position: fixed; top: 0; bottom: 0; height: auto; } 
+        .item-data-null {text-align: center; padding: 2rem 0; } 
+        .order-status {display: flex; align-items: center; justify-content: flex-end; } </style>
 </head>
 
 <body>
     <div id="info_id" class="aui-padded-5 " id="tab1-con">
-        <!-- <template> -->
             <div id="mescroll" class="mescroll aui-content aui-margin-b-15">
                 <ul class="aui-list aui-media-list goods-list">
                     <li class="item-data-null" v-if ='showGoodsList'>
@@ -96,7 +53,6 @@
                                                 <span class="goods-status-null" v-if="item.CART_STATUS == 10">同意退货</span>
                                                 <span class="goods-status-null" v-if="item.CART_STATUS == 9">客户发货</span>
                                                 <span class="goodsStatus" v-if="item.CART_STATUS == 5">拒绝退货</span>
-                                                <!-- <span class="goods-status-null">-{{item.CART_STATUS}}</span> -->
                                             </span>
                                         </div>
                                     <p class="aui-font-size-12 aui-ellipsis-2">
@@ -104,7 +60,6 @@
                                     </p>
                                     <p class="aui-font-size-12">
                                         <span>普通单号:{{item.ORDER_NO}}</span> 
-                                        <!-- <span class="aui-font-size-12">日期:{{item.BACK_REASON_DATE}}</span> -->
                                     </p>
                                     <p class="aui-font-size-12" v-if='item.PHOTO_ORDER_ID'>
                                         <span>拍照单号:{{item.PHOTO_ORDER_ID}}</span>
@@ -112,15 +67,6 @@
                                     <div class="aui-list-item-text aui-row aui-font-size-12">
                                         <div class="aui-font-size-12">时间:{{item.BACK_REASON_DATE}}</div>
                                     </div class="aui-list-item-text aui-row aui-font-size-12">
-                                    <!-- <p> -->
-                                        <!-- <span class="aui-font-size-12">数量:{{item.ITEM_NUMBER}}</span>
-                                        <span class="aui-font-size-12">金额:{{item.ITEM_PRICE}}</span> -->
-                                        <!-- <span class="">名称:{{item.CLIENT_NAME}}</span>
-                                        <span class="aui-font-size-12">电话:{{item.CLIENT_PHONE}}</span> -->
-                                    <!-- </p> -->
-                                    <!-- <div class="aui-list-item-text">
-                                        描述:{{item.BACK_REASON}}
-                                    </div> -->
                                 </div>
                                 <div class="aui-row but-click">
                                         <div class="aui-btn aui-btn-success" v-if="item.agreeToReturn"
@@ -139,7 +85,6 @@
                     </li>
                 </ul>
             </div>
-        <!-- </template> -->
     </div>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
@@ -210,9 +155,6 @@
                         }, {
                                 orderStatus: orderStatus
                             })
-                        // if(item.agreeToReturn){item.agreeToReturn=item}else{item.agreeToReturn=Object.assign(item, {agreeToReturn: infoVm.agreeToReturn},{orderStatus:orderStatus})}
-                        // if(item.refuseToReturn){item.refuseToReturn=item}else{item.refuseToReturn=Object.assign(item, {refuseToReturn: infoVm.refuseToReturn},{orderStatus:orderStatus})}
-                        // if(item.confirmToReturn){item.confirmToReturn=item}else{item.confirmToReturn=Object.assign(item, {confirmToReturn: infoVm.confirmToReturn},{orderStatus:orderStatus})}
                         if(item.BACK_REASON_DATE!=null){
                             item.BACK_REASON_DATE = dataFormatting(item.BACK_REASON_DATE) //时间格式
                         }
@@ -222,8 +164,6 @@
 
                 } else {
                     infoVm.showGoodsList = false
-                    
-                    // api.toast({ msg: '加载完毕',duration: 2000, location: 'bottom'});
                     mescroll.endErr();}
             });
         }
@@ -528,11 +468,8 @@
     infoVm.showGoodsList = false
     getListData(false)
     }
-
-
         getUserInfoHttps() //获取店铺信息
         getListData(true) //获取list
-
     }
 </script>
 
