@@ -1098,8 +1098,8 @@ background: #97442a;
           infoVm.goodsSpec = e
           infoVm.inventory_num = e.upNumber //库存 
           infoVm.specifications_list = []
-          for(let index in infoVm.goodsSpec.itemSpec){
-            var itemSpec = infoVm.goodsSpec.itemSpec[index][index];
+          for(var _index in infoVm.goodsSpec.itemSpec){
+            var itemSpec = infoVm.goodsSpec.itemSpec[_index][_index];
             infoVm.specifications_list.push(itemSpec)
           }
           infoVm.new_price = infoVm.specifications_list[0].itemSalePrice
@@ -1381,7 +1381,7 @@ background: #97442a;
 
     getPhotoOrderItem(function name(params) {})
 
-    setTimeout(() => {
+    setTimeout(function(){
       infoVm.topHeightCss()
     }, 500);
 

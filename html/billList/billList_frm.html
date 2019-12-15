@@ -355,38 +355,38 @@
         },
 
       /**计算总价 */
-  calTotalPrice: function () {
-    var goodsList = this.data.goodsList;
-    var totalPrice = 0;
-    var goodsSum = [];
-    for (var index in goodsList) {
-      if (goodsList[index].isChecked) {
-        var xfMoney = (Number(goodsList[index].itemSalePrice) * Number(goodsList[index].itemNumber)).toFixed(2);
-        totalPrice = app.accAdd(totalPrice, xfMoney);
-        var postageAmnt = goodsList[index].postageAmnt == undefined ? 0 : goodsList[index].postageAmnt;
-        totalPrice = app.accAdd(totalPrice, Number(postageAmnt));
-        goodsSum.push(goodsList[index].itemNumber)
-        this.setData({
-          goodsNumber: goodsSum.reduce((a, b) => a + b)
-        })
-      }
-    }
-    this.setData({
-      totalPrice: totalPrice.toFixed(2),
-      isGoodsNumber: this.data.goodsNumber //解决数字统计时闪烁问题
-    })
-    if (totalPrice == 0) {
-      this.setData({
-        goodsNumber: 0,
-        isGoodsNumber: 0,
-        thisIsChecked: false
-      })
-    } else {
-      this.setData({
-        thisIsChecked: true
-      })
-    }
-  },
+  // calTotalPrice: function () {
+  //   var goodsList = this.data.goodsList;
+  //   var totalPrice = 0;
+  //   var goodsSum = [];
+  //   for (var index in goodsList) {
+  //     if (goodsList[index].isChecked) {
+  //       var xfMoney = (Number(goodsList[index].itemSalePrice) * Number(goodsList[index].itemNumber)).toFixed(2);
+  //       totalPrice = app.accAdd(totalPrice, xfMoney);
+  //       var postageAmnt = goodsList[index].postageAmnt == undefined ? 0 : goodsList[index].postageAmnt;
+  //       totalPrice = app.accAdd(totalPrice, Number(postageAmnt));
+  //       goodsSum.push(goodsList[index].itemNumber)
+  //       this.setData({
+  //         goodsNumber: goodsSum.reduce((a, b) => a + b)
+  //       })
+  //     }
+  //   }
+  //   this.setData({
+  //     totalPrice: totalPrice.toFixed(2),
+  //     isGoodsNumber: this.data.goodsNumber //解决数字统计时闪烁问题
+  //   })
+  //   if (totalPrice == 0) {
+  //     this.setData({
+  //       goodsNumber: 0,
+  //       isGoodsNumber: 0,
+  //       thisIsChecked: false
+  //     })
+  //   } else {
+  //     this.setData({
+  //       thisIsChecked: true
+  //     })
+  //   }
+  // },
 
             //重新获取该商品数据
             geIfyHttpsData : function(funCll){

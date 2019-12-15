@@ -303,7 +303,7 @@
                     orderListArr.forEach(function (item, index) {
                         infoVm.goodsList.push(item)
                     });
-                    setTimeout(() => {
+                    setTimeout(function(){
                         infoVm.mescroll.endSuccess();
                     }, 500);
                     infoVm.showGoodsList = false

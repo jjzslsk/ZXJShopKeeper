@@ -251,7 +251,7 @@
 <body>
     <div id="picture"></div>
     <div id="info_id" v-cloak>
-        <!-- <template> -->
+        <template>
     <div class="main">
         <!-- <button onclick="resToken()"></button> -->
             <!-- <section class="aui-content trans-wrap-box transaction">
@@ -528,8 +528,7 @@
             </div>
         </section>
     </div>
-    
-<!-- </template> -->
+</template>
 </div>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
@@ -1064,7 +1063,7 @@
                 function (res) {
                     api.hideProgress();
                     if(res.status){
-                        setTimeout(() => {
+                        setTimeout(function(){
                         infoVm.refresh = true
                         }, 1000);
 
@@ -1102,7 +1101,7 @@
                         infoVm.visitNum = $api.getStorage("visitNum"); // 旧拍照数
                         infoVm.totalAmount = $api.getStorage("totalAmount"); // 旧拍照数
                         infoVm.totalNum = $api.getStorage("totalNum"); // 旧拍照数
-                        setTimeout(() => {
+                        setTimeout(function(){
                         infoVm.refresh = true
                         }, 5000);
                         funCll (true)
@@ -1155,7 +1154,7 @@
 			if(ret){
 				if(ret.value.resObj.status){
                     if(ret.value.resObj.code == 0001 && ret.value.resObj.code != 0005){
-                        setTimeout(() => {
+                        setTimeout(function(){
                             infoVm.refresh = true
                             }, 1000);
                             infoVm.tipStutas = {}
@@ -1178,7 +1177,7 @@
                     infoVm.visitNum = $api.getStorage("visitNum"); // 旧数据
                     infoVm.totalAmount = $api.getStorage("totalAmount"); // 旧数据
                     infoVm.totalNum = $api.getStorage("totalNum"); // 旧数据
-                    setTimeout(() => {
+                    setTimeout(function(){
                     infoVm.refresh = true
                     }, 1000);
                     api.hideProgress();

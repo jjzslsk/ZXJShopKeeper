@@ -179,9 +179,9 @@
                     </div>
                 </div>
                 <div class="head-state">
-                    <span v-if="isShopDataStuta == 1"  class="head-state-text">审核中</span>
-                    <span v-if="isShopDataStuta == 2"  class="head-state-text">营业中</span>
-                    <span v-if="isShopDataStuta == 3"  class="head-state-text">审核失败</span>
+                    <span v-if="isShopDataStuta == 1"  class="head-state-text" onclick="shopManage()">审核中</span>
+                    <span v-if="isShopDataStuta == 2"  class="head-state-text" onclick="shopManage()">营业中</span>
+                    <span v-if="isShopDataStuta == 3"  class="head-state-text" onclick="shopManage()">审核失败</span>
                     <span v-if="isShopDataStuta == 0" class="head-state-text" onclick="shopManage()">未开店</span>
                 </div>
             </div>

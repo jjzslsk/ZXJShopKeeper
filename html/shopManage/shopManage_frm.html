@@ -985,19 +985,19 @@
 
     function BMapTransqqMap(lng, lat) {
 
-      let x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+      var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 
-      let x = lng - 0.0065;
+      var x = lng - 0.0065;
 
-      let y = lat - 0.006;
+      var y = lat - 0.006;
 
-      let z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+      var z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
 
-      let theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+      var theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
 
-      let lngs = z * Math.cos(theta);
+      var lngs = z * Math.cos(theta);
 
-      let lats = z * Math.sin(theta);
+      var lats = z * Math.sin(theta);
 
       return {
 
@@ -1103,7 +1103,7 @@
                 }
               }
 
-              setTimeout(() => {
+              setTimeout(function(){
                 if(infoVm.LongAndLat == ''){
                   infoVm.openMapSetTimeout();
                   console.log ('定位超时，重新定位')

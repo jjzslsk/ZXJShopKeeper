@@ -433,10 +433,10 @@ var _getHttpsData = function(actionUrl, param, funRecall, errFunRecall) {
 	}, function(ret, err) {
 		if(ret.status == false && ret.code == '0009'){		
 
-			api.alert({
-				title: '提示',
-				msg: '长时间离开，请重新登录',
-			}, function(ret, err) {
+			// api.alert({
+			// 	title: '提示',
+			// 	msg: '长时间离开，请重新登录',
+			// }, function(ret, err) {
 				clearUserInfoCache();
 				clearShopInfoCache();
 				api.openWin({
@@ -445,7 +445,7 @@ var _getHttpsData = function(actionUrl, param, funRecall, errFunRecall) {
 					reload:true,
 					allowEdit:true,
 				});	
-			});
+			// });
 
 			}
 		if (ret) {
@@ -1131,7 +1131,7 @@ var sendSocket = function(sendObg){
 						reload:true,
 						allowEdit:true,
 					});
-					api.toast({ msg: '长时间离开，请重新登录',duration: 5000, location: 'middle'});
+					// api.toast({ msg: '长时间离开，请重新登录',duration: 5000, location: 'middle'});
 				}
 				else if (res.status){
 					funCal(res.data);
