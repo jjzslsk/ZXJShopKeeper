@@ -17,17 +17,14 @@
 <script type="text/javascript" src="./script/aui/aui_dialog.js"></script>
 <script type="text/javascript" src="./script/custom/tools.js"></script>
 <script type="text/javascript" src="./script/packajax.js"></script>
-<!-- <script type="text/javascript" src="./script/custom/bmap.js"></script> -->
 
 <script type="text/javascript">
     var intervalNewData
-
     apiready = function(){
         var userId = $api.getStorage("userid");//用户id
         var clientPhone = $api.getStorage("clientPhone");//手机号
         var clientLevel = $api.getStorage("clientLevel");//
         var shopOpenId = $api.getStorage("openId")
-
         if(userId==undefined || userId==null || userId==''){
             api.openWin({
    			name: 'login_win',
@@ -55,35 +52,12 @@
 			    name:'resume'
 			}, function(ret, err){   
 				//应用从后台到前台
-				// alert ('应用从后台到前台')
 				console.log ('1应用从后台到前台')
                 againLoginByUserId();
                 getShopDataHttps(function (params) {}) //应用从后台到前台
-                // getTokenRes(function name(params) {})
 			});
 
-            // checkUpAppVersion();
-            // getShopDataHttps(function (params) { //退出APP 进入APP会执行，首次进入执行 但不触发api.sendEvent
-            //     if(params.status){
-            //         api.sendEvent({
-            //             name: 'refreshData_Event',
-            //             extra: {
-            //                 resObj: params,
-            //                 Success:true
-            //             }
-            //         });
-            //     }else {
-            //         api.sendEvent({
-            //             name: 'refreshData_Event',
-            //             extra: {
-            //                 res: params,
-            //                 Success:false
-            //             }
-            //         });
-            //     }
-            // })
-            // getTokenRes(function name(params) {})
-
+        // checkUpAppVersion();
         //拍照订单声音提示
         // var NumPaiZhao = $api.getStorage("PAIZHAO"); // 旧拍照数
         // var NumPaiZhaoNew //新拍照数

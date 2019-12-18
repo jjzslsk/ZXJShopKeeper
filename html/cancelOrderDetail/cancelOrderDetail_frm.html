@@ -25,15 +25,15 @@
         <h4>退货订单信息</h4>
         <p>商品名称：{{orderData.ITEM_NAME}}</p>
         <p>规格：{{orderData.SHOP_ITEM_SPEC_ATTR}}</p>
-        <p class="" v-if="orderData.CART_STATUS == 2">状态：申请退货-{{orderData.CART_STATUS}}</p>
-        <p class="" v-if="orderData.CART_STATUS == 3">状态：同意退货-{{orderData.CART_STATUS}}</p>
-        <p class="" v-if="orderData.CART_STATUS == 4">状态：客户发货-{{orderData.CART_STATUS}}</p>
-        <p class="" v-if="orderData.CART_STATUS == 7">状态：确认退货-{{orderData.CART_STATUS}}</p>
-        <p class="" v-if="orderData.CART_STATUS == 8">状态：申请退货-{{orderData.CART_STATUS}}</p>
-        <p class="" v-if="orderData.CART_STATUS == 11">状态：拒绝退货-{{orderData.CART_STATUS}}</p>
-        <p class="" v-if="orderData.CART_STATUS == 6">状态：确认退货-{{orderData.CART_STATUS}}</p>
-        <p class="" v-if="orderData.CART_STATUS == 9">状态：客户发货-{{orderData.CART_STATUS}}</p>
-        <p class="" v-if="orderData.CART_STATUS == 5">状态：拒绝退货-{{orderData.CART_STATUS}}</p>
+        <p class="" v-if="orderData.CART_STATUS == 2">状态：申请退货</p>
+        <p class="" v-if="orderData.CART_STATUS == 3">状态：同意退货</p>
+        <p class="" v-if="orderData.CART_STATUS == 4">状态：客户发货</p>
+        <p class="" v-if="orderData.CART_STATUS == 7">状态：确认退货</p>
+        <p class="" v-if="orderData.CART_STATUS == 8">状态：申请退货</p>
+        <p class="" v-if="orderData.CART_STATUS == 11">状态：拒绝退货</p>
+        <p class="" v-if="orderData.CART_STATUS == 6">状态：确认退货</p>
+        <p class="" v-if="orderData.CART_STATUS == 9">状态：客户发货</p>
+        <p class="" v-if="orderData.CART_STATUS == 5">状态：拒绝退货</p>
         <p>普通单号：{{orderData.ORDER_NO}}</p>
         <p v-if='orderData.PHOTO_ORDER_ID'>拍照单号：{{orderData.PHOTO_ORDER_ID}}</p>
         <p>日期：{{orderData.BACK_REASON_DATE}}</p>

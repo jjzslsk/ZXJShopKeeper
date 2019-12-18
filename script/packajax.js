@@ -21,7 +21,6 @@
    var webSocketPath='zxj/websocket';//webSocket域名后面那部分路径
 ///////////////开发环境地址end///////////////
 
-// var serviceUrlApk = 'http://www.jjzslsk.top'//开发环境
 var serviceUrlApk = 'http://www.zxj888.cn'//正式环境
 //    var serviceUrlApk = 'https://www.zxjtest.xyz'//测试环境
 
@@ -275,8 +274,6 @@ var upUserRealNamePro=function(){
  *上传文件 
  */
 var uploadFileHttps = function(param,imgArray, funRecall, errFunRecall){
-	console.log ('uploadFileHttpsURL' + upFileUrl)
-	console.log ('uploadFileHttps::' + param+imgArray+ funRecall+ errFunRecall)
 	api.ajax({
         url: upFileUrl,
         method: 'post',
@@ -292,9 +289,6 @@ var uploadFileHttps = function(param,imgArray, funRecall, errFunRecall){
 			values:param
 		 }
     },function(ret,err){
-	// console.log ('uploadFileHttps::' + pret+err)
-	console.log ('uploadFileHttps:pret:' + JSON.stringify(ret))
-	console.log ('uploadFileHttps:err:' + JSON.stringify(err))
     	if (ret) {
 			funRecall(ret);
 		} else {
@@ -367,7 +361,6 @@ var _postHttpsData1 = function(actionUrl, param, funRecall, errFunRecall) {
 	}else{
 		url = serviceUrl+'/jaxrs' + actionUrl + '?' + param;
 	}
-	console.log('_postHttpsData1-url:'+url)
 	api.ajax({
 		url : url,
 		method : 'post',
@@ -379,7 +372,6 @@ var _postHttpsData1 = function(actionUrl, param, funRecall, errFunRecall) {
 	    }
 	}, function(ret, err) {
 		alert (ret.msg)
-		console.log ('_postHttpsData1:',JSON.stringify(ret, err));
 		if (ret) {
 			funRecall(ret);
 		} else {
@@ -409,10 +401,6 @@ var _postHttpsData1 = function(actionUrl, param, funRecall, errFunRecall) {
 //请求数据(提交JSON数据)
 var _getHttpsData = function(actionUrl, param, funRecall, errFunRecall) {
 	var url;
-	// if(token == undefined || token == null || token == ''){
-	// 	token = ''
-	// 	alert ('空token')
-	// }
 	if(param==undefined || param==null || param==''){
 		url = serviceUrl+'/jaxrs' + actionUrl;
 	}else{
@@ -427,12 +415,11 @@ var _getHttpsData = function(actionUrl, param, funRecall, errFunRecall) {
 		//    'content-type': 'application/json; charset=UTF-8',
 			token: getToken()
 	    },
-//		data : {
-//			values : param
-//		},
+			//data : {
+			//	values : param
+			//},
 	}, function(ret, err) {
 		if(ret.status == false && ret.code == '0009'){		
-
 			// api.alert({
 			// 	title: '提示',
 			// 	msg: '长时间离开，请重新登录',
@@ -446,7 +433,6 @@ var _getHttpsData = function(actionUrl, param, funRecall, errFunRecall) {
 					allowEdit:true,
 				});	
 			// });
-
 			}
 		if (ret) {
 			funRecall(ret);
@@ -454,12 +440,6 @@ var _getHttpsData = function(actionUrl, param, funRecall, errFunRecall) {
 			errFunRecall(err);
 			var title = '网络请求状态码4(' + err.statusCode + ')';
 			var msg = err.msg + '(' + err.code + ')'
-			console.log (title)
-			console.log (msg)
-			// api.alert({
-			// 	title : title,
-			// 	msg : msg
-			// });
 		}
 	});
 
@@ -467,27 +447,18 @@ var _getHttpsData = function(actionUrl, param, funRecall, errFunRecall) {
 
 //请求数据(提交JSON数据)
 var _postDataMap = function(param, funRecall, errFunRecall) {
-	console.log('_postDataMap-url:'+baiduMapUrl+baiduMapCityParam+param)
 	api.ajax({
 		url : baiduMapUrl+baiduMapCityParam+param,
 		method : 'post',
 		timeout:ajaxTimeout,
 		returnAll : false, //（可选项）是否需要返回所有 response 信息（包括响应头、消息体、状态码），为 true 时，返回的头信息获取方法(ret.headers)，消息体信息获取方法(ret.body)，状态码获取方法(ret.statusCode)
 	}, function(ret, err) {
-		console.log ('_postDataMap1:',JSON.stringify(ret));
-		console.log ('_postDataMap2:',JSON.stringify(err));
 		if (ret) {
 			funRecall(ret);
 		} else {
 			errFunRecall(err);
 			var title = '网络请求状态码5(' + err.statusCode + ')';
 			var msg = err.msg + '(' + err.code + ')'
-			console.log ('定位'+title)
-			console.log ('定位'+msg)
-			// api.alert({
-			// 	title : title,
-			// 	msg : msg
-			// });
 		}
 	});
 
@@ -651,7 +622,6 @@ var saveUserInfoCache=function(pwd,obj,funCall){
 	$api.setStorage("clientPhone", obj.clientPhone);//手机号
 	$api.setStorage("clientRegDate", obj.clientRegDate);//注册日期
 	$api.setStorage("isCertification", obj.isCertification);//是否实名验证（ 1为已实名认证    0 为未实名认证）
-	
 	funCall(true)
 	}
 }
