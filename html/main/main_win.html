@@ -390,6 +390,7 @@
 			}, function(ret, err){   
 				//应用从后台到前台
 				console.log ('应用从后台到前台')
+				checkUpAppVersion();
 				againLoginByUserId();
 			});
 
@@ -540,7 +541,7 @@
 					}
 				}
 			};
-			// create_ws();  //服务连接
+			create_ws();  //服务连接
 
 				//发送消息
 				sendChat = function(param) {
